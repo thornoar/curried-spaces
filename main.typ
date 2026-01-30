@@ -3,7 +3,7 @@
 #import "@preview/equate:0.3.1": equate
 #show: theorem
 
-#set page("a4", margin: 1in)
+#set page("a4", margin: 1in, numbering: "1")
 #set text(font: "TeX Gyre Schola")
 #set heading(numbering: "1.")
 
@@ -16,8 +16,8 @@
 #let CC = $cal(C)$
 
 #align(center)[
-  #text(size: 22pt)[*Synchronous Convergence and Applications*]
-  #v(1cm)
+  #text(size: 22pt)[*Continuous Convergence and Curried Functional Spaces*]
+  #v(.5in)
 ]
 
 = Preliminary definitions
@@ -47,7 +47,7 @@
 
 #def[
   Let $X$ be a set together with a family $SS subset nn(X) times X$. Then $(X, SS)$ is called a _convergence space_ if the following conditions are satisfied:
-  - For any $x in X$ and any directed set $I$, we have $((x)_(i in I), x) in SS$. In other words, any constant net $SS-$converges to the constant;
+  - For any $x in X$ and any directed set $I$, we have $((x)_(i in I), x) in SS$. In other words, any constant net $SS$-converges to the constant;
   - If $((x_i)_(i in I), x_0) in SS$, then $((x_sigma(j))_(j in J), x_0) in SS$ for any subnet $(x_sigma(j))_(j in J)$ of $(x_i)_(i in I)$.
 
   The condition $((x_i)_(i in I), x_0) in SS$ may be denoted by $x_i st(i in I, class: SS) x_0$ or just $x_i st(i in I) x_0$.
@@ -75,19 +75,19 @@
   Let $X$ be a set with a convergence class $SS$. For a set $A subset X$, define $overline(A)$ to be the set of all $x in X$ such that there is a net $(x_i)_(i in I) subset A$ that $SS$-converges to $x$. Then map $A |-> overline(A)$ is a closure operator that endows $X$ with a topology in which a net $(x_i)_(i in I) subset X$ converges to $x in X$ iff it $SS$-converges to $x$.
 ]
 
+#def([modes of convergence])[
+  Let $X$ and $Y$ be two convergence spaces. Denote by $CC(X,Y)$ the set of all continuous functions from $X$ to $Y$. Let $(f_i)_(i in I)$ be a net in $CC(X,Y)$, and let $f in CC(X,Y)$. Then we say that the net $(f_i)_(i in I)$ converges _synchronously_ to $f$ if for any directed set $J$ with a directed map $sigma : J -> I$, and for any net $(x_j)_(j in J)$ converging to $x$ in $X$, we have $f_sigma(j) (x_j) st(j in J) f(x)$ in $Y$.
+]
+
 = The topology of synchronous convergence
 
 #th[
-  Let $X$ and $Y$ be two topological spaces, and let $CC = CC(X,Y) subset Y^X$ be the family of all continuous maps from $X$ to $Y$. For a directed set $I$, a net $(f_i)_(i in I) subset CC$, and a point $f in CC$, we say that $f_i$ converges to $f$ if and only if for every directed set $J$ with a directed map $sigma : J -> I$, and any net $(x_j)_(j in J) subset X$, we have
-  $
-    f_sigma(j)(x_j) stretch(->)_(j in J) f(x) in Y.
-  $
-  We claim that the set $cal(S)$ consisting of pairs $((f_i)_(i in I), f)$ such that $f_i stretch(->)_(i in I) f$ as defined above, is a convergence class on $CC$, and subsequently provides a topology on $CC$, called the topology of *synchronous convergence.*\
+  Let $X$ and $Y$ be two topological spaces, and let $CC = CC(X,Y) subset Y^X$ be the family of all continuous maps from $X$ to $Y$. Then the set $cal(S)$ consisting of pairs $((f_i)_(i in I), f)$ such that $f_i stretch(->)_(i in I) f$ synchronously, is a convergence class on $CC$.
 ]
 #pf[
   We first need to verify four axioms that a convergence class must satisfy:
   + Let $I$ be a directed set, and let $f in CC$. Since $f$ is continuous, for any directed set $J$ and any net $(x_j)_(j in J) subset X$ that converges to $x in X$, we have $f(x_j) stretch(->)_(j in J) f(x) in Y$. Therefore the net $(f)_(i in I)$ converges to $f$ in $CC$.
-  + We need to show that any subnet of a convergent net converges to the same point. Let $(f_i)_(i in I) subset CC$ be a net that converges to $f in CC$, and let $J$ be a directed set with $sigma : J -> I$. To show that the subnet $(f_sigma(j))_(j in J)$ converges to $f$, consider another directed set $K$, mapped to $J$ via $tau : K -> J$, and a net $(x_k)_(k in K) subset X$ that converges to $x in X$. Since the map $sigma circ tau : K -> I$ is monotone and final, by the definition of convergence we see that
+  + We need to show that any subnet of a convergent net converges to the same point. Let $(f_i)_(i in I) subset CC$ be a net that converges to $f in CC$, and let $J$ be a directed set with $sigma : J -> I$. To show that the subnet $(f_sigma(j))_(j in J)$ converges to $f$, consider another directed set $K$, mapped to $J$ via $tau : K -> J$, and a net $(x_k)_(k in K) subset X$ that converges to $x in X$. Since the map $sigma circ tau : K -> I$ is directed, by the definition of convergence we see that
     $
       f_(sigma(tau(k)))(x_k) stretch(->)_(k in K) f(x),
     $
@@ -115,7 +115,7 @@
     $
       forall l >= l_0 wh f'_R(tau(l)) (x_l) in U.
     $
-    Consider the map $eta : L -> I$ defined by $eta(l) = i$, where $(i,alpha) = tau(l)$. Clearly, $eta$ is a monotone final map, so by the definition of convergence, $f_i stretch(->)_(i in I) f$ implies that
+    Consider the map $eta : L -> I$ defined by $eta(l) = i$, where $(i,alpha) = tau(l)$. Clearly, $eta$ is a directed map, so by the definition of convergence, $f_i stretch(->)_(i in I) f$ implies that
     $
       f_eta(l) (x_l) stretch(->)_(l in L) f(x) in Y.
     $
