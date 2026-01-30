@@ -1,0 +1,16 @@
+kelley:
+    type: Book
+    title: General Topology
+    author: Kelley, John L.
+    page-total: 315
+    publisher: Graduate Texts in Mathematics
+    volume: 27
+    date: 1975
+
+bb:
+    type: Book
+    title: Convergence Structures and Applications to Functional Analysis
+    author:
+        - Beattie, R.
+        - Butzmann, H.-P.
+    page-total: 271
