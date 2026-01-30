@@ -15,7 +15,7 @@
 #let CC = $cal(C)$
 
 #align(center)[
-  #text(size: 24pt)[Synchronous Convergence and Applications]
+  #text(size: 22pt)[*Synchronous Convergence and Applications*]
 ]
 
 = Preliminary definitions
