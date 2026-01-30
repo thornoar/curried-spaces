@@ -27,11 +27,15 @@
   Let $X$ be a set. A _filter_ on $X$ is a non-empty set $F subset 2^X$ which is closed under supersets and finite intersections, and does not contain the empty set. The set of all filters on $X$ will be denoted by $FF(X)$.
 ]
 
+// #def[
+//   A filter $F$ on $X$ is called an _ultrafilter_ if is not properly contained in any other filter. A standard application of Zorn's lemma shows that every filter in contained in at least one ultrafilter @bou. Moreover, for any filter $F in FF(X)$ we have
+//   $
+//     F = inter.big {G mid(|) G "is an ultrafilter and" F subset G}.
+//   $
+// ]
+
 #def[
-  A filter $F$ on $X$ is called an _ultrafilter_ if is not properly contained in any other filter. A standard application of Zorn's lemma shows that every filter in contained in at least one ultrafilter @bou. Moreover, for any filter $F in FF(X)$ we have
-  $
-    F = inter.big {G mid(|) G "is an ultrafilter and" F subset G}.
-  $
+  Let $X$ be a set. A family $cal(B) subset 2^X$ is called a _filter base_ if it does not contain the empty set and is closed under finite intersection. The filter $[cal(B)]$ _generated_ by $cal(B)$ is defined as the collection of all supersets of sets from $cal(B)$. If $cal(B) = {{x}}$ where $x in X$, the filter $[x] = [{{x}}]$ is called the _universal filter_ of $x$.
 ]
 
 #def[
@@ -46,7 +50,15 @@
     $
     converges to $x$. This filter $F$ is called the _derived filter_ of ${x_n}_(n = 1)^oo$.
   - A subset $E subset X$ is closed if for every point $x in E$ there is a filter $F in FF(X)$ converging to $x$ such that $A inter E != diameter$ for all $A in F$.
+  - A topological space $X$ is compact iff every filter $F$ on $X$ is contained in a convergent filter on $X$.
   - A function $f : X -> Y$ between topological spaces is continuous iff it preserves convergent filters, i.e. $F -> x in X$ implies $f(F) -> f(x) in Y$.
+]
+
+#def[
+  One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
+  - For all $x in X$, we have $[x] -> x$;
+  - If $F -> x$ and $G -> x$, then $F inter G -> x$;
+  - If $F -> x$ and $F subset G$, then $G -> x$.
 ]
 
 #def[
