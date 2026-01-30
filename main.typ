@@ -3,7 +3,7 @@
 #import "@preview/equate:0.3.1": equate
 #show: theorem
 
-#set page("a4", margin: 0.5in)
+#set page("a4", margin: 1in)
 #set text(font: "TeX Gyre Schola")
 #set heading(numbering: "1.")
 
@@ -16,6 +16,7 @@
 
 #align(center)[
   #text(size: 22pt)[*Synchronous Convergence and Applications*]
+  #v(1cm)
 ]
 
 = Preliminary definitions
@@ -63,7 +64,7 @@
   Let $X$ be a set together with a family $CC subset nn(X) times X$. Then the family $CC$ is called a _convergence class_ if the following hold:
   - $(X, CC)$ is a convergence space;
   - Let $x in X$. If every subnet of $(x_i)_(i in I) subset X$ has a subnet that $CC$-converges to $x$, then $x_i st(i in I, class: CC) x$.
-  - Consider a directed set $I$. For all $i in I$, let $J_i$ be also a directed set and consider a net $(x^i_j)_(j in J_i)$ that $CC$-converges to $x^i in X$. Assume also that $x^i st(i in I, class: CC) x in X$. Denote $F := I times product_(i in I) J_i$. The set $J$ is directed by the pointwise order inherited from $I$ and $J_i$'s. We then require that the following convergence must hold:
+  - Consider a directed set $I$. For all $i in I$, let $J_i$ be also a directed set and consider a net $(x^i_j)_(j in J_i)$ that $CC$-converges to $x^i in X$. Assume also that $x^i st(i in I, class: CC) x in X$. Denote\ $F := I times product_(i in I) J_i$. The set $J$ is directed by the pointwise order inherited from $I$ and $J_i$'s. We then require that the following convergence must hold:
     $
       x^i_(f(i)) st((i, f) in F, class: CC) x.
     $
