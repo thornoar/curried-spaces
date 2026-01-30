@@ -12,6 +12,7 @@
 
 #let st(cnt, class: []) = $stretch(->)_(#cnt)^(#class)$
 #let nn(X) = $cal(N)(#X)$
+#let SS = $cal(S)$
 #let CC = $cal(C)$
 
 #align(center)[
@@ -45,11 +46,11 @@
 ]
 
 #def[
-  Let $X$ be a set together with a family $CC subset nn(X) times X$. Then $(X, CC)$ is called a _convergence space_ if the following conditions are satisfied:
-  - For any $x in X$ and any directed set $I$, we have $((x)_(i in I), x) in CC$. In other words, any constant net $CC-$converges to the constant;
-  - If $((x_i)_(i in I), x_0) in CC$, then $((x_sigma(j))_(j in J), x_0) in CC$ for any subnet $(x_sigma(j))_(j in J)$ of $(x_i)_(i in I)$.
+  Let $X$ be a set together with a family $SS subset nn(X) times X$. Then $(X, SS)$ is called a _convergence space_ if the following conditions are satisfied:
+  - For any $x in X$ and any directed set $I$, we have $((x)_(i in I), x) in SS$. In other words, any constant net $SS-$converges to the constant;
+  - If $((x_i)_(i in I), x_0) in SS$, then $((x_sigma(j))_(j in J), x_0) in SS$ for any subnet $(x_sigma(j))_(j in J)$ of $(x_i)_(i in I)$.
 
-  The condition $((x_i)_(i in I), x_0) in CC$ may be denoted by $x_i st(i in I, class: CC) x_0$ or just $x_i st(i in I) x_0$.
+  The condition $((x_i)_(i in I), x_0) in SS$ may be denoted by $x_i st(i in I, class: SS) x_0$ or just $x_i st(i in I) x_0$.
 ]
 
 #rem[
@@ -61,27 +62,27 @@
 ]
 
 #def[
-  Let $X$ be a set together with a family $CC subset nn(X) times X$. Then the family $CC$ is called a _convergence class_ if the following hold:
-  - $(X, CC)$ is a convergence space;
-  - Let $x in X$. If every subnet of $(x_i)_(i in I) subset X$ has a subnet that $CC$-converges to $x$, then $x_i st(i in I, class: CC) x$.
-  - Consider a directed set $I$. For all $i in I$, let $J_i$ be also a directed set and consider a net $(x^i_j)_(j in J_i)$ that $CC$-converges to $x^i in X$. Assume also that $x^i st(i in I, class: CC) x in X$. Denote\ $F := I times product_(i in I) J_i$. The set $J$ is directed by the pointwise order inherited from $I$ and $J_i$'s. We then require that the following convergence must hold:
+  Let $X$ be a set together with a family $SS subset nn(X) times X$. Then the family $SS$ is called a _convergence class_ if the following hold:
+  - $(X, SS)$ is a convergence space;
+  - Let $x in X$. If every subnet of $(x_i)_(i in I) subset X$ has a subnet that $SS$-converges to $x$, then $x_i st(i in I, class: SS) x$.
+  - Consider a directed set $I$. For all $i in I$, let $J_i$ be also a directed set and consider a net $(x^i_j)_(j in J_i)$ that $SS$-converges to $x^i in X$. Assume also that $x^i st(i in I, class: SS) x in X$. Denote\ $F := I times product_(i in I) J_i$. The set $J$ is directed by the pointwise order inherited from $I$ and $J_i$'s. We then require that the following convergence must hold:
     $
-      x^i_(f(i)) st((i, f) in F, class: CC) x.
+      x^i_(f(i)) st((i, f) in F, class: SS) x.
     $
 ]
 
 #th([J. L. Kelley, see @kelley])[
-  Let $X$ be a set with a convergence class $CC$. For a set $A subset X$, define $overline(A)$ to be the set of all $x in X$ such that there is a net $(x_i)_(i in I) subset A$ that $CC$-converges to $x$. Then map $A |-> overline(A)$ is a closure operator that endows $X$ with a topology in which a net $(x_i)_(i in I) subset X$ converges to $x in X$ iff it $CC$-converges to $x$.
+  Let $X$ be a set with a convergence class $SS$. For a set $A subset X$, define $overline(A)$ to be the set of all $x in X$ such that there is a net $(x_i)_(i in I) subset A$ that $SS$-converges to $x$. Then map $A |-> overline(A)$ is a closure operator that endows $X$ with a topology in which a net $(x_i)_(i in I) subset X$ converges to $x in X$ iff it $SS$-converges to $x$.
 ]
 
 = The topology of synchronous convergence
 
 #th[
-  Let $X$ and $Y$ be two convergence spaces, and let $CC = CC(X,Y) subset Y^X$ be the family of all continuous maps from $X$ to $Y$. For a directed set $I$, a net $(f_i)_(i in I) subset CC$, and a point $f in CC$, we say that $f_i$ converges to $f$ if and only if for every directed set $J$ with a monotone final map $sigma : J -> I$, and any net $(x_j)_(j in J) subset X$, we have
+  Let $X$ and $Y$ be two topological spaces, and let $CC = CC(X,Y) subset Y^X$ be the family of all continuous maps from $X$ to $Y$. For a directed set $I$, a net $(f_i)_(i in I) subset CC$, and a point $f in CC$, we say that $f_i$ converges to $f$ if and only if for every directed set $J$ with a directed map $sigma : J -> I$, and any net $(x_j)_(j in J) subset X$, we have
   $
     f_sigma(j)(x_j) stretch(->)_(j in J) f(x) in Y.
   $
-  We claim that the set $cal(S)$ consisting of pairs $((f_i)_(i in I), f)$ such that $f_i stretch(->)_(i in I) f$ as defined above, is a convergence class on $CC$, and subsequently provides a topology on $CC$, called the topology of *semi-uniform convergence.*\
+  We claim that the set $cal(S)$ consisting of pairs $((f_i)_(i in I), f)$ such that $f_i stretch(->)_(i in I) f$ as defined above, is a convergence class on $CC$, and subsequently provides a topology on $CC$, called the topology of *synchronous convergence.*\
 ]
 #pf[
   We first need to verify four axioms that a convergence class must satisfy:
@@ -148,7 +149,7 @@
   $
     overline(E) := {f in CC hs mid(|) hs exists#hh (f_i)_(i in I) subset E st f_i stretch(->)_(i in I) f}
   $
-  endows $CC$ with a topology in which convergence coincides with the one defined by $cal(S)$.
+  endows $CC$ with a topology in which convergence coincides with the one defined by $SS$.
 ]
 
 #prop[
