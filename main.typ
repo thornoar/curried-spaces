@@ -88,26 +88,31 @@
   continuous. Here, the product $CC(X,Y) times X$ is endowed with the product convergence structure.
 ]
 
-#prop([see @bb, page 26])[
-  Let $X, Y, Z$ be convergence spaces. Then a map $h : X -> CC(Y, Z)$ is continuous if and only if the associated map
+#prop([see @bb, page 27])[
+  Let $X, Y, Z$ be convergence spaces. Then the map
   $
-    tilde(h) : X times Y -> Z
+    gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
   $
-  defined by $tilde(h)(x, y) = h(x)(y)$, is continuous.
+  defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
 ] <convcurry>
-#pf[
-  Assume that $h$ is continuous. To show the continuity of $tilde(h)$, it suffices to take two convergent filters $F -> x in X$ and $G -> y in Y$, and show that $tilde(h)(F times G) -> tilde(h)(x,y)$, where the filter $F times G$ is based on ${A times B mid(|) A in F, B in G}$. Indeed, we have
-  $
-    tilde(h)(F times G) = h(F)(G) -> h(x)(y) = tilde(h)(x,y),
-  $
-  since $h(F) -> h(x)$ by the continuity of $h$. The converse is proven similarly.
-]
 
 #prop([see @bb, page 34])[
   Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology. That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
 ] <top>
 
-= Curried functional spaces
+#prop[
+  Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
+] <haus>
+
+#prop([see @bb, page 29])[
+  Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
+] <cvs>
+
+#cor[
+  If $X$ is a topological space and $Y$ is a topological vector space, then $CC(X,Y)$ is a topological vector space.
+] <cor1>
+
+= Curried continuous functions
 
 #prop[
   Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ (in the sense that its derived filter converges) if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
@@ -129,71 +134,64 @@
 ]
 
 #def[
-  Let $n in NN_0 = {0, 1, 2, ...}$. The _curried space of continuous functions_ $C_n (RR)$ is defined recursively as follows:
+  Let $n in NN_0 = {0, 1, 2, ...}$. The _space of curried continuous functions_ $C_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
   - If $n = 0$, we set $C_0 (RR) = RR$.
-  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. 
+  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @cor1 ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
+
+// #prop[
+//   For all $n in NN_0$, the space $C_n (RR)$ is a Hausdorff topological vector space.
+// ]
+// #pf[
+//   If $n = 0$, the statement is trivial. Suppose that $C_n (RR)$ is a Hausdorff TVS. We aim to show the same for $C_(n+1)(RR)$.
+//
+//   Since $RR$ is locally compact and $C_n (RR)$ is regular, we see by @top that the convergence space $CC(RR, C_n (RR))$ is topological. It is given the pointwise vector space structure, i.e.
+//     $
+//       (alpha f + beta g)(x) = alpha f(x) + beta g(x)
+//     $
+//     for $alpha, beta in RR$ and $f, g in C_(n+1)(RR)$.\
+//     First of all, as proved in @bb (page 28), we see that $C_(n+1)(RR)$ is Hausdorff. It remains to show that the addition and scalar multiplication maps are continuous.\
+//
+//     Consider the addition map $+ : C_(n+1)(RR) times C_(n+1)(RR) -> C_(n+1)(RR)$. Let $F_1 -> f_1$ and $F_2 -> f_2$ in $C_(n+1)(RR)$. We aim to show that $F_1 + F_2 -> f_1 + f_2$, where $F_1 + F_2$ is a shorthand for $(+)(F_1 times F_2)$. To this end, let $P -> x in RR$. Observe that we have $F_1 (P) -> f_1 (x)$ and $F_2 (P) -> f_2 (x)$ since $f_i in CC(RR, C_n (RR))$. Moreover, since $C_n (RR)$ is a TVS, we see that
+//     $
+//       F_1 (P) + F_2 (P) -> f_1 (x) + f_2 (x) = (f_1 + f_2)(x).
+//     $
+//     It remains to show that $(F_1 + F_2)(P)$ is finer than $F_1 (P) + F_2 (P)$. For $i = 1,2$, let\ $C_i in F_i$ and $A_i in P$. We then see that
+//     $
+//       C_1 (A_1) + C_2 (A_2) supset (C_1 + C_2)(A_1 inter A_2).
+//     $
+//     Therefore, we have
+//     $
+//       F_1 (P) + F_2 (P) &= [{C_1 (A_1) + C_2 (A_2) mid(|) C_i in F_i wh A_i in P}]\
+//       &subset [(C_1 + C_2)(A) mid(|) C_i in F_i wh A in P] = (F_1 + F_2)(P),
+//     $
+//     and so $(F_1 + F_2)(P) -> (f_1 + f_2)(x)$, which allows us to conclude that
+//     $
+//       F_1 + F_2 -> f_1 + f_2 in C_(n+1)(RR).
+//     $
+//
+//     Finally, consider the multiplication map $dot : RR times C_(n+1)(RR) -> C_(n+1)(RR)$. Let $P -> alpha in RR$ and $F -> f in C_(n+1)(RR)$. To show that $P dot F -> alpha f$, take a filter $Q -> x in RR$. One can easily show that $(P F)(Q) = P dot F(Q)$, and, since $dot : RR times C_n (RR) -> C_n (RR)$ is continuous, we have
+//     $
+//       (P F)(Q) = P dot (F(Q)) -> alpha dot f(x) = (alpha f)(x),
+//     $
+//     q.e.d.
+// ]
 
 #prop[
-  For all $n in NN_0$, the space $C_n (RR)$ is a Hausdorff topological vector space.
+  Let $n in NN_0$. Then the map
+  $
+    gamma : CC(RR^n, RR) -> C_n (RR)
+  $
+  defined by $gamma(f)(t_1)(t_2)...(t_n) = f(t_1, ..., t_n)$, is well-defined and is a homeomorphism.
 ]
 #pf[
-  If $n = 0$, the statement is trivial. Suppose that $C_n (RR)$ is a Hausdorff TVS. We aim to show the same for $C_(n+1)(RR)$.
-
-  Since $RR$ is locally compact and $C_n (RR)$ is regular, we see by @top that the convergence space $CC(RR, C_n (RR))$ is topological. It is given the pointwise vector space structure, i.e.
-    $
-      (alpha f + beta g)(x) = alpha f(x) + beta g(x)
-    $
-    for $alpha, beta in RR$ and $f, g in C_(n+1)(RR)$.\
-    First of all, as proved in @bb (page 28), we see that $C_(n+1)(RR)$ is Hausdorff. It remains to show that the addition and scalar multiplication maps are continuous.\
-
-    Consider the addition map $+ : C_(n+1)(RR) times C_(n+1)(RR) -> C_(n+1)(RR)$. Let $F_1 -> f_1$ and $F_2 -> f_2$ in $C_(n+1)(RR)$. We aim to show that $F_1 + F_2 -> f_1 + f_2$, where $F_1 + F_2$ is a shorthand for $(+)(F_1 times F_2)$. To this end, let $P -> x in RR$. Observe that we have $F_1 (P) -> f_1 (x)$ and $F_2 (P) -> f_2 (x)$ since $f_i in CC(RR, C_n (RR))$. Moreover, since $C_n (RR)$ is a TVS, we see that
-    $
-      F_1 (P) + F_2 (P) -> f_1 (x) + f_2 (x) = (f_1 + f_2)(x).
-    $
-    It remains to show that $(F_1 + F_2)(P)$ is finer than $F_1 (P) + F_2 (P)$. For $i = 1,2$, let\ $C_i in F_i$ and $A_i in P$. We then see that
-    $
-      C_1 (A_1) + C_2 (A_2) supset (C_1 + C_2)(A_1 inter A_2).
-    $
-    Therefore, we have
-    $
-      F_1 (P) + F_2 (P) &= [{C_1 (A_1) + C_2 (A_2) mid(|) C_i in F_i wh A_i in P}]\
-      &subset [(C_1 + C_2)(A) mid(|) C_i in F_i wh A in P] = (F_1 + F_2)(P),
-    $
-    and so $(F_1 + F_2)(P) -> (f_1 + f_2)(x)$, which allows us to conclude that
-    $
-      F_1 + F_2 -> f_1 + f_2 in C_(n+1)(RR).
-    $
-
-    Finally, consider the multiplication map $dot : RR times C_(n+1)(RR) -> C_(n+1)(RR)$. Let $P -> alpha in RR$ and $F -> f in C_(n+1)(RR)$. To show that $P dot F -> alpha f$, take a filter $Q -> x in RR$. One can easily show that $(P F)(Q) = P dot F(Q)$, and, since $dot : RR times C_n (RR) -> C_n (RR)$ is continuous, we have
-    $
-      (P F)(Q) = P dot (F(Q)) -> alpha dot f(x) = (alpha f)(x),
-    $
-    q.e.d.
-]
-
-#prop[
-  Let $X$ be a topological space, $n in NN_0$. Then a map $h : X -> C_n (RR)$ is continuous if and only if the map
+  If $n = 0$, the statement is trivial. Assume it is proven for $C_n (RR)$. By @convcurry, we have
   $
-    tilde(h) : X times RR^n -> RR
+    CC(RR^(n+1), RR) = CC(RR times RR^n, RR) tilde.equiv CC(RR, CC(RR^n, RR)) tilde.equiv CC(RR, C_n (RR)) = C_(n+1)(RR),
   $
-  defined by $tilde(h)(x, y_1, y_2, ..., y_n) = h(x)(y_1)(y_2)...(y_n)$, is continuous.
-]
-#pf[
-  If $n = 0$, the statement is trivial. Assume it is proven for $C_n (RR)$, and consider a map $h : X -> C_(n+1)(RR) = CC(RR, C_n (RR))$.
-  
-  By @convcurry, we see that $h$ is continuous if and only if the associated map
-  $
-    h' : X times RR -> C_n (RR)
-  $
-  is continuous, which, by the induction hypothesis, is equivalent to the continuity of $tilde(h') = tilde(h)$.
+  q.e.d.
 ]
 
-#cor[
-  Let $n >= 1$. Then the correspondence $h |-> tilde(h)$ yields a homeomorphism $C_n (RR) tilde.equiv CC(RR^n, RR)$.
-]
-#pf[
-
-]
+= Curried differentiable functions
 
 #bibliography("bibliography.yml")
