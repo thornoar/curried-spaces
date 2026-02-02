@@ -139,44 +139,6 @@
   - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @cor1 ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
 
-// #prop[
-//   For all $n in NN_0$, the space $C_n (RR)$ is a Hausdorff topological vector space.
-// ]
-// #pf[
-//   If $n = 0$, the statement is trivial. Suppose that $C_n (RR)$ is a Hausdorff TVS. We aim to show the same for $C_(n+1)(RR)$.
-//
-//   Since $RR$ is locally compact and $C_n (RR)$ is regular, we see by @top that the convergence space $CC(RR, C_n (RR))$ is topological. It is given the pointwise vector space structure, i.e.
-//     $
-//       (alpha f + beta g)(x) = alpha f(x) + beta g(x)
-//     $
-//     for $alpha, beta in RR$ and $f, g in C_(n+1)(RR)$.\
-//     First of all, as proved in @bb (page 28), we see that $C_(n+1)(RR)$ is Hausdorff. It remains to show that the addition and scalar multiplication maps are continuous.\
-//
-//     Consider the addition map $+ : C_(n+1)(RR) times C_(n+1)(RR) -> C_(n+1)(RR)$. Let $F_1 -> f_1$ and $F_2 -> f_2$ in $C_(n+1)(RR)$. We aim to show that $F_1 + F_2 -> f_1 + f_2$, where $F_1 + F_2$ is a shorthand for $(+)(F_1 times F_2)$. To this end, let $P -> x in RR$. Observe that we have $F_1 (P) -> f_1 (x)$ and $F_2 (P) -> f_2 (x)$ since $f_i in CC(RR, C_n (RR))$. Moreover, since $C_n (RR)$ is a TVS, we see that
-//     $
-//       F_1 (P) + F_2 (P) -> f_1 (x) + f_2 (x) = (f_1 + f_2)(x).
-//     $
-//     It remains to show that $(F_1 + F_2)(P)$ is finer than $F_1 (P) + F_2 (P)$. For $i = 1,2$, let\ $C_i in F_i$ and $A_i in P$. We then see that
-//     $
-//       C_1 (A_1) + C_2 (A_2) supset (C_1 + C_2)(A_1 inter A_2).
-//     $
-//     Therefore, we have
-//     $
-//       F_1 (P) + F_2 (P) &= [{C_1 (A_1) + C_2 (A_2) mid(|) C_i in F_i wh A_i in P}]\
-//       &subset [(C_1 + C_2)(A) mid(|) C_i in F_i wh A in P] = (F_1 + F_2)(P),
-//     $
-//     and so $(F_1 + F_2)(P) -> (f_1 + f_2)(x)$, which allows us to conclude that
-//     $
-//       F_1 + F_2 -> f_1 + f_2 in C_(n+1)(RR).
-//     $
-//
-//     Finally, consider the multiplication map $dot : RR times C_(n+1)(RR) -> C_(n+1)(RR)$. Let $P -> alpha in RR$ and $F -> f in C_(n+1)(RR)$. To show that $P dot F -> alpha f$, take a filter $Q -> x in RR$. One can easily show that $(P F)(Q) = P dot F(Q)$, and, since $dot : RR times C_n (RR) -> C_n (RR)$ is continuous, we have
-//     $
-//       (P F)(Q) = P dot (F(Q)) -> alpha dot f(x) = (alpha f)(x),
-//     $
-//     q.e.d.
-// ]
-
 #prop[
   Let $n in NN_0$. Then the map
   $
@@ -193,5 +155,32 @@
 ]
 
 = Curried differentiable functions
+
+#def[
+  Let $n in NN_0$. The _space of curried differentiable functions_ $D_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
+  - If $n = 0$, we set $D_0 (RR) = C_0 (RR) = RR$.
+  - If the space $D_n (RR)$ is defined, we define $D_(n+1) (RR)$ as the subspace of $CC(RR, D_n (RR))$ consisting of such functions $f : RR -> D_n (RR)$, that there is $f' in C_(n+1)(RR)$ which satisfies
+    $
+      f(x_0 + h) = f(x_0) + h dot f'(x_0) + o(h) in C_n (RR)
+    $
+    for all $x_0 in RR$.
+]
+
+#def[
+  Fix $n in NN_0$. For all $m in NN$, the _space of curried $m$ times differentiable functions_ $D_n^m (RR)$ is defined recursively as follows:
+  - If $m = 1$, we set $D_n^1 (RR) = D_n (RR)$.
+  - If $D_n^m (RR)$ is defined, we set $D_n^(m+1)(RR)$ to be the space of all functions $f in D_n (RR)$ such that $f' in D_n^m (RR)$.
+  Trivially, for all $n in NN_0$, we have
+  $
+    D_n^1 (RR) supset D_n^2 (RR) supset D_n^3 (RR) supset ... 
+  $
+]
+
+#prop[
+  Let $n, m in NN$, and $f in D_n^m$. Then for all $x in RR$, we have $f(x) in D_(n-1)^m (RR)$.
+]
+#pf[
+  ...
+]
 
 #bibliography("bibliography.yml")
