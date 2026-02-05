@@ -177,7 +177,7 @@
 ]
 
 #prop[
-  Let $n, m in NN$, and $f in D_n^m$. Then for all $x in RR$, we have $f(x) in D_(n-1)^m (RR)$.
+  Let $n, m in NN$, and $f in D_n^m (RR)$. Then for all $x in RR$, we have $f(x) in D_(n-1)^m (RR)$.
 ]
 #pf[
   ...
