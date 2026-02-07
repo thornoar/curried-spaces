@@ -22,3 +22,10 @@ bb:
         - Butzmann, H.-P.
     page-total: 271
     date: 2002
+
+fox:
+    type: Article
+    title: On Topologies For Function Spaces
+    author: Fox, Ralph H.
+    page-total: 4
+    date: 1945

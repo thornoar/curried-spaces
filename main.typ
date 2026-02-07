@@ -57,48 +57,61 @@
   - A function $f : X -> Y$ between topological spaces is continuous iff it preserves convergent filters, i.e. $F -> x in X$ implies $f(F) -> f(x) in Y$.
 ]
 
-#def[
-  One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
-  - For all $x in X$, we have $[x] -> x$;
-  - If $F -> x$ and $G -> x$, then $F inter G -> x$;
-  - If $F -> x$ and $F subset G$, then $G -> x$.
-]
+// #def[
+//   One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
+//   - For all $x in X$, we have $[x] -> x$;
+//   - If $F -> x$ and $G -> x$, then $F inter G -> x$;
+//   - If $F -> x$ and $F subset G$, then $G -> x$.
+// ]
+//
+// #def[
+//   A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
+// ]
+//
+// #def[
+//   Let $X, Y$ be two convergence spaces. Then the product $X times Y$ can be endowed with the following convergence structure: a filter $F in FF(X times Y)$ converges to $(x,y) in X times Y$ if and only if $p_X (F) -> x in X$ and $p_Y (F) -> y in Y$.
+// ]
+//
+// #def[
+//   Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
+// if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
+//   $
+//     {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
+//   $
+//   The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
+// ] <cxydef>
+//
+// #rem[
+//   Continuous convergence on $CC(X,Y)$ is the coarsest convergence structure that makes the _evaluation mapping_
+//   $
+//     omega : CC(X,Y) times X -> Y
+//   $
+//   continuous. Here, the product $CC(X,Y) times X$ is endowed with the product convergence structure.
+// ]
 
-#def[
-  A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
-]
+// #prop([see @bb, page 27])[
+//   Let $X, Y, Z$ be convergence spaces. Then the map
+//   $
+//     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
+//   $
+//   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
+// ] <convcurry>
 
-#def[
-  Let $X, Y$ be two convergence spaces. Then the product $X times Y$ can be endowed with the following convergence structure: a filter $F in FF(X times Y)$ converges to $(x,y) in X times Y$ if and only if $p_X (F) -> x in X$ and $p_Y (F) -> y in Y$.
-]
-
-#def[
-  Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
+#prop([see @bb, page 34])[
+  // Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology. That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
+  Let $X,Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. On the set of continuous functions $CC(X,Y)$, consider the compact-open topology (see @fox). Then a filter $F in FF(CC(X,Y))$ converges to a function $f in CC(X,Y)$ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
   $
     {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
   $
-  The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
-] <cxydef>
-
-#rem[
-  Continuous convergence on $CC(X,Y)$ is the coarsest convergence structure that makes the _evaluation mapping_
-  $
-    omega : CC(X,Y) times X -> Y
-  $
-  continuous. Here, the product $CC(X,Y) times X$ is endowed with the product convergence structure.
-]
+] <top>
 
 #prop([see @bb, page 27])[
-  Let $X, Y, Z$ be convergence spaces. Then the map
+  Let $X$ be a locally compact topological space and let $Y$ be a regular topological space. Then the map
   $
     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
   $
   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
 ] <convcurry>
-
-#prop([see @bb, page 34])[
-  Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology. That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
-] <top>
 
 #prop[
   Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
@@ -164,6 +177,17 @@
       f(x_0 + h) = f(x_0) + h dot f'(x_0) + o(h) in C_n (RR)
     $
     for all $x_0 in RR$.
+]
+
+#prop[
+  Let $n in NN_0$. Then the map
+  $
+    gamma : C^1 (RR^n) -> D_n (RR)
+  $
+  is well-defined and a homeomorphism. In particular, a function $f in C_n (RR)$ lies in $D_n (RR)$ if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ has continuous partial derivatives.
+]
+#pf[
+  First let us show that $gamma$ is well-defined and bijective. 
 ]
 
 #def[
