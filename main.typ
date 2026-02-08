@@ -22,18 +22,11 @@
   #v(.5in)
 ]
 
-= Preliminary definitions
+= The language of filters
 
 #def[
   Let $X$ be a set. A _filter_ on $X$ is a non-empty set $F subset 2^X$ which is closed under supersets and finite intersections, and does not contain the empty set. The set of all filters on $X$ will be denoted by $FF(X)$.
 ]
-
-// #def[
-//   A filter $F$ on $X$ is called an _ultrafilter_ if is not properly contained in any other filter. A standard application of Zorn's lemma shows that every filter in contained in at least one ultrafilter @bou. Moreover, for any filter $F in FF(X)$ we have
-//   $
-//     F = inter.big {G mid(|) G "is an ultrafilter and" F subset G}.
-//   $
-// ]
 
 #def[
   Let $X$ be a set. A family $cal(B) subset 2^X$ is called a _filter base_ if it does not contain the empty set and is closed under finite intersection. The filter $[cal(B)]$ _generated_ by $cal(B)$ is defined as the collection of all supersets of sets from $cal(B)$.\
@@ -57,56 +50,36 @@
   - A function $f : X -> Y$ between topological spaces is continuous iff it preserves convergent filters, i.e. $F -> x in X$ implies $f(F) -> f(x) in Y$.
 ]
 
-// #def[
-//   One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
-//   - For all $x in X$, we have $[x] -> x$;
-//   - If $F -> x$ and $G -> x$, then $F inter G -> x$;
-//   - If $F -> x$ and $F subset G$, then $G -> x$.
-// ]
-//
-// #def[
-//   A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
-// ]
-//
-// #def[
-//   Let $X, Y$ be two convergence spaces. Then the product $X times Y$ can be endowed with the following convergence structure: a filter $F in FF(X times Y)$ converges to $(x,y) in X times Y$ if and only if $p_X (F) -> x in X$ and $p_Y (F) -> y in Y$.
-// ]
-//
-// #def[
-//   Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
-// if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
-//   $
-//     {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
-//   $
-//   The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
-// ] <cxydef>
-//
-// #rem[
-//   Continuous convergence on $CC(X,Y)$ is the coarsest convergence structure that makes the _evaluation mapping_
-//   $
-//     omega : CC(X,Y) times X -> Y
-//   $
-//   continuous. Here, the product $CC(X,Y) times X$ is endowed with the product convergence structure.
-// ]
+= Curried functions
 
-// #prop([see @bb, page 27])[
-//   Let $X, Y, Z$ be convergence spaces. Then the map
-//   $
-//     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
-//   $
-//   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
-// ] <convcurry>
+#def[
+  Let $n in NN_0 = {0, 1, 2, ...}$. The set $H_n (RR)$ of _curried $n$-variable functions_ is a topological vector space defined as follows:
+  - If $n = 0$, we set $H_0 (RR) = RR$;
+  - If $H_n (RR)$ is defined, we define $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise topological and linear structure. In other words, a filter $F in FF(H_(n+1)(RR))$ converges to $f in H_(n+1)(RR)$ if and only if $F(x) = {A(x) mid(|) A in F}$ converges to $f(x)$ for all $x in RR$. It is not hard to see that this topology is compatible with the pointwise vector structure.
+]
+
+#def[
+  Let $tilde(f) : RR^n -> RR$ be a function. Define
+  $
+    gamma(tilde(f))(x_1)(x_2)...(x_n) = tilde(f)(x_1, x_2, ..., x_n).
+  $
+  Then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ is clearly a bijection. The function $f = gamma(tilde(f))$ will be called the _curried version_ of $tilde(f)$.
+]
+
+= Continuous functions
 
 #prop([see @bb, page 34])[
-  // Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology. That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
   Let $X,Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. On the set of continuous functions $CC(X,Y)$, consider the compact-open topology (see @fox). Then a filter $F in FF(CC(X,Y))$ converges to a function $f in CC(X,Y)$ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
   $
     {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
   $
+  The convergence $F -> f$ so defined is called _continuous convergence._
 ] <top>
 
+In what follows, we assume that $X$ is a locally compact topological space and $Y$ is a regular topological space.
+
 #prop([see @bb, page 27])[
-  Let $X$ be a locally compact topological space and let $Y$ be a regular topological space. Then the map
+  If $Y$ is locally compact and $Z$ is another regular topological space, then the map
   $
     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
   $
@@ -114,18 +87,12 @@
 ] <convcurry>
 
 #prop[
-  Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
+  Let $X$ be a locally compact topological space and let $Y$ be a Hausdorff topological space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff topological space.
 ] <haus>
 
 #prop([see @bb, page 29])[
-  Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
-] <cvs>
-
-#cor[
-  If $X$ is a topological space and $Y$ is a topological vector space, then $CC(X,Y)$ is a topological vector space.
-] <cor1>
-
-= Curried continuous functions
+  Let $X$ be a locally compact space and $Y$ be a regular topological vector space, i.e. a set endowed with both topological and linear structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a topological vector space.
+] <tvs>
 
 #prop[
   Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ (in the sense that its derived filter converges) if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
@@ -149,7 +116,7 @@
 #def[
   Let $n in NN_0 = {0, 1, 2, ...}$. The _space of curried continuous functions_ $C_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
   - If $n = 0$, we set $C_0 (RR) = RR$.
-  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @cor1 ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
+  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @tvs ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
 
 #prop[
@@ -167,7 +134,7 @@
   q.e.d.
 ]
 
-= Curried differentiable functions
+= Differentiable functions
 
 #def[
   Let $n in NN_0$. The _space of curried differentiable functions_ $D_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
@@ -198,6 +165,10 @@
   $
     D_n^1 (RR) supset D_n^2 (RR) supset D_n^3 (RR) supset ... 
   $
+]
+
+#prop[
+  Let $n,m in NN$. Then a function $f in C_n (RR)$ lies in the differentiability class $D_n^m (RR)$ if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ lies in the class $C^m (RR)$.
 ]
 
 #prop[
