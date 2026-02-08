@@ -28,6 +28,13 @@
   Let $X$ be a set. A _filter_ on $X$ is a non-empty set $F subset 2^X$ which is closed under supersets and finite intersections, and does not contain the empty set. The set of all filters on $X$ will be denoted by $FF(X)$.
 ]
 
+// #def[
+//   A filter $F$ on $X$ is called an _ultrafilter_ if is not properly contained in any other filter. A standard application of Zorn's lemma shows that every filter in contained in at least one ultrafilter @bou. Moreover, for any filter $F in FF(X)$ we have
+//   $
+//     F = inter.big {G mid(|) G "is an ultrafilter and" F subset G}.
+//   $
+// ]
+
 #def[
   Let $X$ be a set. A family $cal(B) subset 2^X$ is called a _filter base_ if it does not contain the empty set and is closed under finite intersection. The filter $[cal(B)]$ _generated_ by $cal(B)$ is defined as the collection of all supersets of sets from $cal(B)$.\
   If $cal(B) = {{x}}$ where $x in X$, the filter $[x] = [{{x}}]$ is called the _universal filter_ of $x$.\
@@ -50,6 +57,62 @@
   - A function $f : X -> Y$ between topological spaces is continuous iff it preserves convergent filters, i.e. $F -> x in X$ implies $f(F) -> f(x) in Y$.
 ]
 
+#def[
+  One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
+  - For all $x in X$, we have $[x] -> x$;
+  - If $F -> x$ and $G -> x$, then $F inter G -> x$;
+  - If $F -> x$ and $F subset G$, then $G -> x$.
+]
+
+#def[
+  A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
+]
+
+#def[
+  Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
+if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
+  $
+    {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
+  $
+  The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
+] <cxydef>
+
+#prop([see @bb, page 27])[
+  Let $X, Y, Z$ be convergence spaces. Then the map
+  $
+    gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
+  $
+  defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
+] <convcurry>
+
+#prop([see @bb, page 34])[
+  Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology (see @fox). That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
+  // Let $X,Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. On the set of continuous functions $CC(X,Y)$, consider the compact-open topology (see @fox). Then a filter $F in FF(CC(X,Y))$ converges to a function $f in CC(X,Y)$ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
+  // $
+  //   {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
+  // $
+] <top>
+
+// #prop([see @bb, page 27])[
+//   Let $X$ be a locally compact topological space and let $Y$ be a regular topological space. Then the map
+//   $
+//     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
+//   $
+//   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
+// ] <convcurry>
+
+#prop[
+  Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
+] <haus>
+
+#prop([see @bb, page 29])[
+  Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
+] <cvs>
+
+#cor[
+  If $X$ is a locally compact topological space and $Y$ is a regular topological vector space, then $CC(X,Y)$ is a topological vector space.
+] <cor1>
+
 = Curried functions
 
 #def[
@@ -67,32 +130,6 @@
 ]
 
 = Continuous functions
-
-#prop([see @bb, page 34])[
-  Let $X,Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. On the set of continuous functions $CC(X,Y)$, consider the compact-open topology (see @fox). Then a filter $F in FF(CC(X,Y))$ converges to a function $f in CC(X,Y)$ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
-  $
-    {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
-  $
-  The convergence $F -> f$ so defined is called _continuous convergence._
-] <top>
-
-In what follows, we assume that $X$ is a locally compact topological space and $Y$ is a regular topological space.
-
-#prop([see @bb, page 27])[
-  If $Y$ is locally compact and $Z$ is another regular topological space, then the map
-  $
-    gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
-  $
-  defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
-] <convcurry>
-
-#prop[
-  Let $X$ be a locally compact topological space and let $Y$ be a Hausdorff topological space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff topological space.
-] <haus>
-
-#prop([see @bb, page 29])[
-  Let $X$ be a locally compact space and $Y$ be a regular topological vector space, i.e. a set endowed with both topological and linear structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a topological vector space.
-] <tvs>
 
 #prop[
   Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ (in the sense that its derived filter converges) if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
@@ -116,7 +153,7 @@ In what follows, we assume that $X$ is a locally compact topological space and $
 #def[
   Let $n in NN_0 = {0, 1, 2, ...}$. The _space of curried continuous functions_ $C_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
   - If $n = 0$, we set $C_0 (RR) = RR$.
-  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @tvs ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
+  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @cor1 ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
 
 #prop[
