@@ -57,62 +57,6 @@
   - A function $f : X -> Y$ between topological spaces is continuous iff it preserves convergent filters, i.e. $F -> x in X$ implies $f(F) -> f(x) in Y$.
 ]
 
-#def[
-  One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
-  - For all $x in X$, we have $[x] -> x$;
-  - If $F -> x$ and $G -> x$, then $F inter G -> x$;
-  - If $F -> x$ and $F subset G$, then $G -> x$.
-]
-
-#def[
-  A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
-]
-
-#def[
-  Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
-if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
-  $
-    {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
-  $
-  The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
-] <cxydef>
-
-#prop([see @bb, page 27])[
-  Let $X, Y, Z$ be convergence spaces. Then the map
-  $
-    gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
-  $
-  defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
-] <convcurry>
-
-#prop([see @bb, page 34])[
-  Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology (see @fox). That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
-  // Let $X,Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. On the set of continuous functions $CC(X,Y)$, consider the compact-open topology (see @fox). Then a filter $F in FF(CC(X,Y))$ converges to a function $f in CC(X,Y)$ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
-  // $
-  //   {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
-  // $
-] <top>
-
-// #prop([see @bb, page 27])[
-//   Let $X$ be a locally compact topological space and let $Y$ be a regular topological space. Then the map
-//   $
-//     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
-//   $
-//   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
-// ] <convcurry>
-
-#prop[
-  Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
-] <haus>
-
-#prop([see @bb, page 29])[
-  Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
-] <cvs>
-
-#cor[
-  If $X$ is a locally compact topological space and $Y$ is a regular topological vector space, then $CC(X,Y)$ is a topological vector space.
-] <cor1>
-
 = Curried functions
 
 #def[
@@ -130,6 +74,62 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
 ]
 
 = Continuous functions
+
+#def[
+  One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
+  - For all $x in X$, we have $[x] -> x$;
+  - If $F -> x$ and $G -> x$, then $F inter G -> x$;
+  - If $F -> x$ and $F subset G$, then $G -> x$.
+]
+
+#def[
+  A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
+]
+
+#def[
+  Let $X, Y$ be two convergence spaces. Then the product $X times Y$ is endowed with the following convergence structure: a filter $F in FF(X times Y)$ converges to $(x,y) in X times Y$ if and only if $p_X (F) -> x in X$ and $p_Y (F) -> y in Y$.
+] <cprod>
+
+#def([see @bb, pages 25-26])[
+  Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
+if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
+  $
+    {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
+  $
+  The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
+] <cxydef>
+
+#rem[
+  Continuous convergence on $CC(X,Y)$ is the coarsest convergence structure that makes the _evaluation mapping_
+  $
+    omega : CC(X,Y) times X -> Y
+  $
+  continuous. Here, the product $CC(X,Y) times X$ is endowed with the product convergence structure as per @cprod.
+]
+
+#prop([see @bb, page 27])[
+  Let $X, Y, Z$ be convergence spaces. Then the map
+  $
+    gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
+  $
+  defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
+] <convcurry>
+
+#prop([see @bb, page 34])[
+  Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology (see @fox). That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
+] <top>
+
+#prop([see @bb, page 28])[
+  Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
+] <haus>
+
+#prop([see @bb, page 29])[
+  Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
+] <cvs>
+
+#cor[
+  If $X$ is a locally compact topological space and $Y$ is a regular topological vector space, then $CC(X,Y)$ is a topological vector space.
+] <cor1>
 
 #prop[
   Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ (in the sense that its derived filter converges) if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
@@ -151,7 +151,7 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
 ]
 
 #def[
-  Let $n in NN_0 = {0, 1, 2, ...}$. The _space of curried continuous functions_ $C_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
+  Let $n in NN_0$. The set $C_n (RR)$ of _curried continuous functions_ is a Hausdorff topological vector space defined recursively as follows:
   - If $n = 0$, we set $C_0 (RR) = RR$.
   - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @cor1 ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
@@ -161,7 +161,7 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
   $
     gamma : CC(RR^n, RR) -> C_n (RR)
   $
-  defined by $gamma(f)(t_1)(t_2)...(t_n) = f(t_1, ..., t_n)$, is well-defined and is a homeomorphism.
+  defined by $gamma(f)(x_1)(x_2)...(x_n) = f(x_1, ..., x_n)$, is well-defined and is a homeomorphism.
 ]
 #pf[
   If $n = 0$, the statement is trivial. Assume it is proven for $C_n (RR)$. By @convcurry, we have
@@ -174,45 +174,105 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
 = Differentiable functions
 
 #def[
-  Let $n in NN_0$. The _space of curried differentiable functions_ $D_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
-  - If $n = 0$, we set $D_0 (RR) = C_0 (RR) = RR$.
-  - If the space $D_n (RR)$ is defined, we define $D_(n+1) (RR)$ as the subspace of $CC(RR, D_n (RR))$ consisting of such functions $f : RR -> D_n (RR)$, that there is $f' in C_(n+1)(RR)$ which satisfies
+  Let $n in NN$.
+  A curried function $f in H_n (RR)$ is called _differentiable_ at $(x_1, x_2, ..., x_n) in RR^n$ if
+  - $f(x_1) in H_(n-1)(RR)$ is differentiable at $(x_2, ..., x_n) in RR^(n-1)$, if $n >= 2$;
+  - There exists an element $f'(x_1) in H_(n-1)(RR)$ such that
     $
-      f(x_0 + h) = f(x_0) + h dot f'(x_0) + o(h) in C_n (RR)
+      f(x_1 + h) = f(x_1) + h dot f'(x_1) + o(h),
     $
-    for all $x_0 in RR$.
+    where $o(h) in H_(n-1)(RR)$ is a function such that $o(h)/h -> 0$ as $h -> 0$. Equivalently, we may write
+    $
+      f'(x_1) = lim_(h -> 0) (f(x_1 + h) - f(x_1))/h.
+    $
 ]
 
 #prop[
-  Let $n in NN_0$. Then the map
-  $
-    gamma : C^1 (RR^n) -> D_n (RR)
-  $
-  is well-defined and a homeomorphism. In particular, a function $f in C_n (RR)$ lies in $D_n (RR)$ if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ has continuous partial derivatives.
-]
+  A curried function $f in H_n (RR)$ is differentiable at $(x_1, x_2, ..., x_n) in RR^n$ if and only if $tilde(f) = gamma^(-1)(f)$ has all partial derivatives at $(x_1, x_2, ..., x_n) in RR^n$.
+] <diff>
 #pf[
-  First let us show that $gamma$ is well-defined and bijective. 
+  We prove by induction over $n$. If $n = 1$, the statement is trivial, so assume $n >= 2$ and the statement proven for $1, 2, ..., n-1$.\
+  Suppose that $f in H_n$ is differentiable. Then for each $i >= 2$, we have
+  $
+    (partial tilde(f))/(partial x_i) (x_1, x_2, ..., x_n) &= lim_(h -> 0) (tilde(f)(x_1, ..., x_(i-1), x_i + h, x_(i+1), ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
+    &= (partial gamma^(-1)(f(x_1)(x_2)...(x_(i-1))))/(partial x_i)(x_i, x_(i+1), ..., x_n),
+  $ <down>
+  which exists by the induction hypothesis, since $f(x_1)...(x_i) in H_(n-i) (RR)$ is differentiable.\
+  It remains to show that $(partial tilde(f))/(partial x_1)$ exists. But by the definition of $f'(x_1)$, we have
+  $
+    f'(x_1) = lim_(h -> 0) (f(x_1 + h) - f(x_1))/h.
+  $ <fp>
+  Since the limit is taken in $H_n (RR)$, by applying (@fp) to $x_2, x_3, ..., x_n$, we get
+  $
+    (partial tilde(f))/(partial x_1)(x_1, x_2, ..., x_n) = f'(x_1)(x_2)...(x_n).
+  $
+  Now suppose that $tilde(f) : RR^n -> RR$ has all partial derivatives at $(x_1, ..., x_n)$. By (@down), we see that $tilde(f(x_1)) : RR^(n-1) -> RR$ has all partial derivatives at $(x_2, x_3, ..., x_n)$, and so by the induction hypothesis $f(x_1)$ is differentiable. Finally, we set $f'(x_1) := gamma((partial tilde(f))/(partial x_1))(x_1)$, and easily see that (@fp) holds for $f'(x_1)$ so defined. Therefore $f$ is differentiable.
 ]
 
 #def[
-  Fix $n in NN_0$. For all $m in NN$, the _space of curried $m$ times differentiable functions_ $D_n^m (RR)$ is defined recursively as follows:
-  - If $m = 1$, we set $D_n^1 (RR) = D_n (RR)$.
-  - If $D_n^m (RR)$ is defined, we set $D_n^(m+1)(RR)$ to be the space of all functions $f in D_n (RR)$ such that $f' in D_n^m (RR)$.
-  Trivially, for all $n in NN_0$, we have
-  $
-    D_n^1 (RR) supset D_n^2 (RR) supset D_n^3 (RR) supset ... 
-  $
+  A curried function $f in H_n (RR)$ is called _continuously differentiable_ if $f$ is differentiable everywhere, and the maps $f', x |-> f(x)'$ are continuous.
 ]
 
 #prop[
-  Let $n,m in NN$. Then a function $f in C_n (RR)$ lies in the differentiability class $D_n^m (RR)$ if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ lies in the class $C^m (RR)$.
+  If $f in H_n (RR)$ is continuously differentiable, then $f$ is continuous.
 ]
 
 #prop[
-  Let $n, m in NN$, and $f in D_n^m (RR)$. Then for all $x in RR$, we have $f(x) in D_(n-1)^m (RR)$.
+  A curried function $f in H_n (RR)$ is continuously differentiable if and only if $tilde(f) = gamma^(-1)(f)$ has continuous partial derivatives everywhere on $RR^n$.
 ]
 #pf[
-  ...
+  The base case $n = 1$ is trivial, so assume the statement proven for $1, 2, ..., n-1$. We again follow two steps.\
+  First suppose that $f in H_n (RR)$ is continuously differentiable. By @diff we see that $tilde(f)$ has partial derivatives everywhere on $RR^n$, so it remains to show these derivatives are continuous. With respect to $x_1$, we have
+  $
+    (partial tilde(f))/(partial x_1) = gamma^(-1)(f')
+  $
+  which is continuous since $f'$ is continuous. To show the continuity of $(partial tilde(f))/(partial x_2)$, consider a sequence $x^((k)) = (x_1^((k)), x_2^((k)), ..., x_n^((k))) in RR^n$, converging to a point $x = (x_1, ..., x_n)$. By the continuity of the map $t |-> f(t)'$, we have $f(x_1^((k)))' -> f(x_1)'$ in $C_(n-1)(RR)$, which implies
+  $
+    (partial tilde(f))/(partial x_2) (x_1^((k)), x_2^((k)), ..., x_n^((k))) = f(x_1^((k)))'(x_2^((k)))...(x_n^((k))) st(k -> oo) f(x_1)'(x_2)...(x_n) = (partial tilde(f))/(partial x_2)(x_1, ..., x_n),
+  $
+  so $(partial tilde(f))/(partial x_2)$ is continuous.
 ]
+
+// #def[
+//   Let $n in NN_0$. The _space of curried differentiable functions_ $D_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
+//   - If $n = 0$, we set $D_0 (RR) = C_0 (RR) = RR$.
+//   - If the space $D_n (RR)$ is defined, we define $D_(n+1) (RR)$ as the subspace of $CC(RR, D_n (RR))$ consisting of such functions $f : RR -> D_n (RR)$, that there is $f' in C_(n+1)(RR)$ which satisfies
+//     $
+//       f(x_0 + h) = f(x_0) + h dot f'(x_0) + o(h) in C_n (RR)
+//     $
+//     for all $x_0 in RR$.
+// ]
+//
+// #prop[
+//   Let $n in NN_0$. Then the map
+//   $
+//     gamma : C^1 (RR^n) -> D_n (RR)
+//   $
+//   is well-defined and a homeomorphism. In particular, a function $f in C_n (RR)$ lies in $D_n (RR)$ if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ has continuous partial derivatives.
+// ]
+// #pf[
+//   First let us show that $gamma$ is well-defined and bijective. 
+// ]
+//
+// #def[
+//   Fix $n in NN_0$. For all $m in NN$, the _space of curried $m$ times differentiable functions_ $D_n^m (RR)$ is defined recursively as follows:
+//   - If $m = 1$, we set $D_n^1 (RR) = D_n (RR)$.
+//   - If $D_n^m (RR)$ is defined, we set $D_n^(m+1)(RR)$ to be the space of all functions $f in D_n (RR)$ such that $f' in D_n^m (RR)$.
+//   Trivially, for all $n in NN_0$, we have
+//   $
+//     D_n^1 (RR) supset D_n^2 (RR) supset D_n^3 (RR) supset ... 
+//   $
+// ]
+//
+// #prop[
+//   Let $n,m in NN$. Then a function $f in C_n (RR)$ lies in the differentiability class $D_n^m (RR)$ if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ lies in the class $C^m (RR)$.
+// ]
+//
+// #prop[
+//   Let $n, m in NN$, and $f in D_n^m (RR)$. Then for all $x in RR$, we have $f(x) in D_(n-1)^m (RR)$.
+// ]
+// #pf[
+//   ...
+// ]
 
 #bibliography("bibliography.yml")
