@@ -177,61 +177,80 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
   Let $n in NN$.
   A curried function $f in H_n (RR)$ is called _differentiable_ at $(x_1, x_2, ..., x_n) in RR^n$ if
   - $f(x_1) in H_(n-1)(RR)$ is differentiable at $(x_2, ..., x_n) in RR^(n-1)$, if $n >= 2$;
-  - There exists an element $f'(x_1) in H_(n-1)(RR)$ such that
+  - There exists a continuous function $f'(x_1) in C_(n-1)(RR)$ such that
     $
       f(x_1 + h) = f(x_1) + h dot f'(x_1) + o(h),
     $
-    where $o(h) in H_(n-1)(RR)$ is a function such that $o(h)/h -> 0$ as $h -> 0$. Equivalently, we may write
+    where $o(h) in C_(n-1)(RR)$ is a function such that $o(h)/h -> 0$ as $h -> 0$. Equivalently, we may write
     $
       f'(x_1) = lim_(h -> 0) (f(x_1 + h) - f(x_1))/h.
     $
 ]
 
 #prop[
-  A curried function $f in H_n (RR)$ is differentiable at $(x_1, x_2, ..., x_n) in RR^n$ if and only if $tilde(f) = gamma^(-1)(f)$ has all partial derivatives at $(x_1, x_2, ..., x_n) in RR^n$.
-] <diff>
-#pf[
-  We prove by induction over $n$. If $n = 1$, the statement is trivial, so assume $n >= 2$ and the statement proven for $1, 2, ..., n-1$.\
-  Suppose that $f in H_n$ is differentiable. Then for each $i >= 2$, we have
-  $
-    (partial tilde(f))/(partial x_i) (x_1, x_2, ..., x_n) &= lim_(h -> 0) (tilde(f)(x_1, ..., x_(i-1), x_i + h, x_(i+1), ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
-    &= (partial gamma^(-1)(f(x_1)(x_2)...(x_(i-1))))/(partial x_i)(x_i, x_(i+1), ..., x_n),
-  $ <down>
-  which exists by the induction hypothesis, since $f(x_1)...(x_i) in H_(n-i) (RR)$ is differentiable.\
-  It remains to show that $(partial tilde(f))/(partial x_1)$ exists. But by the definition of $f'(x_1)$, we have
-  $
-    f'(x_1) = lim_(h -> 0) (f(x_1 + h) - f(x_1))/h.
-  $ <fp>
-  Since the limit is taken in $H_n (RR)$, by applying (@fp) to $x_2, x_3, ..., x_n$, we get
-  $
-    (partial tilde(f))/(partial x_1)(x_1, x_2, ..., x_n) = f'(x_1)(x_2)...(x_n).
-  $
-  Now suppose that $tilde(f) : RR^n -> RR$ has all partial derivatives at $(x_1, ..., x_n)$. By (@down), we see that $tilde(f(x_1)) : RR^(n-1) -> RR$ has all partial derivatives at $(x_2, x_3, ..., x_n)$, and so by the induction hypothesis $f(x_1)$ is differentiable. Finally, we set $f'(x_1) := gamma((partial tilde(f))/(partial x_1))(x_1)$, and easily see that (@fp) holds for $f'(x_1)$ so defined. Therefore $f$ is differentiable.
+  If $f in H_n (RR)$ is differentiable everywhere, then $f$ is continuous.
 ]
-
-#def[
-  A curried function $f in H_n (RR)$ is called _continuously differentiable_ if $f$ is differentiable everywhere, and the maps $f', x |-> f(x)'$ are continuous.
+#pf[
+  If $n = 1$, then $f : RR -> RR$ is differentiable in the usual sense, and so $f$ is continuous.\
+  Suppose that the statement is proven for $n-1$, and consider a differentiable function $f in H_n (RR)$. First of all, for all $x in RR$ we know that $f(x) in H_(n-1)(RR)$ is differentiable, and hence continuous. It remains to show that $f$ is a continuous map from $R -> C_(n-1)(RR)$. Let $x_k -> x_0 in RR$. Then, letting $h_k = x_k = x_0$, we can write
+  $
+    f(x_k) = f(x_0 + h_k) = f(x_0) + h_k dot f'(x_0) + o(h_k),
+  $
+  where $o(h_k) in C_(n-1)(RR)$ is such that $o(h_k)\/h_k st(k -> oo) 0$. Since $f'(x_0)$ is continuous, we have
+  $
+    h_k dot f'(x_0) + o(h_k) st(k -> oo) 0 in C_(n-1)(RR),
+  $
+  so $f(x_k) -> f(x_0)$, which means that $f$ is continuous.
 ]
 
 #prop[
-  If $f in H_n (RR)$ is continuously differentiable, then $f$ is continuous.
-]
-
-#prop[
-  A curried function $f in H_n (RR)$ is continuously differentiable if and only if $tilde(f) = gamma^(-1)(f)$ has continuous partial derivatives everywhere on $RR^n$.
+  A curried function $f in H_n (RR)$ is differentiable at $(x_1, ..., x_n)$ if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ is differentiable at $(x_1, ..., x_n)$.
 ]
 #pf[
-  The base case $n = 1$ is trivial, so assume the statement proven for $1, 2, ..., n-1$. We again follow two steps.\
-  First suppose that $f in H_n (RR)$ is continuously differentiable. By @diff we see that $tilde(f)$ has partial derivatives everywhere on $RR^n$, so it remains to show these derivatives are continuous. With respect to $x_1$, we have
-  $
-    (partial tilde(f))/(partial x_1) = gamma^(-1)(f')
-  $
-  which is continuous since $f'$ is continuous. To show the continuity of $(partial tilde(f))/(partial x_2)$, consider a sequence $x^((k)) = (x_1^((k)), x_2^((k)), ..., x_n^((k))) in RR^n$, converging to a point $x = (x_1, ..., x_n)$. By the continuity of the map $t |-> f(t)'$, we have $f(x_1^((k)))' -> f(x_1)'$ in $C_(n-1)(RR)$, which implies
-  $
-    (partial tilde(f))/(partial x_2) (x_1^((k)), x_2^((k)), ..., x_n^((k))) = f(x_1^((k)))'(x_2^((k)))...(x_n^((k))) st(k -> oo) f(x_1)'(x_2)...(x_n) = (partial tilde(f))/(partial x_2)(x_1, ..., x_n),
-  $
-  so $(partial tilde(f))/(partial x_2)$ is continuous.
+
 ]
+
+// #prop[
+//   A curried function $f in H_n (RR)$ is differentiable at $(x_1, x_2, ..., x_n) in RR^n$ if and only if $tilde(f) = gamma^(-1)(f)$ has all partial derivatives at $(x_1, x_2, ..., x_n) in RR^n$.
+// ] <diff>
+// #pf[
+//   We prove by induction over $n$. If $n = 1$, the statement is trivial, so assume $n >= 2$ and the statement proven for $1, 2, ..., n-1$.\
+//   Suppose that $f in H_n$ is differentiable. Then for each $i >= 2$, we have
+//   $
+//     (partial tilde(f))/(partial x_i) (x_1, x_2, ..., x_n) &= lim_(h -> 0) (tilde(f)(x_1, ..., x_(i-1), x_i + h, x_(i+1), ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
+//     &= (partial gamma^(-1)(f(x_1)(x_2)...(x_(i-1))))/(partial x_i)(x_i, x_(i+1), ..., x_n),
+//   $ <down>
+//   which exists by the induction hypothesis, since $f(x_1)...(x_i) in H_(n-i) (RR)$ is differentiable.\
+//   It remains to show that $(partial tilde(f))/(partial x_1)$ exists. But by the definition of $f'(x_1)$, we have
+//   $
+//     f'(x_1) = lim_(h -> 0) (f(x_1 + h) - f(x_1))/h.
+//   $ <fp>
+//   Since the limit is taken in $H_n (RR)$, by applying (@fp) to $x_2, x_3, ..., x_n$, we get
+//   $
+//     (partial tilde(f))/(partial x_1)(x_1, x_2, ..., x_n) = f'(x_1)(x_2)...(x_n).
+//   $
+//   Now suppose that $tilde(f) : RR^n -> RR$ has all partial derivatives at $(x_1, ..., x_n)$. By (@down), we see that $tilde(f(x_1)) : RR^(n-1) -> RR$ has all partial derivatives at $(x_2, x_3, ..., x_n)$, and so by the induction hypothesis $f(x_1)$ is differentiable. Finally, we set $f'(x_1) := gamma((partial tilde(f))/(partial x_1))(x_1)$, and easily see that (@fp) holds for $f'(x_1)$ so defined. Therefore $f$ is differentiable.
+// ]
+
+// #def[
+//   A curried function $f in H_n (RR)$ is called _continuously differentiable_ if $f$ is differentiable everywhere, and the maps $f', x |-> f(x)'$ are continuous.
+// ]
+
+// #prop[
+//   A curried function $f in H_n (RR)$ is continuously differentiable if and only if $tilde(f) = gamma^(-1)(f)$ has continuous partial derivatives everywhere on $RR^n$.
+// ]
+// #pf[
+//   The base case $n = 1$ is trivial, so assume the statement proven for $1, 2, ..., n-1$. We again follow two steps.\
+//   First suppose that $f in H_n (RR)$ is continuously differentiable. By @diff we see that $tilde(f)$ has partial derivatives everywhere on $RR^n$, so it remains to show these derivatives are continuous. With respect to $x_1$, we have
+//   $
+//     (partial tilde(f))/(partial x_1) = gamma^(-1)(f')
+//   $
+//   which is continuous since $f'$ is continuous. To show the continuity of $(partial tilde(f))/(partial x_2)$, consider a sequence $x^((k)) = (x_1^((k)), x_2^((k)), ..., x_n^((k))) in RR^n$, converging to a point $x = (x_1, ..., x_n)$. By the continuity of the map $t |-> f(t)'$, we have $f(x_1^((k)))' -> f(x_1)'$ in $C_(n-1)(RR)$, which implies
+//   $
+//     (partial tilde(f))/(partial x_2) (x_1^((k)), x_2^((k)), ..., x_n^((k))) = f(x_1^((k)))'(x_2^((k)))...(x_n^((k))) st(k -> oo) f(x_1)'(x_2)...(x_n) = (partial tilde(f))/(partial x_2)(x_1, ..., x_n),
+//   $
+//   so $(partial tilde(f))/(partial x_2)$ is continuous.
+// ]
 
 // #def[
 //   Let $n in NN_0$. The _space of curried differentiable functions_ $D_n (RR)$ is a Hausdorff topological vector space defined recursively as follows:
