@@ -209,22 +209,6 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
 ]
 
 #prop[
-  If $f in H_n (RR)$ is differentiable, then $f$ is continuous.
-]
-#pf[
-  If $n = 1$, then $f : RR -> RR$ is differentiable in the usual sense, and so $f$ is continuous.\
-  Suppose that the statement is proven for $n-1$, and consider a differentiable function $f in H_n (RR)$. First of all, for all $x in RR$ we know that $f(x) in H_(n-1)(RR)$ is differentiable, and hence continuous. It remains to show that $f$ is a continuous map from $RR -> C_(n-1)(RR)$. Let $x_k -> x_0 in RR$. Then, letting $h_k = x_k - x_0$, we can write
-  $
-    f(x_k) = f(x_0 + h_k) = f(x_0) + h_k dot f'(x_0) + r(h_k),
-  $
-  where $r(h_k) in C_(n-1)(RR)$ are such that $r(h_k)\/h_k st(k -> oo) 0$. Since $f'(x_0)$ is continuous, we have
-  $
-    h_k dot f'(x_0) + r(h_k) st(k -> oo) 0 in C_(n-1)(RR),
-  $
-  so $f(x_k) -> f(x_0)$, which means that $f$ is continuous.
-]
-
-#prop[
   Let $n in NN$. Then a curried function $f in H_n (RR)$ is differentiable if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.
 ]
 #pf[
@@ -298,7 +282,46 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
   $
   where $L : RR^n -> RR$ is linear since it has the form $L(h) = sum_(k = 1)^n c_k h_k$. This allows us to conclude that $tilde(f)$ is differentiable at $x$.\
 
-  To show the reverse implication, we conduct an induction over $n$. If $n = 1$ and $f in H_1 (RR)$, its differentiability is clearly equivalent to the usual definition. Assume that the implication holds for $n-1$, and consider a function $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.
+  To show the reverse implication, we conduct an induction over $n$. If $n = 1$ and $f in H_1 (RR)$, its differentiability is clearly equivalent to the usual definition. Assume that the implication holds for $n-1$, and consider a function $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.\
+  Let $x_1 in RR$. First of all, since a restriction of a differentiable function is differentiable, we see that the function
+  $
+    f(x_1) = gamma((x_2, ..., x_n) |-> tilde(f)(x_1, x_2, ..., x_n)) in H_(n-1)(RR)
+  $
+  is differentiable by the induction hypothesis. It then remains to show that there is $f'(x_1) in C_(n-1)(RR)$ and $r_1 (h_1) in C_(n-1)(RR)$ for all $h_1 in RR$ such that $r_1 (h_1)\/h_1 st(h_1 -> 0) 0$ and
+  $
+    f(x_1 + h_1) = f(x_1) + h_1 dot f'(x_1) + r_1 (h_1).
+  $
+  Being differentiable, $tilde(f)$ has partial derivatives everywhere, and so we can define
+  $
+    f'(x_1) = gamma((partial tilde(f))/(partial x_1))(x_1) in H_(n-1) (RR).
+  $
+  For variable $y_2, y_3, ..., y_n in RR$ and $h_1 in RR$, we have
+  $
+    tilde(f)(x_1 + h_1, y_2, ..., y_n) &= tilde(f)(x_1, y_2, ..., y_n) + (d_((x_1, y_2, ..., y_n)) tilde(f))(h_1, 0, ..., 0) + r (h_1, y_2, ..., y_n)\
+    &= f(x_1)(y_2)...(y_n) + h_1 dot f'(x_1)(y_2)...(y_n) + r (h_1, y_2, ..., y_n),
+  $
+  where $r(h_1, y_2, ..., y_n) = o(h_1)$. We then define $r_1 (h_1) = gamma(r)(h_1)$. Hence, by abstracting over $y_2, ..., y_n$, we obtain
+  $
+    f(x_1 + h_1) = f(x_1) + h_1 dot f'(x_1) + r_1 (h_1).
+  $
+  It remains to show that $f'(x_1)$ and $r_1 (h_1)$ are continuous and that $r_1 (h_1)\/h_1 -> 0$ as $h_1 -> 0$.
+]
+
+#prop[
+  If $f in H_n (RR)$ is differentiable, then $f$ is continuous.
+]
+#pf[
+  // If $n = 1$, then $f : RR -> RR$ is differentiable in the usual sense, and so $f$ is continuous.\
+  // Suppose that the statement is proven for $n-1$, and consider a differentiable function $f in H_n (RR)$. First of all, for all $x in RR$ we know that $f(x) in H_(n-1)(RR)$ is differentiable, and hence continuous. It remains to show that $f$ is a continuous map from $RR -> C_(n-1)(RR)$. Let $x_k -> x_0 in RR$. Then, letting $h_k = x_k - x_0$, we can write
+  // $
+  //   f(x_k) = f(x_0 + h_k) = f(x_0) + h_k dot f'(x_0) + r(h_k),
+  // $
+  // where $r(h_k) in C_(n-1)(RR)$ are such that $r(h_k)\/h_k st(k -> oo) 0$. Since $f'(x_0)$ is continuous, we have
+  // $
+  //   h_k dot f'(x_0) + r(h_k) st(k -> oo) 0 in C_(n-1)(RR),
+  // $
+  // so $f(x_k) -> f(x_0)$, which means that $f$ is continuous.
+  If $f$ is differentiable, then $tilde(f) : RR^n -> RR$ is differentiable, then $tilde(f)$ is continuous, then $f$ is continuous.
 ]
 
 // #prop[
