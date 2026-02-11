@@ -156,6 +156,27 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
   - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @cor1 ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
 
+#exam[
+  The topology on $C_n (RR)$ does not coincide with the topology induced from $H_n (RR)$, unless $n = 0$. To see this, take $n = 1$ and consider the classical function
+  $
+    phi (x) = cases(
+      exp(1/(abs(x)^2 - 1))\, #h(10pt)& abs(x) < 1,
+      0\, & abs(x) >= 1.
+    )
+  $
+  This is a $C^oo (RR)$ function supported on $[-1,1]$. Its graph looks as follows:
+  #figure(
+    image("./figures/bump.pdf")
+  )
+  Now consider the following sequence of functions:
+  $
+    f_k (x) = e dot phi(k dot (x - 1/k)).
+  $
+  Clearly, $f_k$ is infinitely differentiable on $RR$, supported on $[0,2\/k]$, and has a maximum at $x = 1\/k$ with $f_k (1\/k) = 1$. It is clear that for all $x in RR$, we have $f_k (x) st(k -> oo) 0$, so $f_k -> 0$ in the topology induced from $H_1 (RR)$. However, $f_k$ do not converge to $0$ in the native topology of $C_1 (RR)$. To see this, take $x_k = 1\/k$ and observe that $f_k (x_k) equiv 1 != 0$.\
+
+  A similar argument applies for any other $n >= 2$. Hence we conclude that $C_n (RR)$ is not a subspace of $H_n (RR)$.
+]
+
 #prop[
   Let $n in NN_0$. Then the map
   $
@@ -175,39 +196,109 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
 
 #def[
   Let $n in NN$.
-  A curried function $f in H_n (RR)$ is called _differentiable_ at $(x_1, x_2, ..., x_n) in RR^n$ if
-  - $f(x_1) in H_(n-1)(RR)$ is differentiable at $(x_2, ..., x_n) in RR^(n-1)$, if $n >= 2$;
-  - There exists a continuous function $f'(x_1) in C_(n-1)(RR)$ such that
+  A curried function $f in H_n (RR)$ is called _differentiable_ if for all $x_0 in RR$ we have
+  - $f(x_0) in H_(n-1)(RR)$ is differentiable, if $n >= 2$;
+  - There exists a continuous function $f'(x_0) in C_(n-1)(RR)$ such that
     $
-      f(x_1 + h) = f(x_1) + h dot f'(x_1) + o(h),
+      f(x_0 + h) = f(x_0) + h dot f'(x_0) + r(h),
     $
-    where $o(h) in C_(n-1)(RR)$ is a function such that $o(h)/h -> 0$ as $h -> 0$. Equivalently, we may write
+    where $r(h) in C_(n-1)(RR)$ is a function such that $r(h)\/h -> 0$ in $C_(n-1) (RR)$ as $h -> 0$. Equivalently, we may write
     $
-      f'(x_1) = lim_(h -> 0) (f(x_1 + h) - f(x_1))/h.
+      f'(x_0) = lim_(h -> 0) (f(x_0 + h) - f(x_0))/h in C_(n-1)(RR).
     $
 ]
 
 #prop[
-  If $f in H_n (RR)$ is differentiable everywhere, then $f$ is continuous.
+  If $f in H_n (RR)$ is differentiable, then $f$ is continuous.
 ]
 #pf[
   If $n = 1$, then $f : RR -> RR$ is differentiable in the usual sense, and so $f$ is continuous.\
-  Suppose that the statement is proven for $n-1$, and consider a differentiable function $f in H_n (RR)$. First of all, for all $x in RR$ we know that $f(x) in H_(n-1)(RR)$ is differentiable, and hence continuous. It remains to show that $f$ is a continuous map from $R -> C_(n-1)(RR)$. Let $x_k -> x_0 in RR$. Then, letting $h_k = x_k = x_0$, we can write
+  Suppose that the statement is proven for $n-1$, and consider a differentiable function $f in H_n (RR)$. First of all, for all $x in RR$ we know that $f(x) in H_(n-1)(RR)$ is differentiable, and hence continuous. It remains to show that $f$ is a continuous map from $RR -> C_(n-1)(RR)$. Let $x_k -> x_0 in RR$. Then, letting $h_k = x_k - x_0$, we can write
   $
-    f(x_k) = f(x_0 + h_k) = f(x_0) + h_k dot f'(x_0) + o(h_k),
+    f(x_k) = f(x_0 + h_k) = f(x_0) + h_k dot f'(x_0) + r(h_k),
   $
-  where $o(h_k) in C_(n-1)(RR)$ is such that $o(h_k)\/h_k st(k -> oo) 0$. Since $f'(x_0)$ is continuous, we have
+  where $r(h_k) in C_(n-1)(RR)$ are such that $r(h_k)\/h_k st(k -> oo) 0$. Since $f'(x_0)$ is continuous, we have
   $
-    h_k dot f'(x_0) + o(h_k) st(k -> oo) 0 in C_(n-1)(RR),
+    h_k dot f'(x_0) + r(h_k) st(k -> oo) 0 in C_(n-1)(RR),
   $
   so $f(x_k) -> f(x_0)$, which means that $f$ is continuous.
 ]
 
 #prop[
-  A curried function $f in H_n (RR)$ is differentiable at $(x_1, ..., x_n)$ if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ is differentiable at $(x_1, ..., x_n)$.
+  Let $n in NN$. Then a curried function $f in H_n (RR)$ is differentiable if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.
 ]
 #pf[
+  #let hh = h(3pt)
+  First, consider a differentiable function $f in H_n (RR)$. We aim to show that $tilde(f) : RR^n -> RR$ is differentiable everywhere. Fix a point $x = (x_1, x_2, ..., x_n) in RR^n$ and consider a vector $h = (h_1, h_2, ..., h_n) in RR^n$. By the differentiability of $f,#hh f(x_1),#hh f(x_1)(x_2)$ and so on, we may repeatedly expand
+  $
+    f(x_1 + h_1) = &f(x_1) + h_1 dot f'(x_1) + r_1 (h_1),\
+    f(x_1 + h_1)(x_2 + h_2) = &f(x_1)(x_2 + h_2) + h_1 dot f'(x_1)(x_2 + h_2) + r_1 (h_1)(x_2 + h_2)\
+    = &f(x_1)(x_2)\
+    &op(+) h_1 dot f'(x_1)(x_2 + h_2) + h_2 dot f(x_1)'(x_2)\
+    &op(+) r_1 (h_1)(x_2 + h_2) + r_2 (h_2),\
+    // = &f(x_1)(x_2) + h_1 dot f'(x_1)(x_2 + h_2) + h_2 dot f(x_1)'(x_2) + o(abs((h_1, h_2))).\
+  $
+  where $r_1 (h_1) in C_(n-1)(RR)$ and $r_2 (h_2) in C_(n-2)(RR)$.
+  // $
+  //   abs(o(h_1)(x_2 + h_2))/abs((h_1,h_2)) <= abs(o(h_1)/h_1 (x_2 + h_2)) -> 0.
+  // $
+  We continue the expansion until we obtain
+  $
+    &f(x_1 + h_1)(x_2 + h_2)...(x_n + h_n)\
+    &= f(x_1)(x_2)...(x_n)\
+    &cases(
+      reverse: #true,
+      delim: "[",
+      op(+) h_1 dot f'(x_1)(x_2 + h_2)...(x_n + h_n),
+      op(+) h_2 dot f(x_1)'(x_2)(x_3 + h_3)...(x_n + h_n),
+      op(+) h_3 dot f(x_1)(x_2)'(x_3)(x_4 + h_4)...(x_n + h_n)#hh,
+      #h(3pt) dots.v,
+      op(+) h_n dot f(x_1)(x_2)...(x_(n-1))'(x_n),
+    ) #hh (A)\
+    &cases(
+      delim: "[",
+      reverse: #true,
+      op(+) r_1 (h_1)(x_2 + h_2)(x_3 + h_3)...(x_n + h_n)#hh,
+      op(+) r_2 (h_2)(x_3 + h_3)...(x_n + h_n),
+      #h(3pt) dots.v,
+      op(+) r_(n-1) (h_(n-1))(x_n + h_n),
+      op(+) r_n (h_n).,
+    ) (B)\
+  $
+  Observe that all functions $f'(x_1),#hh f(x_1)'(x_2),#hh f(x_1)(x_2)'(x_3)$ that occur in $(A)$, are continuous by the definition of differentiability, and so when $h -> 0$, we have for instance
+  $
+    f'(x_1)(x_2 + h_2)...(x_n - h_n) - f'(x_1)(x_2)...(x_n) -> 0.
+  $
+  This implies that
+  $
+    &h_1 dot (f'(x_1)(x_2 + h_2)...(x_n - h_n) - f'(x_1)(x_2)...(x_n)) = o(abs(h)),\
+    &h_2 dot (f(x_1)'(x_2)(x_3 + h_3)...(x_n - h_n) - f(x_1)'(x_2)...(x_n)) = o(abs(h)),\
+    &#h(3pt)dots.v\
+    &h_n dot (f(x_1)...(x_(n-1))'(x_n) - f(x_1)...(x_(n-1))'(x_n)) = o(abs(h)).
+  $
+  Now, consider the convergence $r_1 (h_1)\/h_1 st(h_1 -> 0) 0$. This convergence occurs in the space $C_(n-1)(RR)$, which means that as $h -> 0$, we have $h_i -> 0$ for all $1 <= i <= n$ and
+  $
+    abs((r_1 (h_1)(x_2 + h_2)...(x_n + h_n))/(abs(h))) <= abs((r_1 (h_1))/h_1 (x_2 + h_2)...(x_n + h_n)) st(#h(5pt) h_1\, h_2\, ...\, h_n -> 0 #h(5pt)) 0.
+  $
+  In other words, we see that $r_1 (h_1)(x_2 + h_2)...(x_n + h_n) = o(abs(h))$, and similarly all remaining terms in $(B)$ are $o(abs(h))$. Finally, combining these observations yields
+  $
+    tilde(f)(x + h) = &f(x_1 + h_1)(x_2 + h_2)...(x_n + h_n)\
+    = &f(x_1)(x_2)...(x_n)\
+    &cases(
+      reverse: #true,
+      delim: "[",
+      op(+) h_1 dot f'(x_1)...(x_n),
+      op(+) h_2 dot f(x_1)'(x_2)...(x_n),
+      op(+) h_3 dot f(x_1)(x_2)'(x_3)...(x_n)#hh,
+      #h(3pt) dots.v,
+      op(+) h_n dot f(x_1)...(x_(n-1))'(x_n),
+    ) #hh L(h)\
+    &op(+) o(abs(h))\
+    = &tilde(f)(x) + L(h) + o(abs(h)),
+  $
+  where $L : RR^n -> RR$ is linear since it has the form $L(h) = sum_(k = 1)^n c_k h_k$. This allows us to conclude that $tilde(f)$ is differentiable at $x$.\
 
+  To show the reverse implication, we conduct an induction over $n$. If $n = 1$ and $f in H_1 (RR)$, its differentiability is clearly equivalent to the usual definition.
 ]
 
 // #prop[
