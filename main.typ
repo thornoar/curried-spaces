@@ -298,7 +298,7 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
   $
   where $L : RR^n -> RR$ is linear since it has the form $L(h) = sum_(k = 1)^n c_k h_k$. This allows us to conclude that $tilde(f)$ is differentiable at $x$.\
 
-  To show the reverse implication, we conduct an induction over $n$. If $n = 1$ and $f in H_1 (RR)$, its differentiability is clearly equivalent to the usual definition.
+  To show the reverse implication, we conduct an induction over $n$. If $n = 1$ and $f in H_1 (RR)$, its differentiability is clearly equivalent to the usual definition. Assume that the implication holds for $n-1$, and consider a function $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.
 ]
 
 // #prop[
