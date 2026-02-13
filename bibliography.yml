@@ -14,6 +14,13 @@ bou:
     page-total: 415
     date: 1966
 
+bou2:
+    type: Book
+    title: General Topology, Part II
+    author: Bourbaki, Nicolas
+    page-total: 367
+    date: 1966
+
 bb:
     type: Book
     title: Convergence Structures and Applications to Functional Analysis
@@ -23,9 +30,9 @@ bb:
     page-total: 271
     date: 2002
 
-fox:
-    type: Article
-    title: On Topologies For Function Spaces
-    author: Fox, Ralph H.
-    page-total: 4
-    date: 1945
+# fox:
+#     type: Article
+#     title: On Topologies For Function Spaces
+#     author: Fox, Ralph H.
+#     page-total: 4
+#     date: 1945

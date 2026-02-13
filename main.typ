@@ -68,13 +68,44 @@
 
 = Continuous functions
 
-#def("compact-open topology")[
+#def([pointwise convergence topology, see @bou2])[
+  Let $X$ be a set, $Y$ a topological space, and denote by $SS(X,Y)$ the set of functions from $X$ to $Y$. For each $x in X$ and each open set $U subset Y$, let $V(x, U)$ be the set of all functions $f in SS(X,Y)$ such that $f(x) in U$. The collection
+  $
+    {V(x,U) mid(|) x in X, U subset Y}
+  $
+  forms a subbase of a topology on $SS(X,Y)$, called the _topology of pointwise convergence._
+]
+
+#rem[
+  Let $X$ be a set and $Y$ a topological space. It is not hard to see that a filter $F in FF(SS(X,Y))$ converges to a function $f in SS(X,Y)$ if and only if, for any $x in X$, the filter $F(x) = [{A(x) mid(|) A in F}]$ converges to $f(x) in Y$.
+]
+
+#def([compact-open topology, see @bou2])[
   Let $X$ and $Y$ be two topological spaces, and by $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. For each compact set $K subset X$ and each open set $U subset Y$, let $V(K,U)$ be the set of all functions $f in CC(X,Y)$ such that $f(K) subset U$. The collection
   $
   {V(K,U) mid(|) K subset X, U subset Y}
   $
   forms a subbase of a topology on $CC(X,Y)$, called the _compact-open_ topology.
 ]
+
+#rem[
+  Clearly, the topology of pointwise convergence on $CC(X,Y)$ is coarser than the compact-open topology.
+]
+
+#prop([see @bb])[
+  Let $X$ and $Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then a filter $F in FF(CC(X,Y))$ converges to a function $f in CC(X,Y)$ if and only if, for any filter $P in FF(X)$ converging to $p in X$, we have $F(P) -> f(p)$ in $Y$, where the filter $F(P)$ is based on
+  $
+    {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
+  $
+]
+
+#prop([see @bou2, page 302])[
+
+]
+
+
+
+
 
 
 
@@ -95,7 +126,8 @@
 
 #def([see @bb, pages 25-26])[
   Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
-if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is based on
+if and only if $F(P) -> f(p)$ whenever $P -> p in X$.
+Here, the filter $F(P)$ is based on
   $
     {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
   $
@@ -119,7 +151,7 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
 ] <convcurry>
 
 #prop([see @bb, page 34])[
-  Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology (see @fox). That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
+  Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology (see @bou2, page 301). That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
 ] <top>
 
 #prop([see @bb, page 28])[
