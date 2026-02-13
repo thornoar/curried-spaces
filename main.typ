@@ -28,13 +28,6 @@
   Let $X$ be a set. A _filter_ on $X$ is a non-empty set $F subset 2^X$ which is closed under supersets and finite intersections, and does not contain the empty set. The set of all filters on $X$ will be denoted by $FF(X)$.
 ]
 
-// #def[
-//   A filter $F$ on $X$ is called an _ultrafilter_ if is not properly contained in any other filter. A standard application of Zorn's lemma shows that every filter in contained in at least one ultrafilter @bou. Moreover, for any filter $F in FF(X)$ we have
-//   $
-//     F = inter.big {G mid(|) G "is an ultrafilter and" F subset G}.
-//   $
-// ]
-
 #def[
   Let $X$ be a set. A family $cal(B) subset 2^X$ is called a _filter base_ if it does not contain the empty set and is closed under finite intersection. The filter $[cal(B)]$ _generated_ by $cal(B)$ is defined as the collection of all supersets of sets from $cal(B)$.\
   If $cal(B) = {{x}}$ where $x in X$, the filter $[x] = [{{x}}]$ is called the _universal filter_ of $x$.\
@@ -74,6 +67,16 @@
 ]
 
 = Continuous functions
+
+#def("compact-open topology")[
+  Let $X$ and $Y$ be two topological spaces, and by $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. For each compact set $K subset X$ and each open set $U subset Y$, let $V(K,U)$ be the set of all functions $f in CC(X,Y)$ such that $f(K) subset U$. The collection
+  $
+  {V(K,U) mid(|) K subset X, U subset Y}
+  $
+  forms a subbase of a topology on $CC(X,Y)$, called the _compact-open_ topology.
+]
+
+
 
 #def[
   One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
@@ -406,6 +409,14 @@ if and only if $F(P) -> f(p)$ whenever $P -> p in X$. Here, the filter $F(P)$ is
 // ]
 // #pf[
 //   ...
+// ]
+
+
+// #def[
+//   A filter $F$ on $X$ is called an _ultrafilter_ if is not properly contained in any other filter. A standard application of Zorn's lemma shows that every filter in contained in at least one ultrafilter @bou. Moreover, for any filter $F in FF(X)$ we have
+//   $
+//     F = inter.big {G mid(|) G "is an ultrafilter and" F subset G}.
+//   $
 // ]
 
 #bibliography("bibliography.yml")
