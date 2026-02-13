@@ -22,7 +22,9 @@
   #v(.5in)
 ]
 
-= The language of filters
+= Preliminary definitions
+
+== The language of filters
 
 #def[
   Let $X$ be a set. A _filter_ on $X$ is a non-empty set $F subset 2^X$ which is closed under supersets and finite intersections, and does not contain the empty set. The set of all filters on $X$ will be denoted by $FF(X)$.
@@ -39,7 +41,7 @@
 ]
 
 #rem[
-  The language of filters is expressive enough to encode all topological properties. For example @bou:
+  The language of filters is expressive enough to encode all topological properties. For example @bou1:
   - A sequence ${x_n}_(n = 1)^oo$ converges to a point $x in X$ iff the filter
     $
       F = {A subset X mid(|) x_n in A "for all but finitely many" n}
@@ -50,23 +52,11 @@
   - A function $f : X -> Y$ between topological spaces is continuous iff it preserves convergent filters, i.e. $F -> x in X$ implies $f(F) -> f(x) in Y$.
 ]
 
-= Curried functions
-
-#def[
-  Let $n in NN_0 = {0, 1, 2, ...}$. The set $H_n (RR)$ of _curried $n$-variable functions_ is a topological vector space defined as follows:
-  - If $n = 0$, we set $H_0 (RR) = RR$;
-  - If $H_n (RR)$ is defined, we define $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise topological and linear structure. In other words, a filter $F in FF(H_(n+1)(RR))$ converges to $f in H_(n+1)(RR)$ if and only if $F(x) = {A(x) mid(|) A in F}$ converges to $f(x)$ for all $x in RR$. It is not hard to see that this topology is compatible with the pointwise vector structure.
+#lm([see @bou1, page 74])[
+  Let $X$ be a set and $f_i : X -> Y_i$ be a family of maps, where $Y_i$ are topological spaces. Let $X$ be endowed with the coarsest topology such that $f_i$ is continuous for each $i$. Then a filter $F in FF(X)$ converges to $x in X$ if and only if $f_i (F)$ converges to $f_i (x)$ for all $i$.
 ]
 
-#def[
-  Let $tilde(f) : RR^n -> RR$ be a function. Define
-  $
-    gamma(tilde(f))(x_1)(x_2)...(x_n) = tilde(f)(x_1, x_2, ..., x_n).
-  $
-  Then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ is clearly a bijection. The function $f = gamma(tilde(f))$ will be called the _curried version_ of $tilde(f)$.
-]
-
-= Continuous functions
+== The topology of pointwise convergence
 
 #def([pointwise convergence topology, see @bou2])[
   Let $X$ be a set, $Y$ a topological space, and denote by $SS(X,Y)$ the set of functions from $X$ to $Y$. For each $x in X$ and each open set $U subset Y$, let $V(x, U)$ be the set of all functions $f in SS(X,Y)$ such that $f(x) in U$. The collection
@@ -79,6 +69,29 @@
 #rem[
   Let $X$ be a set and $Y$ a topological space. It is not hard to see that a filter $F in FF(SS(X,Y))$ converges to a function $f in SS(X,Y)$ if and only if, for any $x in X$, the filter $F(x) = [{A(x) mid(|) A in F}]$ converges to $f(x) in Y$.
 ]
+
+#lm[
+  Let $X$ be a set and $Y$ a Hausdorff topological space. Then $SS(X,Y)$ is also Hausdorff.
+] <pwhaus>
+#pf[
+  Consider two functions $f, g in SS(X,Y)$ such that $f != g$. This implies that there is $x_0 in X$ such that $f(x_0) != g(x_0)$. Since $Y$ is Hausdorff, there are neighborhoods $U_f in.rev f(x_0)$ and $U_g in.rev g(x_0)$ such that $U_f inter U_g = diameter$. It then follows that $f in V(x_0, U_f)$, $g in V(x_0, U_g)$, and $V(x_0, U_f) inter V(x_0, U_g) = diameter$.
+]
+
+#lm[
+  Let $X$ be a set and let $Y$ be a real topological vector space. Then $SS(X,Y)$ is also a real topological vector space with respect to the topology of pointwise convergence and the pointwise linear structure.
+] <pwtvs>
+#pf[
+  We need to show that the maps $+ : SS(X,Y) times SS(X,Y) -> SS(X,Y)$ and $dot : RR times SS(X,Y) -> SS(X,Y)$ are continuous.\
+  To begin, consider two filters $F_1, F_2 in FF(SS(X,Y))$, converging to $f_1$ and $f_2$ respectively. To show that $F_1 + F_2$ converges to $f_1 + f_2$, consider $x in X$. We have
+  $
+    (F_1 + F_2)(x) &= [{(A + B)(x) mid(|) A in F_1, B in F_2}]\
+    &= [{A(x) + B(x) mid(|) A in F_1, B in F_2}]\ 
+    &= F_1 (x) + F_2 (x) -> f_1 (x) + f_2 (x) = (f_1 + f_2)(x).
+  $
+  This shows that the addition operation is continuous. Scalar multiplication is continuous by a similar argument.
+]
+
+== The compact-open topology
 
 #def([compact-open topology, see @bou2])[
   Let $X$ and $Y$ be two topological spaces, and by $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. For each compact set $K subset X$ and each open set $U subset Y$, let $V(K,U)$ be the set of all functions $f in CC(X,Y)$ such that $f(K) subset U$. The collection
@@ -100,74 +113,43 @@
 ]
 
 #prop([see @bou2, page 302])[
-
-]
-
-
-
-
-
-
-
-#def[
-  One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
-  - For all $x in X$, we have $[x] -> x$;
-  - If $F -> x$ and $G -> x$, then $F inter G -> x$;
-  - If $F -> x$ and $F subset G$, then $G -> x$.
-]
-
-#def[
-  A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
-]
-
-#def[
-  Let $X, Y$ be two convergence spaces. Then the product $X times Y$ is endowed with the following convergence structure: a filter $F in FF(X times Y)$ converges to $(x,y) in X times Y$ if and only if $p_X (F) -> x in X$ and $p_Y (F) -> y in Y$.
-] <cprod>
-
-#def([see @bb, pages 25-26])[
-  Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
-if and only if $F(P) -> f(p)$ whenever $P -> p in X$.
-Here, the filter $F(P)$ is based on
-  $
-    {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
-  $
-  The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
-] <cxydef>
-
-#rem[
-  Continuous convergence on $CC(X,Y)$ is the coarsest convergence structure that makes the _evaluation mapping_
-  $
-    omega : CC(X,Y) times X -> Y
-  $
-  continuous. Here, the product $CC(X,Y) times X$ is endowed with the product convergence structure as per @cprod.
-]
-
-#prop([see @bb, page 27])[
-  Let $X, Y, Z$ be convergence spaces. Then the map
+  Let $X, Y, Z$ be topological spaces such that $X$ is Hausdorff and $Y$ is locally compact. Then the map
   $
     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
   $
   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
-] <convcurry>
+] <curry>
 
-#prop([see @bb, page 34])[
-  Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology (see @bou2, page 301). That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
-] <top>
+#lm[
+  Let $X, Y$ be topological spaces such that $Y$ is Hausdorff. Then the space $CC(X,Y)$ is also Hausdorff.
+] <cohaus>
+#pf[
+  The proof is similar to @pwhaus.
+]
 
-#prop([see @bb, page 28])[
-  Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
-] <haus>
+#lm[
+  Let $X$ be a topological space and $Y$ a real topological vector space. Then $CC(X,Y)$ is also a real topological vector space with respect to the pointwise linear structure and the compact-open topology.
+] <cotvs>
+#pf[
+  We will show that the map $+ : CC(X,Y) times CC(X,Y) -> CC(X,Y)$ is continuous. Let $F_1, F_2 in FF(CC(X,Y))$ converge to $f_1 in CC(X,Y)$ and $f_2 in CC(X,Y)$ respectively. For any filter $P in FF(X)$ converging to $p in X$, we have
+  $
+    (F_1 + F_2)(P) &= [{(A_1 + A_2)(B) mid(|) A_i in F_i, B in P}]\
+    &supset [{A_1 (B_1) + A_2 (B_2) mid(|) A_i in F_i, B_i in P}]\
+    &= F_1 (P) + F_2 (P) -> f_1 (p) + f_2 (p) = (f_1 + f_2)(p).
+  $
+  The continuity of scalar multiplication is proven similarly.
+]
 
-#prop([see @bb, page 29])[
-  Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
-] <cvs>
+// #prop([see @bb, page 28])[
+//   Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
+// ] <haus>
 
-#cor[
-  If $X$ is a locally compact topological space and $Y$ is a regular topological vector space, then $CC(X,Y)$ is a topological vector space.
-] <cor1>
+// #prop([see @bb, page 29])[
+//   Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
+// ] <tvs>
 
-#prop[
-  Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ (in the sense that its derived filter converges) if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
+#lm[
+  Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
 ]
 #pf[
   First, let $F$ be the derived filter of ${f_k}_(k in NN)$ and suppose that $F$ converges to a function $f in CC(X,Y)$. Consider a sequence ${x_k}_(k in NN)$ converging to $x in X$, with its derived filter $P$. Now let $V$ be a neighborhood of $f(x)$ in $Y$. By the definition of continuous convergence, we have $F(P) -> f(x)$, and so $V in F(P)$. This means that $V$ contains an element of the base of $F(P)$, namely a set
@@ -185,14 +167,34 @@ Here, the filter $F(P)$ is based on
   In particular, we have $f_(k_n)(x_n) in.not V$ for all $n in NN$. At the same time, since the sets $A_n$ generate $P$, we see that $x_n st(n -> oo) x$, so we must have $f_(k_n)(x_n) st(n -> oo) f(x)$ by (@subseq), a contradiction.
 ]
 
+= The spaces of curried functions
+
+== General functions
+
+#def[
+  Let $n in NN_0 = {0, 1, 2, ...}$. The set $H_n (RR)$ of _curried $n$-variable functions_ is a topological vector space defined recursively as follows:
+  - If $n = 0$, we set $H_0 (RR) = RR$;
+  - If $H_n (RR)$ is defined, we let $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise linear structure and the topology of pointwise convergence. @pwhaus and @pwtvs ensure that $H_(n+1)(RR)$ is a Hausdorff topological vector space.
+]
+
+#def[
+  Let $tilde(f) : RR^n -> RR$ be a function. Define
+  $
+    gamma(tilde(f))(x_1)(x_2)...(x_n) = tilde(f)(x_1, x_2, ..., x_n).
+  $
+  Then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ is clearly a bijection. The function $f = gamma(tilde(f))$ will be called the _curried version_ of $tilde(f)$.
+]
+
+== Continuous functions
+
 #def[
   Let $n in NN_0$. The set $C_n (RR)$ of _curried continuous functions_ is a Hausdorff topological vector space defined recursively as follows:
   - If $n = 0$, we set $C_0 (RR) = RR$.
-  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$. @top, @haus, and @cor1 ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
+  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$, endowed with pointwise linear structure and the compact-open topology. @cohaus and @cotvs ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
 
 #exam[
-  The topology on $C_n (RR)$ does not coincide with the topology induced from $H_n (RR)$, unless $n = 0$. To see this, take $n = 1$ and consider the classical function
+  The topology on $C_n (RR)$ is coarser than the topology induced from $H_n (RR)$, and does not coincide with it, unless $n = 0$. To see this, take $n = 1$ and consider the classical function
   $
     phi (x) = cases(
       exp(1/(abs(x)^2 - 1))\, #h(10pt)& abs(x) < 1,
@@ -220,144 +222,184 @@ Here, the filter $F(P)$ is based on
   defined by $gamma(f)(x_1)(x_2)...(x_n) = f(x_1, ..., x_n)$, is well-defined and is a homeomorphism.
 ]
 #pf[
-  If $n = 0$, the statement is trivial. Assume it is proven for $C_n (RR)$. By @convcurry, we have
+  If $n = 0$, the statement is trivial. Assume it is proven for $C_n (RR)$. By @curry, we have
   $
     CC(RR^(n+1), RR) = CC(RR times RR^n, RR) tilde.equiv CC(RR, CC(RR^n, RR)) tilde.equiv CC(RR, C_n (RR)) = C_(n+1)(RR),
   $
   q.e.d.
 ]
 
-= Differentiable functions
+== Differentiable functions
 
 #def[
-  Let $n in NN$.
-  A curried function $f in H_n (RR)$ is called _differentiable_ if for all $x_0 in RR$ we have
-  - $f(x_0) in H_(n-1)(RR)$ is differentiable, if $n >= 2$;
-  - There exists a continuous function $f'(x_0) in C_(n-1)(RR)$ such that
+  Let $n in NN_0$. The set $D_n (RR)$ of _curried differentiable functions_ is a topological vector space defined recursively as follows:
+  - If $n = 0$, we set $D_0 (RR) = RR$, as usual;
+  - If $D_n (RR)$ is defined for some $n$, we let $D_(n+1)(RR) subset CC(RR, D_n (RR))$ consist of all functions $f$ such that there is a function $f' in C_(n+1)(RR)$ (called the derivative of $f$) which satisfies
     $
-      f(x_0 + h) = f(x_0) + h dot f'(x_0) + r(h),
+      (f(x + h) - f(x))/h st(h -> 0) f'(x)
     $
-    where $r(h) in C_(n-1)(RR)$ is a function such that $r(h)\/h -> 0$ in $C_(n-1) (RR)$ as $h -> 0$. Equivalently, we may write
+    for all $x in RR$, where *the convergence is taken in the space $H_n (RR)$*. Clearly, if $f, g in D_(n+1)(RR)$ and $alpha, beta in RR$, we have
     $
-      f'(x_0) = lim_(h -> 0) (f(x_0 + h) - f(x_0))/h in C_(n-1)(RR).
+      (alpha f + beta g)' = alpha f' + beta g',
     $
+    so in particular, $alpha f + beta g in D_(n+1)(RR)$.\
+    We endow $D_(n+1)(RR)$ with the coarsest topology in which the maps
+    $
+      i : D_(n+1)(RR) &-> CC(RR, D_n (RR)), #h(3cm) d : D_(n+1)(RR) -> C_(n+1)(RR)\
+      f &|-> f #h(6.81cm) f |-> f'
+    $
+    are continuous. We prove below that $D_(n+1)(RR)$ is a Hausdorff topological vector space.
 ]
 
-#prop[
-  Let $n in NN$. Then a curried function $f in H_n (RR)$ is differentiable if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.
+#rem[
+  It is clear that the map $i : D_n (RR) -> C_n (RR)$ is continuous, meaning that the topology on $D_n (RR)$ is coarser than that induced from $C_n (RR)$.
 ]
+
+#lm[
+  For all $n in NN_0$, the topological space $D_n (RR)$ is Hausdorff.
+] <diffhaus>
 #pf[
-  #let hh = h(3pt)
-  First, consider a differentiable function $f in H_n (RR)$. We aim to show that $tilde(f) : RR^n -> RR$ is differentiable everywhere. Fix a point $x = (x_1, x_2, ..., x_n) in RR^n$ and consider a vector $h = (h_1, h_2, ..., h_n) in RR^n$. By the differentiability of $f,#hh f(x_1),#hh f(x_1)(x_2)$ and so on, we may repeatedly expand
-  $
-    f(x_1 + h_1) = &f(x_1) + h_1 dot f'(x_1) + r_1 (h_1),\
-    f(x_1 + h_1)(x_2 + h_2) = &f(x_1)(x_2 + h_2) + h_1 dot f'(x_1)(x_2 + h_2) + r_1 (h_1)(x_2 + h_2)\
-    = &f(x_1)(x_2)\
-    &op(+) h_1 dot f'(x_1)(x_2 + h_2) + h_2 dot f(x_1)'(x_2)\
-    &op(+) r_1 (h_1)(x_2 + h_2) + r_2 (h_2),\
-    // = &f(x_1)(x_2) + h_1 dot f'(x_1)(x_2 + h_2) + h_2 dot f(x_1)'(x_2) + o(abs((h_1, h_2))).\
-  $
-  where $r_1 (h_1) in C_(n-1)(RR)$ and $r_2 (h_2) in C_(n-2)(RR)$.
-  // $
-  //   abs(o(h_1)(x_2 + h_2))/abs((h_1,h_2)) <= abs(o(h_1)/h_1 (x_2 + h_2)) -> 0.
-  // $
-  We continue the expansion until we obtain
-  $
-    &f(x_1 + h_1)(x_2 + h_2)...(x_n + h_n)\
-    &= f(x_1)(x_2)...(x_n)\
-    &cases(
-      reverse: #true,
-      delim: "[",
-      op(+) h_1 dot f'(x_1)(x_2 + h_2)...(x_n + h_n),
-      op(+) h_2 dot f(x_1)'(x_2)(x_3 + h_3)...(x_n + h_n),
-      op(+) h_3 dot f(x_1)(x_2)'(x_3)(x_4 + h_4)...(x_n + h_n)#hh,
-      #h(3pt) dots.v,
-      op(+) h_n dot f(x_1)(x_2)...(x_(n-1))'(x_n),
-    ) #hh (A)\
-    &cases(
-      delim: "[",
-      reverse: #true,
-      op(+) r_1 (h_1)(x_2 + h_2)(x_3 + h_3)...(x_n + h_n)#hh,
-      op(+) r_2 (h_2)(x_3 + h_3)...(x_n + h_n),
-      #h(3pt) dots.v,
-      op(+) r_(n-1) (h_(n-1))(x_n + h_n),
-      op(+) r_n (h_n).,
-    ) (B)\
-  $
-  Observe that all functions $f'(x_1),#hh f(x_1)'(x_2),#hh f(x_1)(x_2)'(x_3)$ that occur in $(A)$, are continuous by the definition of differentiability, and so when $h -> 0$, we have for instance
-  $
-    f'(x_1)(x_2 + h_2)...(x_n - h_n) - f'(x_1)(x_2)...(x_n) -> 0.
-  $
-  This implies that
-  $
-    &h_1 dot (f'(x_1)(x_2 + h_2)...(x_n - h_n) - f'(x_1)(x_2)...(x_n)) = o(abs(h)),\
-    &h_2 dot (f(x_1)'(x_2)(x_3 + h_3)...(x_n - h_n) - f(x_1)'(x_2)...(x_n)) = o(abs(h)),\
-    &#h(3pt)dots.v\
-    &h_n dot (f(x_1)...(x_(n-1))'(x_n) - f(x_1)...(x_(n-1))'(x_n)) = o(abs(h)).
-  $
-  Now, consider the convergence $r_1 (h_1)\/h_1 st(h_1 -> 0) 0$. This convergence occurs in the space $C_(n-1)(RR)$, which means that as $h -> 0$, we have $h_i -> 0$ for all $1 <= i <= n$ and
-  $
-    abs((r_1 (h_1)(x_2 + h_2)...(x_n + h_n))/(abs(h))) <= abs((r_1 (h_1))/h_1 (x_2 + h_2)...(x_n + h_n)) st(#h(5pt) h_1\, h_2\, ...\, h_n -> 0 #h(5pt)) 0.
-  $
-  In other words, we see that $r_1 (h_1)(x_2 + h_2)...(x_n + h_n) = o(abs(h))$, and similarly all remaining terms in $(B)$ are $o(abs(h))$. Finally, combining these observations yields
-  $
-    tilde(f)(x + h) = &f(x_1 + h_1)(x_2 + h_2)...(x_n + h_n)\
-    = &f(x_1)(x_2)...(x_n)\
-    &cases(
-      reverse: #true,
-      delim: "[",
-      op(+) h_1 dot f'(x_1)...(x_n),
-      op(+) h_2 dot f(x_1)'(x_2)...(x_n),
-      op(+) h_3 dot f(x_1)(x_2)'(x_3)...(x_n)#hh,
-      #h(3pt) dots.v,
-      op(+) h_n dot f(x_1)...(x_(n-1))'(x_n),
-    ) #hh L(h)\
-    &op(+) o(abs(h))\
-    = &tilde(f)(x) + L(h) + o(abs(h)),
-  $
-  where $L : RR^n -> RR$ is linear since it has the form $L(h) = sum_(k = 1)^n c_k h_k$. This allows us to conclude that $tilde(f)$ is differentiable at $x$.\
-
-  To show the reverse implication, we conduct an induction over $n$. If $n = 1$ and $f in H_1 (RR)$, its differentiability is clearly equivalent to the usual definition. Assume that the implication holds for $n-1$, and consider a function $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.\
-  Let $x_1 in RR$. First of all, since a restriction of a differentiable function is differentiable, we see that the function
-  $
-    f(x_1) = gamma((x_2, ..., x_n) |-> tilde(f)(x_1, x_2, ..., x_n)) in H_(n-1)(RR)
-  $
-  is differentiable by the induction hypothesis. It then remains to show that there is $f'(x_1) in C_(n-1)(RR)$ and $r_1 (h_1) in C_(n-1)(RR)$ for all $h_1 in RR$ such that $r_1 (h_1)\/h_1 st(h_1 -> 0) 0$ and
-  $
-    f(x_1 + h_1) = f(x_1) + h_1 dot f'(x_1) + r_1 (h_1).
-  $
-  Being differentiable, $tilde(f)$ has partial derivatives everywhere, and so we can define
-  $
-    f'(x_1) = gamma((partial tilde(f))/(partial x_1))(x_1) in H_(n-1) (RR).
-  $
-  For variable $y_2, y_3, ..., y_n in RR$ and $h_1 in RR$, we have
-  $
-    tilde(f)(x_1 + h_1, y_2, ..., y_n) &= tilde(f)(x_1, y_2, ..., y_n) + (d_((x_1, y_2, ..., y_n)) tilde(f))(h_1, 0, ..., 0) + r (h_1, y_2, ..., y_n)\
-    &= f(x_1)(y_2)...(y_n) + h_1 dot f'(x_1)(y_2)...(y_n) + r (h_1, y_2, ..., y_n),
-  $
-  where $r(h_1, y_2, ..., y_n) = o(h_1)$. We then define $r_1 (h_1) = gamma(r)(h_1)$. Hence, by abstracting over $y_2, ..., y_n$, we obtain
-  $
-    f(x_1 + h_1) = f(x_1) + h_1 dot f'(x_1) + r_1 (h_1).
-  $
-  It remains to show that $f'(x_1)$ and $r_1 (h_1)$ are continuous and that $r_1 (h_1)\/h_1 -> 0$ as $h_1 -> 0$.
+  Let $f, g in D_n (RR)$ such that $f != g$.
 ]
 
-#prop[
-  If $f in H_n (RR)$ is differentiable, then $f$ is continuous.
-]
+#lm[
+  For all $n in NN_0$, the linear and topological structures on $D_n (RR)$ are compatible, making $D_n (RR)$ a topological vector space.
+] <difftvs>
 #pf[
-  // If $n = 1$, then $f : RR -> RR$ is differentiable in the usual sense, and so $f$ is continuous.\
-  // Suppose that the statement is proven for $n-1$, and consider a differentiable function $f in H_n (RR)$. First of all, for all $x in RR$ we know that $f(x) in H_(n-1)(RR)$ is differentiable, and hence continuous. It remains to show that $f$ is a continuous map from $RR -> C_(n-1)(RR)$. Let $x_k -> x_0 in RR$. Then, letting $h_k = x_k - x_0$, we can write
-  // $
-  //   f(x_k) = f(x_0 + h_k) = f(x_0) + h_k dot f'(x_0) + r(h_k),
-  // $
-  // where $r(h_k) in C_(n-1)(RR)$ are such that $r(h_k)\/h_k st(k -> oo) 0$. Since $f'(x_0)$ is continuous, we have
-  // $
-  //   h_k dot f'(x_0) + r(h_k) st(k -> oo) 0 in C_(n-1)(RR),
-  // $
-  // so $f(x_k) -> f(x_0)$, which means that $f$ is continuous.
-  If $f$ is differentiable, then $tilde(f) : RR^n -> RR$ is differentiable, then $tilde(f)$ is continuous, then $f$ is continuous.
+  Let $F_1 -> f_1 in D_n (RR)$ and $F_2 -> f_2 in D_n (RR)$. Then $F_1 -> f_1$ in the space $CC(RR, D_(n-1)(RR))$.
 ]
+
+#bibliography("bibliography.yml")
+
+// #def[
+//   Let $n in NN$.
+//   A curried function $f in H_n (RR)$ is called _differentiable_ if for all $x_0 in RR$ we have
+//   - $f(x_0) in H_(n-1)(RR)$ is differentiable, if $n >= 2$;
+//   - There exists a continuous function $f'(x_0) in C_(n-1)(RR)$ such that
+//     $
+//       f(x_0 + h) = f(x_0) + h dot f'(x_0) + r(h),
+//     $
+//     where $r(h) in C_(n-1)(RR)$ is a function such that $r(h)\/h -> 0$ in $C_(n-1) (RR)$ as $h -> 0$. Equivalently, we may write
+//     $
+//       f'(x_0) = lim_(h -> 0) (f(x_0 + h) - f(x_0))/h in C_(n-1)(RR).
+//     $
+// ]
+//
+// #prop[
+//   Let $n in NN$. Then a curried function $f in H_n (RR)$ is differentiable if and only if its counterpart $tilde(f) = gamma^(-1)(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.
+// ]
+// #pf[
+//   #let hh = h(3pt)
+//   First, consider a differentiable function $f in H_n (RR)$. We aim to show that $tilde(f) : RR^n -> RR$ is differentiable everywhere. Fix a point $x = (x_1, x_2, ..., x_n) in RR^n$ and consider a vector $h = (h_1, h_2, ..., h_n) in RR^n$. By the differentiability of $f,#hh f(x_1),#hh f(x_1)(x_2)$ and so on, we may repeatedly expand
+//   $
+//     f(x_1 + h_1) = &f(x_1) + h_1 dot f'(x_1) + r_1 (h_1),\
+//     f(x_1 + h_1)(x_2 + h_2) = &f(x_1)(x_2 + h_2) + h_1 dot f'(x_1)(x_2 + h_2) + r_1 (h_1)(x_2 + h_2)\
+//     = &f(x_1)(x_2)\
+//     &op(+) h_1 dot f'(x_1)(x_2 + h_2) + h_2 dot f(x_1)'(x_2)\
+//     &op(+) r_1 (h_1)(x_2 + h_2) + r_2 (h_2),\
+//     // = &f(x_1)(x_2) + h_1 dot f'(x_1)(x_2 + h_2) + h_2 dot f(x_1)'(x_2) + o(abs((h_1, h_2))).\
+//   $
+//   where $r_1 (h_1) in C_(n-1)(RR)$ and $r_2 (h_2) in C_(n-2)(RR)$.
+//   // $
+//   //   abs(o(h_1)(x_2 + h_2))/abs((h_1,h_2)) <= abs(o(h_1)/h_1 (x_2 + h_2)) -> 0.
+//   // $
+//   We continue the expansion until we obtain
+//   $
+//     &f(x_1 + h_1)(x_2 + h_2)...(x_n + h_n)\
+//     &= f(x_1)(x_2)...(x_n)\
+//     &cases(
+//       reverse: #true,
+//       delim: "[",
+//       op(+) h_1 dot f'(x_1)(x_2 + h_2)...(x_n + h_n),
+//       op(+) h_2 dot f(x_1)'(x_2)(x_3 + h_3)...(x_n + h_n),
+//       op(+) h_3 dot f(x_1)(x_2)'(x_3)(x_4 + h_4)...(x_n + h_n)#hh,
+//       #h(3pt) dots.v,
+//       op(+) h_n dot f(x_1)(x_2)...(x_(n-1))'(x_n),
+//     ) #hh (A)\
+//     &cases(
+//       delim: "[",
+//       reverse: #true,
+//       op(+) r_1 (h_1)(x_2 + h_2)(x_3 + h_3)...(x_n + h_n)#hh,
+//       op(+) r_2 (h_2)(x_3 + h_3)...(x_n + h_n),
+//       #h(3pt) dots.v,
+//       op(+) r_(n-1) (h_(n-1))(x_n + h_n),
+//       op(+) r_n (h_n).,
+//     ) (B)\
+//   $
+//   Observe that all functions $f'(x_1),#hh f(x_1)'(x_2),#hh f(x_1)(x_2)'(x_3)$ that occur in $(A)$, are continuous by the definition of differentiability, and so when $h -> 0$, we have for instance
+//   $
+//     f'(x_1)(x_2 + h_2)...(x_n - h_n) - f'(x_1)(x_2)...(x_n) -> 0.
+//   $
+//   This implies that
+//   $
+//     &h_1 dot (f'(x_1)(x_2 + h_2)...(x_n - h_n) - f'(x_1)(x_2)...(x_n)) = o(abs(h)),\
+//     &h_2 dot (f(x_1)'(x_2)(x_3 + h_3)...(x_n - h_n) - f(x_1)'(x_2)...(x_n)) = o(abs(h)),\
+//     &#h(3pt)dots.v\
+//     &h_n dot (f(x_1)...(x_(n-1))'(x_n) - f(x_1)...(x_(n-1))'(x_n)) = o(abs(h)).
+//   $
+//   Now, consider the convergence $r_1 (h_1)\/h_1 st(h_1 -> 0) 0$. This convergence occurs in the space $C_(n-1)(RR)$, which means that as $h -> 0$, we have $h_i -> 0$ for all $1 <= i <= n$ and
+//   $
+//     abs((r_1 (h_1)(x_2 + h_2)...(x_n + h_n))/(abs(h))) <= abs((r_1 (h_1))/h_1 (x_2 + h_2)...(x_n + h_n)) st(#h(5pt) h_1\, h_2\, ...\, h_n -> 0 #h(5pt)) 0.
+//   $
+//   In other words, we see that $r_1 (h_1)(x_2 + h_2)...(x_n + h_n) = o(abs(h))$, and similarly all remaining terms in $(B)$ are $o(abs(h))$. Finally, combining these observations yields
+//   $
+//     tilde(f)(x + h) = &f(x_1 + h_1)(x_2 + h_2)...(x_n + h_n)\
+//     = &f(x_1)(x_2)...(x_n)\
+//     &cases(
+//       reverse: #true,
+//       delim: "[",
+//       op(+) h_1 dot f'(x_1)...(x_n),
+//       op(+) h_2 dot f(x_1)'(x_2)...(x_n),
+//       op(+) h_3 dot f(x_1)(x_2)'(x_3)...(x_n)#hh,
+//       #h(3pt) dots.v,
+//       op(+) h_n dot f(x_1)...(x_(n-1))'(x_n),
+//     ) #hh L(h)\
+//     &op(+) o(abs(h))\
+//     = &tilde(f)(x) + L(h) + o(abs(h)),
+//   $
+//   where $L : RR^n -> RR$ is linear since it has the form $L(h) = sum_(k = 1)^n c_k h_k$. This allows us to conclude that $tilde(f)$ is differentiable at $x$.\
+//
+//   To show the reverse implication, we conduct an induction over $n$. If $n = 1$ and $f in H_1 (RR)$, its differentiability is clearly equivalent to the usual definition. Assume that the implication holds for $n-1$, and consider a function $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ is differentiable everywhere on $RR^n$.\
+//   Let $x_1 in RR$. First of all, since a restriction of a differentiable function is differentiable, we see that the function
+//   $
+//     f(x_1) = gamma((x_2, ..., x_n) |-> tilde(f)(x_1, x_2, ..., x_n)) in H_(n-1)(RR)
+//   $
+//   is differentiable by the induction hypothesis. It then remains to show that there is $f'(x_1) in C_(n-1)(RR)$ and $r_1 (h_1) in C_(n-1)(RR)$ for all $h_1 in RR$ such that $r_1 (h_1)\/h_1 st(h_1 -> 0) 0$ and
+//   $
+//     f(x_1 + h_1) = f(x_1) + h_1 dot f'(x_1) + r_1 (h_1).
+//   $
+//   Being differentiable, $tilde(f)$ has partial derivatives everywhere, and so we can define
+//   $
+//     f'(x_1) = gamma((partial tilde(f))/(partial x_1))(x_1) in H_(n-1) (RR).
+//   $
+//   For variable $y_2, y_3, ..., y_n in RR$ and $h_1 in RR$, we have
+//   $
+//     tilde(f)(x_1 + h_1, y_2, ..., y_n) &= tilde(f)(x_1, y_2, ..., y_n) + (d_((x_1, y_2, ..., y_n)) tilde(f))(h_1, 0, ..., 0) + r (h_1, y_2, ..., y_n)\
+//     &= f(x_1)(y_2)...(y_n) + h_1 dot f'(x_1)(y_2)...(y_n) + r (h_1, y_2, ..., y_n),
+//   $
+//   where $r(h_1, y_2, ..., y_n) = o(h_1)$. We then define $r_1 (h_1) = gamma(r)(h_1)$. Hence, by abstracting over $y_2, ..., y_n$, we obtain
+//   $
+//     f(x_1 + h_1) = f(x_1) + h_1 dot f'(x_1) + r_1 (h_1).
+//   $
+//   It remains to show that $f'(x_1)$ and $r_1 (h_1)$ are continuous and that $r_1 (h_1)\/h_1 -> 0$ as $h_1 -> 0$.
+// ]
+//
+// #prop[
+//   If $f in H_n (RR)$ is differentiable, then $f$ is continuous.
+// ]
+// #pf[
+//   // If $n = 1$, then $f : RR -> RR$ is differentiable in the usual sense, and so $f$ is continuous.\
+//   // Suppose that the statement is proven for $n-1$, and consider a differentiable function $f in H_n (RR)$. First of all, for all $x in RR$ we know that $f(x) in H_(n-1)(RR)$ is differentiable, and hence continuous. It remains to show that $f$ is a continuous map from $RR -> C_(n-1)(RR)$. Let $x_k -> x_0 in RR$. Then, letting $h_k = x_k - x_0$, we can write
+//   // $
+//   //   f(x_k) = f(x_0 + h_k) = f(x_0) + h_k dot f'(x_0) + r(h_k),
+//   // $
+//   // where $r(h_k) in C_(n-1)(RR)$ are such that $r(h_k)\/h_k st(k -> oo) 0$. Since $f'(x_0)$ is continuous, we have
+//   // $
+//   //   h_k dot f'(x_0) + r(h_k) st(k -> oo) 0 in C_(n-1)(RR),
+//   // $
+//   // so $f(x_k) -> f(x_0)$, which means that $f$ is continuous.
+//   If $f$ is differentiable, then $tilde(f) : RR^n -> RR$ is differentiable, then $tilde(f)$ is continuous, then $f$ is continuous.
+// ]
 
 // #prop[
 //   A curried function $f in H_n (RR)$ is differentiable at $(x_1, x_2, ..., x_n) in RR^n$ if and only if $tilde(f) = gamma^(-1)(f)$ has all partial derivatives at $(x_1, x_2, ..., x_n) in RR^n$.
@@ -451,4 +493,51 @@ Here, the filter $F(P)$ is based on
 //   $
 // ]
 
-#bibliography("bibliography.yml")
+// #def[
+//   One may try to decouple the notion of convergent filters from topology. Let $X$ be a set with a relation $op(->) subset FF(X) times X$. Then $(X, ->)$ is called a _convergence space_ if
+//   - For all $x in X$, we have $[x] -> x$;
+//   - If $F -> x$ and $G -> x$, then $F inter G -> x$;
+//   - If $F -> x$ and $F subset G$, then $G -> x$.
+// ]
+//
+// #def[
+//   A map $f : X -> Y$ between convergence spaces is said to be _continuous_ if $f(F) -> f(x) in Y$ whenever $F -> x in X$.
+// ]
+//
+// #def[
+//   Let $X, Y$ be two convergence spaces. Then the product $X times Y$ is endowed with the following convergence structure: a filter $F in FF(X times Y)$ converges to $(x,y) in X times Y$ if and only if $p_X (F) -> x in X$ and $p_Y (F) -> y in Y$.
+// ] <cprod>
+//
+// #def([see @bb, pages 25-26])[
+//   Let $X, Y$ be convergence spaces. By $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. Then $CC(X,Y)$ can be endowed with a convergence structure as follows. For a filter $F in FF(CC(X,Y))$, we say that $F -> f in CC(X,Y)$
+// if and only if $F(P) -> f(p)$ whenever $P -> p in X$.
+// Here, the filter $F(P)$ is based on
+//   $
+//     {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
+//   $
+//   The resulting convergence structure on $CC(X,Y)$ is called the structure of _continuous convergence._
+// ] <cxydef>
+//
+// #rem[
+//   Continuous convergence on $CC(X,Y)$ is the coarsest convergence structure that makes the _evaluation mapping_
+//   $
+//     omega : CC(X,Y) times X -> Y
+//   $
+//   continuous. Here, the product $CC(X,Y) times X$ is endowed with the product convergence structure as per @cprod.
+// ]
+
+// #prop([see @bb, page 27])[
+//   Let $X, Y, Z$ be convergence spaces. Then the map
+//   $
+//     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
+//   $
+//   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
+// ] <convcurry>
+
+// #prop([see @bb, page 34])[
+//   Let $X, Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then the convergence space $CC(X,Y)$ is topologized by the compact-open topology (see @bou2, page 301). That is, the convergence relation arising from this topology coincides precisely with the convergence structure given in @cxydef.
+// ] <top>
+
+// #cor[
+//   If $X$ is a locally compact topological space and $Y$ is a regular topological vector space, then $CC(X,Y)$ is a topological vector space.
+// ] <cor1>
