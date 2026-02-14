@@ -252,14 +252,14 @@
 ]
 
 #rem[
-  It is clear that the map $i : D_n (RR) -> C_n (RR)$ is continuous, meaning that the topology on $D_n (RR)$ is finer than the topology induced from $C_n (RR)$.
+  It is clear that the inclusion map $i : D_n (RR) -> C_n (RR)$ is continuous, meaning that the topology on $D_n (RR)$ is finer than the topology induced from $C_n (RR)$.
 ]
 
 #lm[
   For all $n in NN_0$, the topological space $D_n (RR)$ is Hausdorff.
 ] <diffhaus>
 #pf[
-  Since $C_n (RR)$ is Hausdorff and $i : D_n (RR) -> C_n (RR)$ is continuous, we see that $D_n (RR)$ is also Hausdorff.
+  Since $C_n (RR)$ is Hausdorff and $i : D_n (RR) -> C_n (RR)$ is continuous and injective, we see that $D_n (RR)$ is also Hausdorff.
 ]
 
 #lm[
