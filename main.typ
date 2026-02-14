@@ -234,7 +234,7 @@
 #def[
   Let $n in NN_0$. The set $D_n (RR)$ of _curried differentiable functions_ is a topological vector space defined recursively as follows:
   - If $n = 0$, we set $D_0 (RR) = RR$, as usual;
-  - If $D_n (RR)$ is defined for some $n$, we let $D_(n+1)(RR) subset CC(RR, D_n (RR))$ consist of all functions $f$ such that there is a function $f' in C_(n+1)(RR)$ (called the derivative of $f$) which satisfies
+  - If $D_n (RR)$ is defined for some $n$, we let $D_(n+1)(RR)$ consist of all functions $f in CC(RR, D_n (RR))$ such that there is a function $f' in C_(n+1)(RR)$ (called the derivative of $f$) which satisfies
     $
       (f(x + h) - f(x))/h st(h -> 0) f'(x) in H_n (RR)
     $
