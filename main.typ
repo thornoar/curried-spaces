@@ -337,7 +337,7 @@
   $ <difftrans>
 ] <diffgamma>
 #pf[
-  We employ induction over $n in NN_0$. If $n = 1$, the statement clearly holds. Now, consider $n >= 2$ and assume that the statement holds for $n-1$.\
+  We employ induction over $n$. If $n = 1$, the statement clearly holds. Now, consider $n >= 2$ and assume that the statement holds for $n-1$.\
   First, let $f in D_n (RR)$ and $(x_1, x_2, ..., x_n) in RR^n$. For $i >= 2$, we have
   $
     (partial tilde(f))/(partial x_i)(x_1, ..., x_n) &= lim_(h -> 0) (tilde(f)(x_1, ..., x_i + h, ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
