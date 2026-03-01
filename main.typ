@@ -1,6 +1,7 @@
 #import "@local/common:0.0.0": *
 #import "@local/theorem-shorthands-en:0.0.0": *
 #import "@preview/equate:0.3.1": equate
+#import "@preview/commute:0.3.0": *
 
 #show: theorem
 
@@ -140,14 +141,6 @@
   The continuity of scalar multiplication is proven similarly.
 ]
 
-// #prop([see @bb, page 28])[
-//   Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
-// ] <haus>
-
-// #prop([see @bb, page 29])[
-//   Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
-// ] <tvs>
-
 #lm[
   Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
 ] <simul>
@@ -183,6 +176,13 @@
     gamma(tilde(f))(x_1)(x_2)...(x_n) = tilde(f)(x_1, x_2, ..., x_n).
   $
   Then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ is clearly a bijection. The function $f = gamma(tilde(f))$ will be called the _curried version_ of $tilde(f)$.
+]
+
+#lm[
+  For every $n in NN_0$, the space $H_n (RR)$ is locally compact.
+]
+#pf[
+  An easy proof by induction over $n$.
 ]
 
 == Continuous functions
@@ -229,51 +229,114 @@
   q.e.d.
 ]
 
+#lm[
+  For every $n in NN_0$, the space $C_n (RR)$ is locally compact.
+]
+#pf[
+  An easy proof by induction over $n$.
+]
+
 == Differentiable functions
 
 #def[
-  Let $n in NN_0$. The set $D_n (RR)$ of _curried differentiable functions_ is a topological vector space defined recursively as follows:
-  - If $n = 0$, we set $D_0 (RR) = RR$, as usual;
-  - If $D_n (RR)$ is defined for some $n$, we let $D_(n+1)(RR)$ consist of all functions $f in CC(RR, D_n (RR))$ such that there is a function $f' in C_(n+1)(RR)$ (called the derivative of $f$) which satisfies
+  Let $m in NN_0$ and $n in NN_0$. The set $D^m_n (RR)$ of _curried $m$ times differentiable functions_ is a topological space defined recursively as follows:
+  - If $n = 0$, we set $D^m_0 (RR) = RR$ for all $m$, as usual;
+  - If $m = 0$, we set $D^0_n (RR) = C_n (RR)$;
+  - Let $m,n > 0$, and assume that both $D_(n-1)^m (RR)$ and $D_n^(m-1) (RR)$ are defined. Then we let $D^m_n (RR)$ be the set of all functions $f in CC(RR, D^m_(n-1)(RR))$ such that there is a function $f' in D^(m-1)_n (RR)$ which satisfies
     $
-      (f(x + h) - f(x))/h st(h -> 0) f'(x) in H_n (RR)
+      (f(x + h) - f(x))/h st(h -> 0) f'(x) in H_(n-1) (RR)
     $
-    for all $x in RR$, where *the convergence is taken in the space $H_n (RR)$*. Clearly, if $f, g in D_(n+1)(RR)$ and $alpha, beta in RR$, we have
+    for all $x in RR$, where *the convergence is taken in the space $H_(n-1) (RR)$*. Clearly, if $f, g in D^m_n (RR)$ and $alpha, beta in RR$, we have
     $
       (alpha f + beta g)' = alpha f' + beta g',
     $
-    so in particular, $alpha f + beta g in D_(n+1)(RR)$.\
-    We endow $D_(n+1)(RR)$ with the coarsest topology in which the maps
+    so in particular, $alpha f + beta g in D^m_n (RR)$.\
+    We endow $D^m_n (RR)$ with the coarsest topology in which the maps
     $
-      i : D_(n+1)(RR) &-> CC(RR, D_n (RR)), #h(3cm) d : D_(n+1)(RR) -> C_(n+1)(RR) #<maps>\
-      f &|-> f #h(6.81cm) f |-> f'
+      i : D^m_n (RR) &-> CC(RR, D^m_(n-1) (RR)), #h(3cm) d : D^m_n (RR) -> D^(m-1)_n (RR) #<maps>\
+      f &|-> f #h(6.85cm) f |-> f'
     $
-    are continuous. This topology will be called the _differential topology._ We prove below that $D_(n+1)(RR)$ is a Hausdorff topological vector space.
-]
-
-#rem[
-  It is clear that the inclusion map $i : D_n (RR) -> C_n (RR)$ is continuous, meaning that the topology on $D_n (RR)$ is finer than the topology induced from $C_n (RR)$.
+    are continuous. This topology will be called the _differential topology of order $m$._ We prove below that $D^m_n (RR)$ are Hausdorff topological vector spaces.
 ]
 
 #lm[
-  For all $n in NN_0$, the topological space $D_n (RR)$ is Hausdorff.
+  For all $m,n in NN_0$, we have $D_n^(m+1) (RR) subset D_n^m$, and the inclusion map
+  $
+    j : D^(m+1)_n (RR) -> D^m_n (RR)
+  $
+  is continuous, meaning that the topology on $D^(m+1)_n (RR)$ is finer than the topology induced from $D^m_n (RR)$.
+]
+#pf[
+  We prove by induction over $n$. Consider the following cases:
+  + $n = 0$. Then we have $D_0^(m+1) (RR) = D_0^n (RR) = RR$, and the statement holds;
+  + $m = 0$. Then we have
+    $
+      D_n^1 (RR) subset CC(RR, D_(n-1)^0 (RR)) = CC(RR, C_(n-1) (RR)) = C_n (RR) = D_n^0 (RR),
+    $
+    and the inclusion is continuous by the definition of differential topology.
+  + $n, m > 0$, with the statement proven for $(m, n-1)$ and $(m-1, n)$. Let $f in D_n^(m+1) (RR)$. Then we have
+    $
+      f in CC(RR, D_(n-1)^(m+1) (RR)) subset CC(RR, D_(n-1)^m (RR)).
+    $
+    Moreover, since $f' in D_n^m (RR) subset D_n^(m-1) (RR)$, we see that $f in D_n^m (RR)$ by definition, so we have the inclusion $D_n^(m+1) (RR) subset D_n^m (RR)$. It only remains to show that the inclusion map $j : D_n^(m+1) (RR) -> D_n^m (RR)$ is continuous. This is equivalent to showing that the maps $i circ j$ and $d circ j$ are continuous, which is evident from the following commutative diagrams:
+    #centering(shallow: false)[
+      #let s1 = 1
+      #let s2 = 1
+      #let ll = 10pt
+      #let pd = 1em
+      #let np = (40pt, 40pt)
+      #show: columns.with(2)
+      #commutative-diagram(
+        padding: pd, node-padding: np,
+        node((0,0), $D_n^(m+1)(RR)$, "00"),
+        node((0,s1), $D_n^m (RR)$, "01"),
+        node((s2,0), $CC(RR, D_(n-1)^(m+1)(RR))$, "10"),
+        node((s2,s1), $CC(RR, D_(n-1)^m (RR))$, "11"),
+        arr("00", "01", $j$, label-pos: ll, "inj"),
+        arr("00", "10", $i$, label-pos: -ll, "inj"),
+        arr("01", "11", $i$, label-pos: ll, "inj"),
+        arr("10", "11", $j$, label-pos: -ll, "inj"),
+      )
+      #colbreak()
+      #commutative-diagram(
+        padding: pd, node-padding: np,
+        node((0,0), $D_n^(m+1) (RR)$, "00"),
+        node((0,s1), $D_n^m (RR)$, "01"),
+        node((s2,0), $D_n^m (RR)$, "10"),
+        node((s2,s1), $D_n^(m-1)(RR)$, "11"),
+        arr("00", "01", $j$, label-pos: ll, "inj"),
+        arr("00", "10", $d$, label-pos: -ll),
+        arr("01", "11", $d$, label-pos: ll),
+        arr("10", "11", $j$, label-pos: -ll, "inj"),
+      )
+    ]
+]
+
+#cor[
+  We have a chain of subspaces with each topology finer than the previous one:
+  $
+    C_n (RR) = D_n^0 (RR) <--^j D_n^1 (RR) <--^j D_n^2 (RR) <--^j D_n^3 (RR) <--^j ...
+  $
+]
+
+#lm[
+  For all $n, m in NN_0$, the topological space $D_n^m (RR)$ is Hausdorff.
 ] <diffhaus>
 #pf[
-  Since $C_n (RR)$ is Hausdorff and $i : D_n (RR) -> C_n (RR)$ is continuous and injective, we see that $D_n (RR)$ is also Hausdorff.
+  Since $C_n (RR)$ is Hausdorff and $i : D_n^m (RR) -> C_n (RR)$ is continuous and injective, we see that $D_n (RR)$ is also Hausdorff.
 ]
 
 #lm[
-  For all $n in NN_0$, the linear and topological structures on $D_n (RR)$ are compatible, making $D_n (RR)$ a topological vector space.
+  For all $m,n in NN_0$, the pointwise linear structure is compatible with the topology on $D_n^m (RR)$, making $D_n^m (RR)$ a topological vector space.
 ] <difftvs>
 #pf[
-  We prove by induction over $n$. If $n = 0$, we have $D_0 (RR) = RR$ with the usual topology and linear structure. Suppose now that $D_(n-1)(RR)$ is a TVS. We need to establish the continuity of the following two maps:
+  We prove by induction over $n$ and $m$. If $n = 0$, we have $D_0 (RR) = RR$ with the usual topology and linear structure. If $m = 0$, we have $D_n^0 (RR) = C_n (RR)$, which is a TVS. Suppose now that $m, n > 0$. We need to establish the continuity of the following two maps:
   $
-    + : D_n (RR) times D_n (RR) -> D_n (RR), #h(2cm) dot : RR times D_n (RR) -> D_n (RR).
+    + : D_n^m (RR) times D_n^m (RR) -> D_n^m (RR), #h(2cm) dot : RR times D_n^m (RR) -> D_n^m (RR).
   $
   In turn, by the definition of the differential topology, this task is equivalent to proving that the maps $i circ (+), d circ (+), i circ (dot), d circ (dot)$ are continuous, where the maps $i$ and $d$ are defined in (@maps).\
   To this end, note that we have commutative diagrams
   #centering(shallow: false)[
-    #import "@preview/commute:0.3.0": *
     #let s1 = 2
     #let s2 = 1
     #let ll = 10pt
@@ -281,10 +344,10 @@
     #let np = (40pt, 40pt)
     #commutative-diagram(
       padding: pd, node-padding: np,
-      node((0,0), $D_n (RR) times D_n (RR)$, "00"),
-      node((0,s1), $D_n (RR)$, "01"),
-      node((s2,0), $CC(RR, D_(n-1)(RR)) times CC(RR, D_(n-1)(RR))$, "10"),
-      node((s2,s1), $CC(RR, D_(n-1)(RR))$, "11"),
+      node((0,0), $D_n^m (RR) times D_n^m (RR)$, "00"),
+      node((0,s1), $D_n^m (RR)$, "01"),
+      node((s2,0), $CC(RR, D_(n-1)^m (RR)) times CC(RR, D_(n-1)^m (RR))$, "10"),
+      node((s2,s1), $CC(RR, D_(n-1)^m (RR))$, "11"),
       arr("00", "01", $(+)$, label-pos: ll),
       arr("00", "10", $i times i$, label-pos: -1.6*ll, "inj"),
       arr("01", "11", $i$, label-pos: 0.8*ll, "inj"),
@@ -293,36 +356,36 @@
     #v(1em)
     #commutative-diagram(
       padding: pd, node-padding: np,
-      node((0,0), $D_n (RR) times D_n (RR)$, "00"),
-      node((0,s1), $D_n (RR)$, "01"),
-      node((s2,0), $C_n (RR) times C_n (RR)$, "10"),
-      node((s2,s1), $C_n (RR)$, "11"),
+      node((0,0), $D_n^m (RR) times D_n^m (RR)$, "00"),
+      node((0,s1), $D_n^m (RR)$, "01"),
+      node((s2,0), $D_n^(m-1) (RR) times D_n^(m-1) (RR)$, "10"),
+      node((s2,s1), $D_n^(m-1) (RR)$, "11"),
       arr("00", "01", $(+)$, label-pos: ll),
-      arr("00", "10", $d times d$, label-pos: -1.6*ll),
+      arr("00", "10", $d times d$, label-pos: -1.8*ll),
       arr("01", "11", $d$, label-pos: 0.8*ll),
       arr("10", "11", $(+)$, label-pos: -ll),
     )
     #v(1em)
     #commutative-diagram(
       padding: pd, node-padding: np,
-      node((0,0), $RR times D_n (RR)$, "00"),
-      node((0,s1), $D_n (RR)$, "01"),
-      node((s2,0), $RR times CC(RR, D_(n-1)(RR))$, "10"),
-      node((s2,s1), $CC(RR, D_(n-1)(RR))$, "11"),
+      node((0,0), $RR times D_n^m (RR)$, "00"),
+      node((0,s1), $D_n^m (RR)$, "01"),
+      node((s2,0), $RR times CC(RR, D_(n-1)^m (RR))$, "10"),
+      node((s2,s1), $CC(RR, D_(n-1)^m (RR))$, "11"),
       arr("00", "01", $(dot)$, label-pos: ll),
-      arr("00", "10", $"id" times i$, label-pos: -1.8*ll, "inj"),
+      arr("00", "10", $"id" times i$, label-pos: -2*ll, "inj"),
       arr("01", "11", $i$, label-pos: 0.8*ll, "inj"),
       arr("10", "11", $(dot)$, label-pos: -ll),
     )
     #v(1em)
     #commutative-diagram(
       padding: pd, node-padding: np,
-      node((0,0), $RR times D_n (RR)$, "00"),
-      node((0,s1), $D_n (RR)$, "01"),
-      node((s2,0), $RR times C_n (RR)$, "10"),
-      node((s2,s1), $C_n (RR)$, "11"),
+      node((0,0), $RR times D_n^m (RR)$, "00"),
+      node((0,s1), $D_n^m (RR)$, "01"),
+      node((s2,0), $RR times D_n^(m-1) (RR)$, "10"),
+      node((s2,s1), $D_n^(m-1) (RR)$, "11"),
       arr("00", "01", $(dot)$, label-pos: ll),
-      arr("00", "10", $"id" times d$, label-pos: -1.8*ll),
+      arr("00", "10", $"id" times d$, label-pos: -2*ll),
       arr("01", "11", $d$, label-pos: 0.8*ll),
       arr("10", "11", $(dot)$, label-pos: -ll),
     )
@@ -331,45 +394,36 @@
 ]
 
 #th[
-  Let $n in NN$. A curried function $f in H_n (RR)$ lies in the class $D_n (RR)$ if and only if its counterpart $tilde(f) : RR^n -> RR$ has continuous partial derivatives on $RR^n$. Moreover, for each $1 <= i <= n$, we have
+  Let $m,n in NN$. A curried function $f in H_n (RR)$ lies in the class $D_n^m (RR)$ if and only if its counterpart $tilde(f) : RR^n -> RR$ has continuous partial derivatives on $RR^n$, of all orders up to $m$. Moreover, for each $1 <= i_1 <= i_2 <= ... <= i_m <= n$, we have
   $
-    (partial tilde(f))/(partial x_i)(x_1, x_2, ..., x_n) = f(x_1)...(x_(i-1))'(x_i)...(x_n).
-  $ <difftrans>
+    &(partial^m tilde(f))/(partial x_(i_1) partial x_(i_2) ... partial x_(i_m))(x_1, x_2, ..., x_n)\
+    = &f(x_1)...(x_(i_1 - 1))'(x_i_1)...(x_(i_2 - 1))'(x_i_2)...(x_(i_m - 1))'(x_i_m)...(x_n). #<difftrans>
+  $
 ] <diffgamma>
 #pf[
-  We employ induction over $n$. If $n = 1$, the statement clearly holds. Now, consider $n >= 2$ and assume that the statement holds for $n-1$.\
-  First, let $f in D_n (RR)$ and $(x_1, x_2, ..., x_n) in RR^n$. For $i >= 2$, we have
-  $
-    (partial tilde(f))/(partial x_i)(x_1, ..., x_n) &= lim_(h -> 0) (tilde(f)(x_1, ..., x_i + h, ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
-    &= lim_(h -> 0) (tilde(f(x_1))(x_2, ..., x_i + h, ..., x_n) - tilde(f(x_1))(x_2, ..., x_n))/h\
-    &= (partial tilde(f(x_1)))/(partial x_i)(x_2, ..., x_n) = f(x_1)...(x_(i-1))'(x_i)...(x_n)
-  $
-  by the induction hypothesis, since $f(x_1) in D_(n-1)(RR)$. For the derivative with respect to $x_1$, we have
-  $
-    f'(x_1)(x_2)...(x_n) &= (lim_(h -> 0) (f(x_1 + h) - f(x_1))/h)(x_2)...(x_n)\
-    &= lim_(h -> 0) (f(x_1+h)(x_2)...(x_n) - f(x_1)...(x_n))/h\
-    &= lim_(h -> 0) (tilde(f)(x_1 + h, x_2, ..., x_n) - tilde(f)(x_1, ..., x_n))/h = (partial tilde(f))/(partial x_1)(x_1, ..., x_n),
-  $
-  so $partial tilde(f)\/partial x_1 = f'$, and we see that (@difftrans) holds. We also immediately observe that $partial tilde(f)\/partial x_1$ is continuous by @cogamma, since $f' in C_n (RR)$. It remains to show that the derivatives with respect to $x_2, ..., x_n$ are continuous. To this end, let $(h_1, ..., h_n) -> 0 in RR^n$. Since $D_n (RR) subset CC(RR, D_(n-1)(RR))$, the function $f : RR -> D_(n-1)(RR)$ is continuous, and so we have the convergence
-  $
-    f(x_1 + h_1) st(h_1 -> 0) f(x_1) in D_(n-1)(RR).
-  $
-  Now, since the map $d : D_(n-1)(RR) -> C_(n-1)(RR)$ is continuous, the above implies
-  $
-    f(x_1 + h_1)' st(h_1 -> 0) f(x_1)' in C_(n-1)(RR).
-  $
-  From here, by @simul, we have
-  $
-    &(partial tilde(f))/(partial x_2)(x_1 + h_1, ..., x_n + h_n)\
-    = &f(x_1 + h_1)'(x_2 + h_2)...(x_n + h_n) st(#h(5pt) h_1\, h_2\, ... h_n -> 0 #h(5pt)) f(x_1)'(x_2)...(x_n) = (partial tilde(f))/(partial x_2)(x_1, ..., x_n).
-  $
-  A similar argument shows that the partial derivatives with respect to $x_3, ..., x_n$ are continuous as well.
+  If $n = 0$ or $m = 0$, the statement is trivial. Now let $n,m > 0$ and assume the statement proven for $(m,n-1)$ and $(m-1,n)$.\
 
-  Now, we prove the other direction. Consider $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ has continuous partial derivatives. To show that $f in D_n (RR)$, we follow three steps:
-  + For all $x_1 in RR$, we have $f(x_1) in D_(n-1)(RR)$. This holds by the induction hypothesis, since $tilde(f(x_1)) : RR^(n-1) -> RR$ clearly has continuous partial derivatives, being a restriction of $tilde(f)$.
-  + The function $f : RR -> D_(n-1)(RR)$ is continuous. To show this, consider a sequence ${x_k^((1))}_(k in NN) subset RR$ converging to $x_0^((1)) in RR$. We aim to prove that $f(x_k^((1))) -> f(x_0^((1)))$ in $D_(n-1)(RR)$. This is equivalent to showing that
+  First, let $f in D_n^m (RR)$. We immediately see that $f in D_n^(m-1) (RR)$, and so, by the induction hypothesis, partial derivatives or order up to $m-1$ exist and are continuous on $RR^n$. Now, consider some $1 <= i_1 <= i_2 <= ..., <= i_m <= n$. It is not hard to see by definition that (@difftrans) holds. To show that the partial derivative with respect to $x_i_1, ..., x_i_m$ is continuous, consider $(h_1, h_2, ..., h_n) -> 0 in RR^n$, and a point $(x_1, ..., x_n) in RR^n$. By the continuity of $f$ and the definition of the differential topology, we have
+  $
+    f(x_1 + h_1) &st(h_1 -> 0) f(x_1) in D_(n-1)^m (RR),\
+    &dots.v\
+    f(x_1 + h_1)...(x_(i_1 - 1) + h_(i_1-1))' &st(h_1\, ...\, h_(i_1 - 1) -> 0) f(x_1)...(x_(i_1 - 1))' in D_(n - i_1 + 1)^(m-1) (RR),\
+    &dots.v\
+    &f(x_1 + h_1)...(x_(i_1 - 1) + h_(i_1-1))'...(x_(i_m - 1) + h_(i_m - 1))...(x_n + h_n)\
+    st(h_1\, h_2\, ...\, h_n -> 0) &f(x_1)...(x_(i_1 - 1))'...(x_(i_m-1))'...(x_n) in D_0^0 (RR) = RR,\
+  $
+  so the partial derivative
+  $
+    (partial^m tilde(f))/(partial x_i_1 partial x_i_2 ... partial x_i_m)
+  $
+  is continuous on $RR^n$.\
+
+  Conversely, suppose $f in H_n (RR)$ is such that $tilde(f) : RR^n -> RR$ lies in the class $C^m (RR^n)$. To show that $f in D_n^m (RR)$, we follow three steps:
+  + For all $x_1 in RR$, we have $f(x_1) in D_(n-1)^m (RR)$. This is provided by the induction hypothesis, since the restriction of a $C^m$ function on a hyperplane is also a $C^m$ function.
+  // + The function $f : RR -> D_(n-1)^m (RR)$ is continuous. To show this, consider a sequence ${x_k^((1))}_(k in NN) subset RR$ converging to $x^((1)) in RR$. 
+  + The function $f : RR -> D_(n-1)^m (RR)$ is continuous. To show this, consider a sequence ${x_k^((1))}_(k in NN) subset RR$ converging to $x_0^((1)) in RR$. We aim to prove that $f(x_k^((1))) -> f(x_0^((1)))$ in $D_(n-1)^m (RR)$. This is equivalent to showing that
     $
-      f(x_k^((1))) -> f(x_k^((1))) in CC(RR, D_(n-2)(RR)) #h(10pt) "and" #h(10pt) f(x_k^((1)))' -> f(x_0^((1)))' in C_(n-1)(RR).
+      f(x_k^((1))) -> f(x_k^((1))) in CC(RR, D_(n-2)^m (RR)) #h(10pt) "and" #h(10pt) f(x_k^((1)))' -> f(x_0^((1)))' in D_(n-1)^(m-1) (RR).
     $ <twocond>
     The latter of these conditions holds by the induction hypothesis, since
     $
@@ -388,13 +442,13 @@
       f(x_k^((1)))(x_k^((2)))...(x_k^((n))) -> f(x_0^((1)))(x_0^((2)))...(x_0^((n))) in RR,
     $
     which is evident since $f in C_n (RR)$ by @cogamma. Hence we see that $f$ lies in $CC(RR, D_(n-1)(RR))$. We have also established (@difftrans) for $f$ and $i >= 2$, via (@par2).
-  + Finally, we need to find $f' in C_n (RR)$ such that
+  + Finally, we need to find $f' in D_n^(m-1) (RR)$ such that
     $
       (f(x + h) - f(x))/h st(h -> 0) f'(x) in H_(n-1)(RR)
     $ <conv>
-    for all $x in RR$. Indeed, following (@difftrans), let us define $f' := gamma(partial tilde(f)\/partial x_1)$. We immediately see by (@cogamma) that $f'$ so defined lies in $C_n (RR)$. To see that (@conv) holds, consider $x_1, ..., x_n in RR$ and write
+    for all $x in RR$. Indeed, following (@difftrans), let us define $f' := gamma(partial tilde(f)\/partial x_1)$. We immediately see by the induction hypothesis that $f'$ so defined lies in $D_n^(m-1) (RR)$. To see that (@conv) holds, consider $x_1, ..., x_n in RR$ and write
     $
-      f'(x_1)(x_2)...(x_n) &= (partial tilde(f)/(partial x_1)(x_1, ..., x_n)\
+      f'(x_1)(x_2)...(x_n) &= (partial tilde(f))/(partial x_1)(x_1, ..., x_n)\
       &= lim_(h -> 0) (tilde(f)(x_1 + h, x_2, ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
       &= (lim_(h -> 0) (f(x_1 + h) - f(x_1))/h)(x_2)...(x_n),
     $
@@ -402,3 +456,42 @@
 ]
 
 #bibliography("bibliography.yml")
+
+  // We employ induction over $n$. If $n = 1$, the statement clearly holds. Now, consider $n >= 2$ and assume that the statement holds for $n-1$.\
+  // First, let $f in D_n (RR)$ and $(x_1, x_2, ..., x_n) in RR^n$. For $i >= 2$, we have
+  // $
+  //   (partial tilde(f))/(partial x_i)(x_1, ..., x_n) &= lim_(h -> 0) (tilde(f)(x_1, ..., x_i + h, ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
+  //   &= lim_(h -> 0) (tilde(f(x_1))(x_2, ..., x_i + h, ..., x_n) - tilde(f(x_1))(x_2, ..., x_n))/h\
+  //   &= (partial tilde(f(x_1)))/(partial x_i)(x_2, ..., x_n) = f(x_1)...(x_(i-1))'(x_i)...(x_n)
+  // $
+  // by the induction hypothesis, since $f(x_1) in D_(n-1)(RR)$. For the derivative with respect to $x_1$, we have
+  // $
+  //   f'(x_1)(x_2)...(x_n) &= (lim_(h -> 0) (f(x_1 + h) - f(x_1))/h)(x_2)...(x_n)\
+  //   &= lim_(h -> 0) (f(x_1+h)(x_2)...(x_n) - f(x_1)...(x_n))/h\
+  //   &= lim_(h -> 0) (tilde(f)(x_1 + h, x_2, ..., x_n) - tilde(f)(x_1, ..., x_n))/h = (partial tilde(f))/(partial x_1)(x_1, ..., x_n),
+  // $
+  // so $partial tilde(f)\/partial x_1 = f'$, and we see that (@difftrans) holds. We also immediately observe that $partial tilde(f)\/partial x_1$ is continuous by @cogamma, since $f' in C_n (RR)$. It remains to show that the derivatives with respect to $x_2, ..., x_n$ are continuous. To this end, let $(h_1, ..., h_n) -> 0 in RR^n$. Since $D_n (RR) subset CC(RR, D_(n-1)(RR))$, the function $f : RR -> D_(n-1)(RR)$ is continuous, and so we have the convergence
+  // $
+  //   f(x_1 + h_1) st(h_1 -> 0) f(x_1) in D_(n-1)(RR).
+  // $
+  // Now, since the map $d : D_(n-1)(RR) -> C_(n-1)(RR)$ is continuous, the above implies
+  // $
+  //   f(x_1 + h_1)' st(h_1 -> 0) f(x_1)' in C_(n-1)(RR).
+  // $
+  // From here, by @simul, we have
+  // $
+  //   &(partial tilde(f))/(partial x_2)(x_1 + h_1, ..., x_n + h_n)\
+  //   = &f(x_1 + h_1)'(x_2 + h_2)...(x_n + h_n) st(#h(5pt) h_1\, h_2\, ... h_n -> 0 #h(5pt)) f(x_1)'(x_2)...(x_n) = (partial tilde(f))/(partial x_2)(x_1, ..., x_n).
+  // $
+  // A similar argument shows that the partial derivatives with respect to $x_3, ..., x_n$ are continuous as well.
+  //
+  // Now, we prove the other direction. Consider $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ has continuous partial derivatives. To show that $f in D_n (RR)$, we follow three steps:
+  // + For all $x_1 in RR$, we have $f(x_1) in D_(n-1)(RR)$. This holds by the induction hypothesis, since $tilde(f(x_1)) : RR^(n-1) -> RR$ clearly has continuous partial derivatives, being a restriction of $tilde(f)$.
+
+// #prop([see @bb, page 28])[
+//   Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
+// ] <haus>
+
+// #prop([see @bb, page 29])[
+//   Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
+// ] <tvs>
