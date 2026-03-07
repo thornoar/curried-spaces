@@ -34,7 +34,7 @@
 #def[
   Let $n in NN_0 = {0, 1, 2, ...}$. The set $H_n (RR)$ of _curried $n$-variable functions_ is a topological vector space defined recursively as follows:
   - If $n = 0$, we set $H_0 (RR) = RR$;
-  - If $H_n (RR)$ is defined, we let $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise linear structure and the topology of pointwise convergence. @pwhaus and @pwtvs ensure that $H_(n+1)(RR)$ is a Hausdorff topological vector space.
+  - If $H_n (RR)$ is defined, we let $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise linear structure and the topology of pointwise convergence (see @pcapp of the Appendix). @pwhaus and @pwtvs ensure that $H_(n+1)(RR)$ is a Hausdorff topological vector space.
 ]
 
 #def[
@@ -64,7 +64,7 @@
 #def[
   Let $n in NN_0$. The set $C_n (RR)$ of _curried continuous functions_ is a Hausdorff topological vector space defined recursively as follows:
   - If $n = 0$, we set $C_0 (RR) = RR$.
-  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$, endowed with pointwise linear structure and the compact-open topology (see @coapp). @cohaus and @cotvs ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
+  - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$, endowed with pointwise linear structure and the compact-open topology (see @coapp of the Appendix). @cohaus and @cotvs ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
 
 #lm[
