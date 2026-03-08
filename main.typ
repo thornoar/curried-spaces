@@ -29,6 +29,9 @@
 
 = Introduction
 
+There are essentially two ways to represent a multivariable function. One is to complicate the domain, resulting in $f : A times B -> C$, and the other is to complicate the codomain by writing $g : A -> C^B$, such that $g(a)$ is again a function that maps $B$ to $C$. In programming, the latter approach is called _partial application_ or _currying,_ and we will adopt this terminology.\
+Classical multivariable calculus is built on the former, "uncurried" approach to defining functions of multiple arguments, and in this paper we seek a way to express calculus in the curried language instead.
+
 = General curried functions
 
 #def[
