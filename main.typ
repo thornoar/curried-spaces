@@ -21,6 +21,7 @@
 #let SS = $cal(S)$
 #let CC = $cal(C)$
 #let FF = $cal(F)$
+#let fr = [Fréchet]
 
 #align(center)[
   #text(size: 22pt)[*Continuous Convergence and Curried Functional Spaces*]
@@ -30,14 +31,15 @@
 = Introduction
 
 There are essentially two ways to represent a multivariable function. One is to complicate the domain, resulting in $f : A times B -> C$, and the other is to complicate the codomain by writing $g : A -> C^B$, such that $g(a)$ is again a function that maps $B$ to $C$. In programming, the latter approach is called _partial application_ or _currying,_ and we will adopt this terminology.\
-Classical multivariable calculus is built on the former, "uncurried" approach to defining functions of multiple arguments, and in this paper we seek a way to express calculus in the curried language instead.
+Classical multivariable calculus is built on the former, "uncurried" approach to defining functions of multiple arguments, and in this paper we seek a way to express calculus in the curried language instead.\
+We will be using the topological language of _filters_ throughout the work, to simplify proofs. For the definition and properties of filters, see @filapp.
 
 = General curried functions
 
 #def[
   Let $n in NN_0 = {0, 1, 2, ...}$. The set $H_n (RR)$ of _curried $n$-variable functions_ is a topological vector space defined recursively as follows:
   - If $n = 0$, we set $H_0 (RR) = RR$;
-  - If $H_n (RR)$ is defined, we let $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise linear structure and the topology of pointwise convergence (see @pcapp of the Appendix). @pwhaus and @pwtvs ensure that $H_(n+1)(RR)$ is a Hausdorff topological vector space.
+  - If $H_n (RR)$ is defined, we let $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise linear structure and the topology of pointwise convergence (see @pcapp), such that a filter $F in FF(H_(n+1)(RR))$ converges to a function $f in H_(n+1)(RR)$ if and only if $F(x) -> f(x) in H_n (RR)$ for all $x in RR$. @pwhaus and @pwtvs from @pcapp ensure that $H_(n+1)(RR)$ is a Hausdorff topological vector space.
 ]
 
 #def[
@@ -48,19 +50,23 @@ Classical multivariable calculus is built on the former, "uncurried" approach to
   Then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ is clearly a bijection. The function $f = gamma(tilde(f))$ will be called the _curried version_ of $tilde(f)$.
 ]
 
-#lm[
-  For every $n in NN_0$, the space $H_n (RR)$ is locally compact.
-]
-#pf[
-  An easy proof by induction over $n$.
+#rem[
+  Let $n in NN$. If $"Hom"(RR^n, RR)$ is given the topology of pointwise convergence together with the pointwise linear structure, then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ clearly becomes an isomorphism of topological vector spaces.
 ]
 
 #lm[
-  For every $n >= 1$, the space $H_n (RR)$ is not metrizable.
+  For every $n in NN_0$, the space $H_n (RR)$ is locally convex.
 ]
 #pf[
-  
+  We employ induction over $n$. If $n = 0$, the statement is clear. Suppose that the space $H_(n-1) (RR)$ is locally compact. It is then easy to see that $V(0, U)$ is a convex neighborhood of $0$ in $H_n (RR)$, where $U$ is the convex neighborhood of $0 in H_(n-1) (RR)$ that exists by the induction hypothesis.
 ]
+
+// #lm[
+//   For every $n >= 1$, the space $H_n (RR)$ is not metrizable.
+// ]
+// #pf[
+//   
+// ]
 
 = Continuous curried functions
 
@@ -130,13 +136,20 @@ Classical multivariable calculus is built on the former, "uncurried" approach to
 ]
 
 #lm[
-  For every $n in NN_0$, the space $C_n (RR)$ is locally compact.
+  For every $n in NN_0$, the space $C_n (RR)$ is locally convex.
 ]
 #pf[
-  An easy proof by induction over $n$.
+  An easy proof by induction over $n$, similar to the case of $H_n (RR)$.
 ]
 
-== Differentiable functions
+#lm[
+  For all $n in NN_0$, the space $C_n (RR)$ is a #fr space.
+]
+#pf[
+  If $n = 0$, the statement clearly holds. Now, assuming that $C_(n-1)(RR)$ is a #fr space, we easily conclude by @fr2fr that $C_n (RR)$ is also a #fr space.
+]
+
+= Differentiable functions
 
 #def[
   Let $m in NN_0$ and $n in NN_0$. The set $D^m_n (RR)$ of _curried $m$ times differentiable functions_ is a topological space defined recursively as follows:
@@ -357,9 +370,20 @@ Classical multivariable calculus is built on the former, "uncurried" approach to
 
 #bibliography("bibliography.yml")
 
-= Appendix <app>
+#let appendix(body) = {
+  set heading(numbering: "A.", supplement: [Appendix])
+  counter(heading).update(0)
+  body
+}
+// #outline(target: heading.where(supplement: [Appendix]), title: [Appendix])
+#show: appendix
 
-== The language of filters <filapp>
+// #set heading.where(level: 1)(numbering: "A", supplement: "Appendix")
+#counter(heading).update(0)
+
+// = Appendix <app>
+
+= The language of filters <filapp>
 
 #def[
   Let $X$ be a set. A _filter_ on $X$ is a non-empty set $F subset 2^X$ which is closed under supersets and finite intersections, and does not contain the empty set. The set of all filters on $X$ will be denoted by $FF(X)$.
@@ -391,11 +415,11 @@ Classical multivariable calculus is built on the former, "uncurried" approach to
   Let $X$ be a set and $f_i : X -> Y_i$ be a family of maps, where $Y_i$ are topological spaces. Let $X$ be endowed with the coarsest topology such that $f_i$ is continuous for each $i$. Then a filter $F in FF(X)$ converges to $x in X$ if and only if $f_i (F)$ converges to $f_i (x)$ for all $i$.
 ]
 
-== Topological vector spaces <tvsapp>
+// = Topological vector spaces <tvsapp>
+//
+// We assume that the reader is familiar with the definition and basic properties of topological vector spaces. Here we list some results that will be 
 
-We assume that the reader is familiar with the definition and basic properties of topological vector spaces. Here we list some results that will be 
-
-== The topology of pointwise convergence <pcapp>
+= The topology of pointwise convergence <pcapp>
 
 #def([pointwise convergence topology, see @bou2])[
   Let $X$ be a set, $Y$ a topological space, and denote by $SS(X,Y)$ the set of functions from $X$ to $Y$. For each $x in X$ and each open set $U subset Y$, let $V(x, U)$ be the set of all functions $f in SS(X,Y)$ such that $f(x) in U$. The collection
@@ -405,8 +429,12 @@ We assume that the reader is familiar with the definition and basic properties o
   forms a subbase of a topology on $SS(X,Y)$, called the _topology of pointwise convergence._
 ]
 
-#rem[
-  Let $X$ be a set and $Y$ a topological space. It is not hard to see that a filter $F in FF(SS(X,Y))$ converges to a function $f in SS(X,Y)$ if and only if, for any $x in X$, the filter $F(x) = [{A(x) mid(|) A in F}]$ converges to $f(x) in Y$.
+#lm[
+  Let $X$ be a set and $Y$ a topological space. Then a filter $F in FF(SS(X,Y))$ converges to a function $f in SS(X,Y)$ if and only if, for any $x in X$, the filter $F(x) = [{A(x) mid(|) A in F}]$ converges to $f(x) in Y$.
+]
+#pf[
+  First, let $F -> f in SS(X,Y)$, and consider a point $x in X$. To show that $F(x) -> f(x) in Y$, let $U$ be a neighborhood of $f(x)$. Then, since $F -> f$, we see that $V(x, U) in F$. But this implies $U = V(x,U)(x) in F(x)$, and so we conclude that $F(x) -> f(x)$.\
+  Conversely, assume that $F(x) -> f(x)$ for all $x in X$. To show that $F$ converges to $f$, it suffices to show that $V(x, U) in F$ whenever $f in V(x, U)$. Indeed, if $f in V(x,U)$, we have $f(x) in U$, and so $U in F(x)$, meaning that $U supset A(x)$ for some $A in F$, and so $V(x, U) supset V(x, A(x)) supset A in F$, and we are done.
 ]
 
 #lm[
@@ -430,9 +458,9 @@ We assume that the reader is familiar with the definition and basic properties o
   This shows that the addition operation is continuous. Scalar multiplication is continuous by a similar argument.
 ]
 
-== The compact-open topology <coapp>
+= The compact-open topology <coapp>
 
-#def([compact-open topology, see @bou2])[
+#def([compact-open topology, see @bou2, page 301])[
   Let $X$ and $Y$ be two topological spaces, and by $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. For each compact set $K subset X$ and each open set $U subset Y$, let $V(K,U)$ be the set of all functions $f in CC(X,Y)$ such that $f(K) subset U$. The collection
   $
   {V(K,U) mid(|) K subset X, U subset Y}
@@ -479,42 +507,43 @@ We assume that the reader is familiar with the definition and basic properties o
   The continuity of scalar multiplication is proven similarly.
 ]
 
-
-  // We employ induction over $n$. If $n = 1$, the statement clearly holds. Now, consider $n >= 2$ and assume that the statement holds for $n-1$.\
-  // First, let $f in D_n (RR)$ and $(x_1, x_2, ..., x_n) in RR^n$. For $i >= 2$, we have
-  // $
-  //   (partial tilde(f))/(partial x_i)(x_1, ..., x_n) &= lim_(h -> 0) (tilde(f)(x_1, ..., x_i + h, ..., x_n) - tilde(f)(x_1, ..., x_n))/h\
-  //   &= lim_(h -> 0) (tilde(f(x_1))(x_2, ..., x_i + h, ..., x_n) - tilde(f(x_1))(x_2, ..., x_n))/h\
-  //   &= (partial tilde(f(x_1)))/(partial x_i)(x_2, ..., x_n) = f(x_1)...(x_(i-1))'(x_i)...(x_n)
-  // $
-  // by the induction hypothesis, since $f(x_1) in D_(n-1)(RR)$. For the derivative with respect to $x_1$, we have
-  // $
-  //   f'(x_1)(x_2)...(x_n) &= (lim_(h -> 0) (f(x_1 + h) - f(x_1))/h)(x_2)...(x_n)\
-  //   &= lim_(h -> 0) (f(x_1+h)(x_2)...(x_n) - f(x_1)...(x_n))/h\
-  //   &= lim_(h -> 0) (tilde(f)(x_1 + h, x_2, ..., x_n) - tilde(f)(x_1, ..., x_n))/h = (partial tilde(f))/(partial x_1)(x_1, ..., x_n),
-  // $
-  // so $partial tilde(f)\/partial x_1 = f'$, and we see that (@difftrans) holds. We also immediately observe that $partial tilde(f)\/partial x_1$ is continuous by @cogamma, since $f' in C_n (RR)$. It remains to show that the derivatives with respect to $x_2, ..., x_n$ are continuous. To this end, let $(h_1, ..., h_n) -> 0 in RR^n$. Since $D_n (RR) subset CC(RR, D_(n-1)(RR))$, the function $f : RR -> D_(n-1)(RR)$ is continuous, and so we have the convergence
-  // $
-  //   f(x_1 + h_1) st(h_1 -> 0) f(x_1) in D_(n-1)(RR).
-  // $
-  // Now, since the map $d : D_(n-1)(RR) -> C_(n-1)(RR)$ is continuous, the above implies
-  // $
-  //   f(x_1 + h_1)' st(h_1 -> 0) f(x_1)' in C_(n-1)(RR).
-  // $
-  // From here, by @simul, we have
-  // $
-  //   &(partial tilde(f))/(partial x_2)(x_1 + h_1, ..., x_n + h_n)\
-  //   = &f(x_1 + h_1)'(x_2 + h_2)...(x_n + h_n) st(#h(5pt) h_1\, h_2\, ... h_n -> 0 #h(5pt)) f(x_1)'(x_2)...(x_n) = (partial tilde(f))/(partial x_2)(x_1, ..., x_n).
-  // $
-  // A similar argument shows that the partial derivatives with respect to $x_3, ..., x_n$ are continuous as well.
-  //
-  // Now, we prove the other direction. Consider $f in H_n (RR)$ such that $tilde(f) : RR^n -> RR$ has continuous partial derivatives. To show that $f in D_n (RR)$, we follow three steps:
-  // + For all $x_1 in RR$, we have $f(x_1) in D_(n-1)(RR)$. This holds by the induction hypothesis, since $tilde(f(x_1)) : RR^(n-1) -> RR$ clearly has continuous partial derivatives, being a restriction of $tilde(f)$.
-
-// #prop([see @bb, page 28])[
-//   Let $X$ be a convergence space and let $Y$ be a Hausdorff convergence space (i.e. every filter in $Y$ converges to at most one point). Then $CC(X,Y)$ is also a Hausdorff convergence space.
-// ] <haus>
-
-// #prop([see @bb, page 29])[
-//   Let $X$ be a convergence space and $Y$ be a convergence vector space, i.e. a set endowed with both structures such that the operations $+ : Y times Y -> Y$ and $dot : RR times Y -> Y$ are continuous. Then $CC(X,Y)$ is also a convergence vector space.
-// ] <tvs>
+#lm[
+  Suppose that $X$ is a locally compact and hemicompact topological space (that is, $X$ is the union of countably many its compact subsets), and let $Y$ be a #fr space. Then the space $CC(X, Y)$ is also a #fr space.
+] <fr2fr>
+#pf[
+  First of all, we need to show that $CC(X,Y)$ is metrizable. Since $Y$ is metrizable, it admits a countable basis ${V_n}_(n = 1)^oo$ of neighborhoods of $0$. Moreover, since $X$ is hemicompact, we have
+  $
+    X = union.big_(m = 1)^oo K_m,
+  $
+  where all $K_m$ are compact. It is clear to see that the family
+  $
+    {V(K_m, U_n) mid(|) m,n in NN}
+  $
+  forms a countable basis of neighborhoods of $0$ in $CC(X,Y)$. Hence, $C(X,Y)$ is metrizable.\
+  It remains to show that the metric generating the topology of $CC(X,Y)$ is complete. To this end, consider a fundamental sequence ${f_k}_(k = 1)^oo$ in $CC(X,Y)$. This means that for all $n,m in NN$, there is $N in NN$ such that
+  $
+    k,l >= N ==> f_k - f_l in V(K_m, U_n).
+  $
+  Now, consider a point $x in X$. By choosing $m_0$ such that $x in K_(m_0)$, we see that for all $n in NN$, eventually
+  $
+    f_k - f_l in V(K_(m_0), U_n) ==> f_k (x) - f_l (x) in U_n.
+  $
+  This means that the sequence ${f_k (x)}_(k = 1)^oo$ is fundamental in $Y$, and so it converges to some point $f(x) in Y$. We now need to show that $f$ is continuous and $f_k -> f$ in $CC(X,Y)$.\
+  Consider $n,m in NN$. Since $Y$ is a topological vector space, it is _regular_ in the sense that every neighborhood $U$ of $0$ contains the closure $overline(U')$ of some other neighborhood $U'$ of $0$. Hence, we can find $n' in NN$ such that $overline(U_n') subset U_n$. Now, as $k,l -> oo$, eventually we have
+  $
+    (f_k - f_l)(K_m) subset U_n'.
+  $
+  Taking any $x in K_m$, we have
+  $
+    f_k (x) - f_l (x) = (f_k - f_l)(x) in U_n' stretch(=>)_(l -> oo) f_k (x) - f(x) in overline(U_n') subset U_n.
+  $
+  This means that
+  $
+    (f_k - f)(K_m) subset U_n
+  $ <lim1>
+  eventually as $k -> oo$. Now, to show that $f$ is continuous, consider $x in X$ and a neighborhood $U$ of $0 in Y$. Since $X$ is locally compact, there is $m_0$ such that $K_(m_0)$ is a neighborhood of $x$. Moreover, there is $n_0 in NN$ such that $U_(n_0) + U_(n_0) + U_(n_0) subset U$. Finally, by (@lim1) there is $k_0 in NN$ such that $(f_(k_0) - f)(K_(m_0)) subset U_(n_0)$. Now, as $y -> x$, we have $y in K_(m_0)$, and
+  $
+    f(y) - f(x) = [f(y) - f_k (y)] + [f_k (y) - f_k (x)] + [f_k (x) - f(x)] in U_(n_0) + U_(n_0) + U_(n_0) subset U.
+  $
+  Hence, we conclude that $f$ is continuous, and (@lim1) implies that for all $m,n in NN$, we have $f_k - f in V(K_m, U_n)$ eventually as $k -> oo$, which means that $f_k -> f$ in $C(X,Y)$, as desired.
+]
