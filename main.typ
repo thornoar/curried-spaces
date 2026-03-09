@@ -1,17 +1,40 @@
 #import "@local/common:0.0.0": *
-#import "@local/theorem-shorthands-en:0.0.0": *
 #import "@preview/equate:0.3.1": equate
 #import "@preview/commute:0.3.0": *
 
-#show: theorem
+#import "@local/theorem:0.0.0": *
+#show: theorem-rule
 
-#set page("a4", margin: 1in, numbering: "1")
-#set text(font: "TeX Gyre Schola")
-#set heading(numbering: "1.")
-#show heading: it => {
-  it
-  v(5pt)
-}
+#let th-numbering = "1.1"
+
+#let definition = plainstyle("Definition", numbering: th-numbering)
+#let notation = plainstyle("Notation", numbering: th-numbering)
+#let example = plainstyle("Example", numbering: th-numbering)
+#let exercise = plainstyle("Exercise", numbering: th-numbering)
+#let note = plainstyle("Note", numbering: th-numbering)
+#let remark = plainstyle("Remark", numbering: th-numbering)
+
+#let theorem = statestyle("Theorem", numbering: th-numbering)
+#let lemma = statestyle("Lemma")
+#let proposition = statestyle("Proposition", numbering: th-numbering)
+#let statement = statestyle("Statement", numbering: th-numbering)
+#let problem = statestyle("Problem", numbering: th-numbering)
+#let corollary = statestyle("Corollary", numbering: th-numbering)
+
+#let proof = proofstyle()
+
+// #import "@preview/theorion:0.4.1": *
+// #set-qed-symbol[#math.square.filled]
+// #show: show-definition
+// #show: show-theorem
+// #show: show-lemma
+// #show: show-proposition
+
+
+#set page("a4", margin: (top: 0.5in, bottom: 0.7in, right: 0.5in, left: 0.5in), numbering: "1")
+#set text(size: 11pt, font: "TeX Gyre Schola")
+#set heading(numbering: "1.1  ")
+#show heading: it => { it; v(7pt) }
 
 #set math.equation(numbering: "(1)", supplement: none)
 #show: equate.with(sub-numbering: false, number-mode: "label")
@@ -28,7 +51,7 @@
   #v(.5in)
 ]
 
-= Introduction
+= Introduction <intro>
 
 There are essentially two ways to represent a multivariable function. One is to complicate the domain, resulting in $f : A times B -> C$, and the other is to complicate the codomain by writing $g : A -> C^B$, such that $g(a)$ is again a function that maps $B$ to $C$. In programming, the latter approach is called _partial application_ or _currying,_ and we will adopt this terminology.\
 Classical multivariable calculus is built on the former, "uncurried" approach to defining functions of multiple arguments, and in this paper we seek a way to express calculus in the curried language instead.\
@@ -36,13 +59,13 @@ We will be using the topological language of _filters_ throughout the work, to s
 
 = General curried functions
 
-#def[
+#definition[
   Let $n in NN_0 = {0, 1, 2, ...}$. The set $H_n (RR)$ of _curried $n$-variable functions_ is a topological vector space defined recursively as follows:
   - If $n = 0$, we set $H_0 (RR) = RR$;
   - If $H_n (RR)$ is defined, we let $H_(n+1) (RR)$ to be the set of all functions from $RR$ to $H_n (RR)$. This set is given the pointwise linear structure and the topology of pointwise convergence (see @pcapp), such that a filter $F in FF(H_(n+1)(RR))$ converges to a function $f in H_(n+1)(RR)$ if and only if $F(x) -> f(x) in H_n (RR)$ for all $x in RR$. @pwhaus and @pwtvs from @pcapp ensure that $H_(n+1)(RR)$ is a Hausdorff topological vector space.
 ]
 
-#def[
+#definition[
   Let $tilde(f) : RR^n -> RR$ be a function. Define
   $
     gamma(tilde(f))(x_1)(x_2)...(x_n) = tilde(f)(x_1, x_2, ..., x_n).
@@ -50,36 +73,36 @@ We will be using the topological language of _filters_ throughout the work, to s
   Then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ is clearly a bijection. The function $f = gamma(tilde(f))$ will be called the _curried version_ of $tilde(f)$.
 ]
 
-#rem[
+#remark[
   Let $n in NN$. If $"Hom"(RR^n, RR)$ is given the topology of pointwise convergence together with the pointwise linear structure, then $gamma : "Hom"(RR^n, RR) -> H_n (RR)$ clearly becomes an isomorphism of topological vector spaces.
 ]
 
-#lm[
+#lemma[
   For every $n in NN_0$, the space $H_n (RR)$ is locally convex.
 ]
-#pf[
+#proof[
   We employ induction over $n$. If $n = 0$, the statement is clear. Suppose that the space $H_(n-1) (RR)$ is locally compact. It is then easy to see that $V(0, U)$ is a convex neighborhood of $0$ in $H_n (RR)$, where $U$ is the convex neighborhood of $0 in H_(n-1) (RR)$ that exists by the induction hypothesis.
 ]
 
-// #lm[
+// #lemma[
 //   For every $n >= 1$, the space $H_n (RR)$ is not metrizable.
 // ]
-// #pf[
+// #proof[
 //   
 // ]
 
 = Continuous curried functions
 
-#def[
+#definition[
   Let $n in NN_0$. The set $C_n (RR)$ of _curried continuous functions_ is a Hausdorff topological vector space defined recursively as follows:
   - If $n = 0$, we set $C_0 (RR) = RR$.
   - If $C_n (RR)$ is defined, we set $C_(n+1) (RR) = CC(RR, C_n (RR))$, endowed with pointwise linear structure and the compact-open topology (see @coapp of the Appendix). @cohaus and @cotvs ensure that $C_(n+1)(RR)$ is a Hausdorff topological vector space, provided that $C_n (RR)$ is.
 ]
 
-#lm[
+#lemma[
   Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
 ] <simul>
-#pf[
+#proof[
   First, let $F$ be the derived filter of ${f_k}_(k in NN)$ and suppose that $F$ converges to a function $f in CC(X,Y)$. Consider a sequence ${x_k}_(k in NN)$ converging to $x in X$, with its derived filter $P$. Now let $V$ be a neighborhood of $f(x)$ in $Y$. By @cofilter, we have $F(P) -> f(x)$, and so $V in F(P)$. This means that $V$ contains an element of the base of $F(P)$, namely a set
   $
     B_(n_0, m_0) = {f_n (x_m) mid(|) n >= n_0, hs m >= m_0}.
@@ -95,11 +118,11 @@ We will be using the topological language of _filters_ throughout the work, to s
   In particular, we have $f_(k_n)(x_n) in.not V$ for all $n in NN$. At the same time, since the sets $A_n$ generate $P$, we see that $x_n st(n -> oo) x$, so we must have $f_(k_n)(x_n) st(n -> oo) f(x)$ by (@subseq), a contradiction.
 ]
 
-#cor[
+#corollary[
   From the above lemma we conclude that if $n >= 1$, a sequence of functions ${f_k}_(k = 1)^oo$ in $C_n (RR)$ converges to $f in C_n (RR)$ if and only if for any sequence ${x_k}_(k = 1)^oo subset RR$ converging to $x in RR$, we have $f_k (x_k) st(k -> oo) f(x)$ in $C_(n-1)(RR)$.
 ]
 
-#exam[
+#example[
   The topology on $C_n (RR)$ is finer than the topology induced from $H_n (RR)$, and does not coincide with it, unless $n = 0$. To see this, take $n = 1$ and consider the classical function
   $
     phi (x) = cases(
@@ -120,14 +143,14 @@ We will be using the topological language of _filters_ throughout the work, to s
   A similar argument applies for any other $n >= 2$. Hence we conclude that $C_n (RR)$ is not a subspace of $H_n (RR)$.
 ]
 
-#prop[
+#proposition[
   Let $n in NN_0$. Then the map
   $
     gamma : CC(RR^n, RR) -> C_n (RR)
   $
   defined by $gamma(f)(x_1)(x_2)...(x_n) = f(x_1, ..., x_n)$, is well-defined and is a homeomorphism.
 ] <cogamma>
-#pf[
+#proof[
   If $n = 0$, the statement is trivial. Assume it is proven for $C_n (RR)$. By @curry, we have
   $
     CC(RR^(n+1), RR) = CC(RR times RR^n, RR) tilde.equiv CC(RR, CC(RR^n, RR)) tilde.equiv CC(RR, C_n (RR)) = C_(n+1)(RR),
@@ -135,23 +158,27 @@ We will be using the topological language of _filters_ throughout the work, to s
   q.e.d.
 ]
 
-#lm[
+#lemma[
   For every $n in NN_0$, the space $C_n (RR)$ is locally convex.
 ]
-#pf[
+#proof[
   An easy proof by induction over $n$, similar to the case of $H_n (RR)$.
 ]
 
-#lm[
+#definition[
+  A topological vector space is called a _#fr space_ if its topology is compatible with a complete invariant metric.
+]
+
+#lemma[
   For all $n in NN_0$, the space $C_n (RR)$ is a #fr space.
 ]
-#pf[
+#proof[
   If $n = 0$, the statement clearly holds. Now, assuming that $C_(n-1)(RR)$ is a #fr space, we easily conclude by @fr2fr that $C_n (RR)$ is also a #fr space.
 ]
 
 = Differentiable functions
 
-#def[
+#definition[
   Let $m in NN_0$ and $n in NN_0$. The set $D^m_n (RR)$ of _curried $m$ times differentiable functions_ is a topological space defined recursively as follows:
   - If $n = 0$, we set $D^m_0 (RR) = RR$ for all $m$, as usual;
   - If $m = 0$, we set $D^0_n (RR) = C_n (RR)$;
@@ -172,14 +199,14 @@ We will be using the topological language of _filters_ throughout the work, to s
     are continuous. This topology will be called the _differential topology of order $m$._ We prove below that $D^m_n (RR)$ are Hausdorff topological vector spaces.
 ]
 
-#lm[
+#lemma[
   For all $m,n in NN_0$, we have $D_n^(m+1) (RR) subset D_n^m$, and the inclusion map
   $
     j : D^(m+1)_n (RR) -> D^m_n (RR)
   $
   is continuous, meaning that the topology on $D^(m+1)_n (RR)$ is finer than the topology induced from $D^m_n (RR)$.
 ]
-#pf[
+#proof[
   We prove by induction over $n$. Consider the following cases:
   + $n = 0$. Then we have $D_0^(m+1) (RR) = D_0^n (RR) = RR$, and the statement holds;
   + $m = 0$. Then we have
@@ -225,24 +252,24 @@ We will be using the topological language of _filters_ throughout the work, to s
     ]
 ]
 
-#cor[
+#corollary[
   We have a chain of subspaces with each topology finer than the previous one:
   $
     C_n (RR) = D_n^0 (RR) <--^j D_n^1 (RR) <--^j D_n^2 (RR) <--^j D_n^3 (RR) <--^j ...
   $
 ]
 
-#lm[
+#lemma[
   For all $n, m in NN_0$, the topological space $D_n^m (RR)$ is Hausdorff.
 ] <diffhaus>
-#pf[
+#proof[
   Since $C_n (RR)$ is Hausdorff and $i : D_n^m (RR) -> C_n (RR)$ is continuous and injective, we see that $D_n (RR)$ is also Hausdorff.
 ]
 
-#lm[
+#lemma[
   For all $m,n in NN_0$, the pointwise linear structure is compatible with the topology on $D_n^m (RR)$, making $D_n^m (RR)$ a topological vector space.
 ] <difftvs>
-#pf[
+#proof[
   We prove by induction over $n$ and $m$. If $n = 0$, we have $D_0 (RR) = RR$ with the usual topology and linear structure. If $m = 0$, we have $D_n^0 (RR) = C_n (RR)$, which is a TVS. Suppose now that $m, n > 0$. We need to establish the continuity of the following two maps:
   $
     + : D_n^m (RR) times D_n^m (RR) -> D_n^m (RR), #h(2cm) dot : RR times D_n^m (RR) -> D_n^m (RR).
@@ -306,14 +333,14 @@ We will be using the topological language of _filters_ throughout the work, to s
   Since the down-then-right path in each diagram is continuous, the right-then-down paths are continuous as well, and we are done.
 ]
 
-#th[
+#theorem[
   Let $m,n in NN$. A curried function $f in H_n (RR)$ lies in the class $D_n^m (RR)$ if and only if its counterpart $tilde(f) : RR^n -> RR$ has continuous partial derivatives on $RR^n$, of all orders up to $m$. Moreover, for each $1 <= i_1 <= i_2 <= ... <= i_m <= n$, we have
   $
     &(partial^m tilde(f))/(partial x_(i_1) partial x_(i_2) ... partial x_(i_m))(x_1, x_2, ..., x_n)\
     = &f(x_1)...(x_(i_1 - 1))'(x_i_1)...(x_(i_2 - 1))'(x_i_2)...(x_(i_m - 1))'(x_i_m)...(x_n). #<difftrans>
   $
 ] <diffgamma>
-#pf[
+#proof[
   If $n = 0$ or $m = 0$, the statement is trivial. Now let $n,m > 0$ and assume the statement proven for $(m,n-1)$ and $(m-1,n)$.\
 
   First, let $f in D_n^m (RR)$. We immediately see that $f in D_n^(m-1) (RR)$, and so, by the induction hypothesis, partial derivatives or order up to $m-1$ exist and are continuous on $RR^n$. Now, consider some $1 <= i_1 <= i_2 <= ..., <= i_m <= n$. It is not hard to see by definition that (@difftrans) holds. To show that the partial derivative with respect to $x_i_1, ..., x_i_m$ is continuous, consider $(h_1, h_2, ..., h_n) -> 0 in RR^n$, and a point $(x_1, ..., x_n) in RR^n$. By the continuity of $f$ and the definition of the differential topology, we have
@@ -370,36 +397,43 @@ We will be using the topological language of _filters_ throughout the work, to s
 
 #bibliography("bibliography.yml")
 
-#let appendix(body) = {
-  set heading(numbering: "A.", supplement: [Appendix])
-  counter(heading).update(0)
-  body
-}
-// #outline(target: heading.where(supplement: [Appendix]), title: [Appendix])
-#show: appendix
-
-// #set heading.where(level: 1)(numbering: "A", supplement: "Appendix")
 #counter(heading).update(0)
+#set heading(numbering: "A.1  ", supplement: "Appendix")
+// #set-theorion-numbering("A.1")
 
-// = Appendix <app>
+// #let th-numbering = "A.1"
+//
+// #let definition = plainstyle("Definition", numbering: th-numbering)
+// #let notation = plainstyle("Notation", numbering: th-numbering)
+// #let example = plainstyle("Example", numbering: th-numbering)
+// #let exercise = plainstyle("Exercise", numbering: th-numbering)
+// #let note = plainstyle("Note", numbering: th-numbering)
+// #let remark = plainstyle("Remark", numbering: th-numbering)
+//
+// #let theorem = statestyle("Theorem", numbering: th-numbering)
+// #let lemma = statestyle("Lemma", numbering: th-numbering)
+// #let proposition = statestyle("Proposition", numbering: th-numbering)
+// #let statement = statestyle("Statement", numbering: th-numbering)
+// #let problem = statestyle("Problem", numbering: th-numbering)
+// #let corollary = statestyle("Corollary", numbering: th-numbering)
 
 = The language of filters <filapp>
 
-#def[
+#definition[
   Let $X$ be a set. A _filter_ on $X$ is a non-empty set $F subset 2^X$ which is closed under supersets and finite intersections, and does not contain the empty set. The set of all filters on $X$ will be denoted by $FF(X)$.
 ]
 
-#def[
+#definition[
   Let $X$ be a set. A family $cal(B) subset 2^X$ is called a _filter base_ if it does not contain the empty set and is closed under finite intersection. The filter $[cal(B)]$ _generated_ by $cal(B)$ is defined as the collection of all supersets of sets from $cal(B)$.\
   If $cal(B) = {{x}}$ where $x in X$, the filter $[x] = [{{x}}]$ is called the _universal filter_ of $x$.\
   If $f : X -> Y$ is a map and $F in FF(X)$ is a filter on $X$, then ${f(A) mid(|) A in F}$ is a filter base that generates the _image filter_ denoted $f(F)$.
 ]
 
-#def[
+#definition[
   Let $X$ be a topological space. Then we say that a filter $F$ on $X$ _converges_ to a point $x in X$, and write $F -> x$, if it contains all open neighborhoods of $x$.
 ]
 
-#rem[
+#remark[
   The language of filters is expressive enough to encode all topological properties. For example @bou1:
   - A sequence ${x_n}_(n = 1)^oo$ converges to a point $x in X$ iff the filter
     $
@@ -411,17 +445,13 @@ We will be using the topological language of _filters_ throughout the work, to s
   - A function $f : X -> Y$ between topological spaces is continuous iff it preserves convergent filters, i.e. $F -> x in X$ implies $f(F) -> f(x) in Y$.
 ]
 
-#lm([see @bou1, page 74])[
+#lemma([see @bou1, page 74])[
   Let $X$ be a set and $f_i : X -> Y_i$ be a family of maps, where $Y_i$ are topological spaces. Let $X$ be endowed with the coarsest topology such that $f_i$ is continuous for each $i$. Then a filter $F in FF(X)$ converges to $x in X$ if and only if $f_i (F)$ converges to $f_i (x)$ for all $i$.
 ]
 
-// = Topological vector spaces <tvsapp>
-//
-// We assume that the reader is familiar with the definition and basic properties of topological vector spaces. Here we list some results that will be 
-
 = The topology of pointwise convergence <pcapp>
 
-#def([pointwise convergence topology, see @bou2])[
+#definition([pointwise convergence topology, see @bou2])[
   Let $X$ be a set, $Y$ a topological space, and denote by $SS(X,Y)$ the set of functions from $X$ to $Y$. For each $x in X$ and each open set $U subset Y$, let $V(x, U)$ be the set of all functions $f in SS(X,Y)$ such that $f(x) in U$. The collection
   $
     {V(x,U) mid(|) x in X, U subset Y}
@@ -429,25 +459,25 @@ We will be using the topological language of _filters_ throughout the work, to s
   forms a subbase of a topology on $SS(X,Y)$, called the _topology of pointwise convergence._
 ]
 
-#lm[
+#lemma[
   Let $X$ be a set and $Y$ a topological space. Then a filter $F in FF(SS(X,Y))$ converges to a function $f in SS(X,Y)$ if and only if, for any $x in X$, the filter $F(x) = [{A(x) mid(|) A in F}]$ converges to $f(x) in Y$.
 ]
-#pf[
+#proof[
   First, let $F -> f in SS(X,Y)$, and consider a point $x in X$. To show that $F(x) -> f(x) in Y$, let $U$ be a neighborhood of $f(x)$. Then, since $F -> f$, we see that $V(x, U) in F$. But this implies $U = V(x,U)(x) in F(x)$, and so we conclude that $F(x) -> f(x)$.\
   Conversely, assume that $F(x) -> f(x)$ for all $x in X$. To show that $F$ converges to $f$, it suffices to show that $V(x, U) in F$ whenever $f in V(x, U)$. Indeed, if $f in V(x,U)$, we have $f(x) in U$, and so $U in F(x)$, meaning that $U supset A(x)$ for some $A in F$, and so $V(x, U) supset V(x, A(x)) supset A in F$, and we are done.
 ]
 
-#lm[
+#lemma[
   Let $X$ be a set and $Y$ a Hausdorff topological space. Then $SS(X,Y)$ is also Hausdorff.
 ] <pwhaus>
-#pf[
+#proof[
   Consider two functions $f, g in SS(X,Y)$ such that $f != g$. This implies that there is $x_0 in X$ such that $f(x_0) != g(x_0)$. Since $Y$ is Hausdorff, there are neighborhoods $U_f in.rev f(x_0)$ and $U_g in.rev g(x_0)$ such that $U_f inter U_g = diameter$. It then follows that $f in V(x_0, U_f)$, $g in V(x_0, U_g)$, and $V(x_0, U_f) inter V(x_0, U_g) = diameter$.
 ]
 
-#lm[
+#lemma[
   Let $X$ be a set and let $Y$ be a real topological vector space. Then $SS(X,Y)$ is also a real topological vector space with respect to the topology of pointwise convergence and the pointwise linear structure.
 ] <pwtvs>
-#pf[
+#proof[
   We need to show that the maps $+ : SS(X,Y) times SS(X,Y) -> SS(X,Y)$ and $dot : RR times SS(X,Y) -> SS(X,Y)$ are continuous.\
   To begin, consider two filters $F_1, F_2 in FF(SS(X,Y))$, converging to $f_1$ and $f_2$ respectively. To show that $F_1 + F_2$ converges to $f_1 + f_2$, consider $x in X$. We have
   $
@@ -460,7 +490,7 @@ We will be using the topological language of _filters_ throughout the work, to s
 
 = The compact-open topology <coapp>
 
-#def([compact-open topology, see @bou2, page 301])[
+#definition([compact-open topology, see @bou2, page 301])[
   Let $X$ and $Y$ be two topological spaces, and by $CC(X,Y)$ denote the set of all continuous functions from $X$ to $Y$. For each compact set $K subset X$ and each open set $U subset Y$, let $V(K,U)$ be the set of all functions $f in CC(X,Y)$ such that $f(K) subset U$. The collection
   $
   {V(K,U) mid(|) K subset X, U subset Y}
@@ -468,18 +498,18 @@ We will be using the topological language of _filters_ throughout the work, to s
   forms a subbase of a topology on $CC(X,Y)$, called the _compact-open_ topology.
 ]
 
-#rem[
+#remark[
   Clearly, the topology of pointwise convergence on $CC(X,Y)$ is coarser than the compact-open topology.
 ]
 
-#prop([see @bb])[
+#proposition([see @bb, page 34])[
   Let $X$ and $Y$ be topological spaces such that $X$ is locally compact and $Y$ is regular. Then a filter $F in FF(CC(X,Y))$ converges to a function $f in CC(X,Y)$ if and only if, for any filter $P in FF(X)$ converging to $p in X$, we have $F(P) -> f(p)$ in $Y$, where the filter $F(P)$ is based on
   $
     {A(B) mid(|) A in F, B in P} = {{a(b) mid(|) a in A, b in B} mid(|) A in F, B in P}.
   $
 ] <cofilter>
 
-#prop([see @bou2, page 302])[
+#proposition([see @bou2, page 302])[
   Let $X, Y, Z$ be topological spaces such that $X$ is Hausdorff and $Y$ is locally compact. Then the map
   $
     gamma : CC(X times Y, Z) -> CC(X, CC(Y, Z))
@@ -487,17 +517,17 @@ We will be using the topological language of _filters_ throughout the work, to s
   defined as $gamma(f)(x)(y) = f(x,y)$, is well-defined and is a homeomorphism.
 ] <curry>
 
-#lm[
+#lemma[
   Let $X, Y$ be topological spaces such that $Y$ is Hausdorff. Then the space $CC(X,Y)$ is also Hausdorff.
 ] <cohaus>
-#pf[
+#proof[
   The compact-open topology on $CC(X,Y)$ is finer than the topology of pointwise convergence, and the latter is Hausdorff, which implies that the former is Hausdorff.
 ]
 
-#lm[
+#lemma[
   Let $X$ be a topological space and $Y$ a real topological vector space. Then $CC(X,Y)$ is also a real topological vector space with respect to the pointwise linear structure and the compact-open topology.
 ] <cotvs>
-#pf[
+#proof[
   We will show that the map $+ : CC(X,Y) times CC(X,Y) -> CC(X,Y)$ is continuous. Let $F_1, F_2 in FF(CC(X,Y))$ converge to $f_1 in CC(X,Y)$ and $f_2 in CC(X,Y)$ respectively. For any filter $P in FF(X)$ converging to $p in X$, we have
   $
     (F_1 + F_2)(P) &= [{(A_1 + A_2)(B) mid(|) A_i in F_i, B in P}]\
@@ -507,11 +537,15 @@ We will be using the topological language of _filters_ throughout the work, to s
   The continuity of scalar multiplication is proven similarly.
 ]
 
-#lm[
+#theorem([see @rud, page 19])[
+  A topological vector space $X$ is metrizable if and only if it admits a countable local base of neighborhoods of $0$.
+] <coumetr>
+
+#lemma[
   Suppose that $X$ is a locally compact and hemicompact topological space (that is, $X$ is the union of countably many its compact subsets), and let $Y$ be a #fr space. Then the space $CC(X, Y)$ is also a #fr space.
 ] <fr2fr>
-#pf[
-  First of all, we need to show that $CC(X,Y)$ is metrizable. Since $Y$ is metrizable, it admits a countable basis ${V_n}_(n = 1)^oo$ of neighborhoods of $0$. Moreover, since $X$ is hemicompact, we have
+#proof[
+  First of all, we need to show that $CC(X,Y)$ is metrizable. Since $Y$ is metrizable, by @coumetr it admits a countable basis ${U_n}_(n = 1)^oo$ of neighborhoods of $0$. Moreover, since $X$ is hemicompact, we have
   $
     X = union.big_(m = 1)^oo K_m,
   $
@@ -519,7 +553,7 @@ We will be using the topological language of _filters_ throughout the work, to s
   $
     {V(K_m, U_n) mid(|) m,n in NN}
   $
-  forms a countable basis of neighborhoods of $0$ in $CC(X,Y)$. Hence, $C(X,Y)$ is metrizable.\
+  forms a countable basis of neighborhoods of $0$ in $CC(X,Y)$. Hence, by @coumetr the space $CC(X,Y)$ is metrizable.\
   It remains to show that the metric generating the topology of $CC(X,Y)$ is complete. To this end, consider a fundamental sequence ${f_k}_(k = 1)^oo$ in $CC(X,Y)$. This means that for all $n,m in NN$, there is $N in NN$ such that
   $
     k,l >= N ==> f_k - f_l in V(K_m, U_n).
