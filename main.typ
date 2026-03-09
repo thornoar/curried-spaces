@@ -5,31 +5,21 @@
 #import "@local/theorem:0.0.0": *
 #show: theorem-rule
 
-#let th-numbering = "1.1"
+#let definition = plainstyle("Definition")
+#let notation = plainstyle("Notation")
+#let example = plainstyle("Example")
+#let exercise = plainstyle("Exercise")
+#let note = plainstyle("Note")
+#let remark = plainstyle("Remark")
 
-#let definition = plainstyle("Definition", numbering: th-numbering)
-#let notation = plainstyle("Notation", numbering: th-numbering)
-#let example = plainstyle("Example", numbering: th-numbering)
-#let exercise = plainstyle("Exercise", numbering: th-numbering)
-#let note = plainstyle("Note", numbering: th-numbering)
-#let remark = plainstyle("Remark", numbering: th-numbering)
-
-#let theorem = statestyle("Theorem", numbering: th-numbering)
+#let theorem = statestyle("Theorem")
 #let lemma = statestyle("Lemma")
-#let proposition = statestyle("Proposition", numbering: th-numbering)
-#let statement = statestyle("Statement", numbering: th-numbering)
-#let problem = statestyle("Problem", numbering: th-numbering)
-#let corollary = statestyle("Corollary", numbering: th-numbering)
+#let proposition = statestyle("Proposition")
+#let statement = statestyle("Statement")
+#let problem = statestyle("Problem")
+#let corollary = statestyle("Corollary")
 
 #let proof = proofstyle()
-
-// #import "@preview/theorion:0.4.1": *
-// #set-qed-symbol[#math.square.filled]
-// #show: show-definition
-// #show: show-theorem
-// #show: show-lemma
-// #show: show-proposition
-
 
 #set page("a4", margin: (top: 0.5in, bottom: 0.7in, right: 0.5in, left: 0.5in), numbering: "1")
 #set text(size: 11pt, font: "TeX Gyre Schola")
@@ -360,7 +350,6 @@ We will be using the topological language of _filters_ throughout the work, to s
 
   Conversely, suppose $f in H_n (RR)$ is such that $tilde(f) : RR^n -> RR$ lies in the class $C^m (RR^n)$. To show that $f in D_n^m (RR)$, we follow three steps:
   + For all $x_1 in RR$, we have $f(x_1) in D_(n-1)^m (RR)$. This is provided by the induction hypothesis, since the restriction of a $C^m$ function on a hyperplane is also a $C^m$ function.
-  // + The function $f : RR -> D_(n-1)^m (RR)$ is continuous. To show this, consider a sequence ${x_k^((1))}_(k in NN) subset RR$ converging to $x^((1)) in RR$. 
   + The function $f : RR -> D_(n-1)^m (RR)$ is continuous. To show this, consider a sequence ${x_k^((1))}_(k in NN) subset RR$ converging to $x_0^((1)) in RR$. We aim to prove that $f(x_k^((1))) -> f(x_0^((1)))$ in $D_(n-1)^m (RR)$. This is equivalent to showing that
     $
       f(x_k^((1))) -> f(x_k^((1))) in CC(RR, D_(n-2)^m (RR)) #h(10pt) "and" #h(10pt) f(x_k^((1)))' -> f(x_0^((1)))' in D_(n-1)^(m-1) (RR).
@@ -399,23 +388,22 @@ We will be using the topological language of _filters_ throughout the work, to s
 
 #counter(heading).update(0)
 #set heading(numbering: "A.1  ", supplement: "Appendix")
-// #set-theorion-numbering("A.1")
 
-// #let th-numbering = "A.1"
-//
-// #let definition = plainstyle("Definition", numbering: th-numbering)
-// #let notation = plainstyle("Notation", numbering: th-numbering)
-// #let example = plainstyle("Example", numbering: th-numbering)
-// #let exercise = plainstyle("Exercise", numbering: th-numbering)
-// #let note = plainstyle("Note", numbering: th-numbering)
-// #let remark = plainstyle("Remark", numbering: th-numbering)
-//
-// #let theorem = statestyle("Theorem", numbering: th-numbering)
-// #let lemma = statestyle("Lemma", numbering: th-numbering)
-// #let proposition = statestyle("Proposition", numbering: th-numbering)
-// #let statement = statestyle("Statement", numbering: th-numbering)
-// #let problem = statestyle("Problem", numbering: th-numbering)
-// #let corollary = statestyle("Corollary", numbering: th-numbering)
+#let th-numbering = "A.1"
+
+#let definition = plainstyle("Definition", numbering: th-numbering)
+#let notation = plainstyle("Notation", numbering: th-numbering)
+#let example = plainstyle("Example", numbering: th-numbering)
+#let exercise = plainstyle("Exercise", numbering: th-numbering)
+#let note = plainstyle("Note", numbering: th-numbering)
+#let remark = plainstyle("Remark", numbering: th-numbering)
+
+#let theorem = statestyle("Theorem", numbering: th-numbering)
+#let lemma = statestyle("Lemma", numbering: th-numbering)
+#let proposition = statestyle("Proposition", numbering: th-numbering)
+#let statement = statestyle("Statement", numbering: th-numbering)
+#let problem = statestyle("Problem", numbering: th-numbering)
+#let corollary = statestyle("Corollary", numbering: th-numbering)
 
 = The language of filters <filapp>
 
