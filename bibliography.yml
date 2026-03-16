@@ -37,6 +37,13 @@ rud:
   page-total: 443
   date: 1991
 
+rud2:
+  type: Book
+  title: Principles of Mathematical Analysis
+  author: Rudin, W.
+  page-total: 352
+  date: 1976
+
 # fox:
 #     type: Article
 #     title: On Topologies For Function Spaces
