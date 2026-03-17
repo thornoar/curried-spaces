@@ -135,6 +135,24 @@ Finally, we give the definition of continuous functions:
   A similar argument applies for any other $n >= 2$. Hence we conclude that $C_n (RR)$ is not a subspace of $H_n (RR)$.
 ]
 
+#lemma[
+  Let $X, Y$ be topological spaces such that $X$ is locally compact. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
+] <simul>
+#proof[
+  First, assume that $f_k -> f in CC(X,Y)$, and consider a sequence ${x_k}_(k = 1)^oo subset X$ converging to $x in X$. Let $U$ be a neighborhood of $f(x)$ in $Y$. Since $X$ is locally compact, the point $x in X$ has a compact neighborhood $K$. Hence, eventually as $k -> oo$, we have $x_k in K$ and $f_k in V(K,U)$, which means that eventually $f_k (x_k) in U$. Since $U$ was arbitrary, we conclude that $f_k (x_k) st(k -> oo) f(x)$.
+
+  Conversely, suppose that $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x in X$. To prove that $f_k -> f in CC(X,Y)$, consider a neighborhood $V(K,U)$ of $f$, and assume that there is a subsequence ${f_(k_l)}_(l = 1)^oo$ such that $f_(k_l)(K) subset.not U$. That means that we can find a sequence ${x_l}_(l = 1)^oo subset K$ such that $f_(k_l)(x_l) in.not U$. By the compactness of $K$, we can choose a subsequence ${x_(l_j)}_(j = 1)^oo$ that converges to a point $x in K$. Moreover, since $f in V(K,U)$, we have $f(K) subset U$, and therefore $f(x) in U$, i.e. $U$ is a neighborhood of $f(x)$. However, we have $f_(k_(l_j))(x_(l_j)) in.not U$
+  for all $j in NN$, a contradiction with the condition that $f_k (x_k) -> f(x)$ whenever $x_k -> x$.
+]
+
+#definition[
+  A sequence ${f_k}_(k = 1)^oo$ of functions between topological spaces $X$ and $Y$ is said to converge _continuously_ to $f : X -> Y$ if, whenever $x_k -> x in X$, we have the convergence $f_k (x_k) -> f(x) in Y$.
+]
+
+#corollary[
+  From the above lemma we conclude that if $n >= 1$, a sequence of functions ${f_k}_(k = 1)^oo$ in $C_n (RR)$ converges to $f in C_n (RR)$ if and only if it converges continuously.
+]
+
 == Differentiable functions
 
 Finally, we define the spaces of curried differentiable functions.
@@ -438,6 +456,21 @@ Next, we consider the spaces $C_n (RR)$ of continuous functions, which turn out 
 
 Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show that these spaces are #fr, we need some preliminary results.
 
+#definition[
+  A sequence of functions $f_k : X -> Y$ between topological vector spaces $X$ and $Y$ is said to converge _uniformly_ to a function $f : X -> Y$ on a subset $E subset X$ if, for any neighborhood $U$ of $0 in Y$, we have $f_k (E) subset U$ eventually as $k -> oo$.\
+]
+
+#lemma[
+  Let $X$ and $Y$ be topological vector spaces and let $f_k -> f$ in the space $CC(X,Y)$. Then $f_k$ converges uniformly to $f$ on all compact subsets of $X$.
+] <cont2un>
+#proof[
+  Let $K subset X$ be compact and let $U$ be a neighborhood of $0 in Y$. Since $f_k -> f in CC(X,Y)$, we have $f_k - f in V(K,U)$ eventually as $k -> oo$. This is to say that eventually $(f_k - f)(K) subset U$, implying that ${f_k}_(k = 1)^oo$ converges to $f$ uniformly on $K$.
+]
+
+// #lemma[
+//   Let ${f_k}_(k = 1)^oo subset D_n^m (RR)$ be a sequence of functions that converges to a function $f in CC(RR, D_(n-1)^m (RR))$
+// ]
+
 #theorem[
   For all $m,n in NN_0$, the space $D_n^m (RR)$ is a #fr space.
 ]
@@ -454,9 +487,13 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
   for some open sets $V subset CC(RR, D_(n-1)^m (RR)), W subset D_n^(m-1)(RR)$ and some $j,k in NN$.\
   Second, we need to prove that all Cauchy sequences in $D_n^m (RR)$ have a limit.
   To this end, let ${f_k}_(k = 1)^oo subset D_n^m (RR)$ be a Cauchy sequence.
-  Then clearly, the sequences ${f_k}_(n = 1)^oo subset CC(RR, D_(n-1)^m (RR))$ and ${f'_k}_(k = 1)^oo subset D_n^(m-1) (RR)$ are Cauchy, meaning that we have
+  Then, clearly, the sequences ${f_k}_(n = 1)^oo subset CC(RR, D_(n-1)^m (RR))$ and ${f'_k}_(k = 1)^oo subset D_n^(m-1) (RR)$ are Cauchy, meaning that we have
   $
     f_k st(k -> oo) f in CC(RR, D_(n-1)^m (RR)), #h(2em) f'_k st(k -> oo) g in D_n^(m-1) (RR).
+  $
+  We must now show that $f in D_n^m (RR)$ with $f' = g$. To this end, let $x_0 in RR$ and define the auxiliary functions
+  $
+    q_k (x) = (f_k (x) - f_k (x_0))/(x - x_0), #h(2em) q(x) = (f(x) - f(x_0))/(x - x_0).
   $
 ]
 
@@ -524,29 +561,6 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
 // ]
 
 // = The compact-open topology <coapp>
-//
-// #lemma[
-//   Let $X, Y$ be topological spaces such that $X$ is first countable. Then a sequence ${f_k}_(k in NN) subset CC(X,Y)$ converges to a function $f in CC(X,Y)$ if and only if $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x$ in $X$.
-// ] <simul>
-// #proof[
-//   First, let $F$ be the derived filter of ${f_k}_(k in NN)$ and suppose that $F$ converges to a function $f in CC(X,Y)$. Consider a sequence ${x_k}_(k in NN)$ converging to $x in X$, with its derived filter $P$. Now let $V$ be a neighborhood of $f(x)$ in $Y$. By @cofilter, we have $F(P) -> f(x)$, and so $V in F(P)$. This means that $V$ contains an element of the base of $F(P)$, namely a set
-//   $
-//     B_(n_0, m_0) = {f_n (x_m) mid(|) n >= n_0, hs m >= m_0}.
-//   $
-//   Hence, for $k >= max(n_0\, m_0)$, we have $f_k (x_k) in V$, as desired.\
-//
-//   Conversely, suppose that $f_k (x_k) st(k -> oo) f(x)$ whenever $x_k st(k -> oo) x in X$. First let us show that for any subsequence ${f_(n_k)}_(k in NN)$, we have $f_(n_k)(x_k) st(k -> oo) f(x)$.\
-//   To this end, let $n in NN$. We let $z_n = x_(phi(n))$, where $phi(n)$ is the minimal number of those $k in NN$ that satisfy $n <= n_k$. We clearly see that $n_1 >= n_2$ implies $phi(n_1) >= phi(n_2)$ and that $phi(n_k) = k$ for all $k in NN$. Therefore, the sequence ${z_n}_(n in NN)$ converges to $x$. Hence we have $f_k (z_k) st(k -> oo) f(x)$, and so
-//   $
-//     f_(n_k) (x_k) = f_(n_k) (z_(n_k)) st(k -> oo) f(x).
-//   $ <subseq>
-//   Now, to show that $f_k -> f$ in $CC(X,Y)$, we need to show that the derived filter $F$ generated by the sets $C_n = {f_k mid(|) k >= n}$ converges to $f$. To this end, let $P$ be a filter in $X$ converging to a point $x in X$. Note that since $X$ is first countable, the filter $P$ has a countable base ${A_m}_(m in NN)$ of neighborhoods of $x$. To show that $F(P)$ converges to $f(x)$, assume the contrary. Then some neighborhood $V$ of $f(x)$ does not lie in $F(P)$, which is to say that for all $n, m in NN$, we have $C_n (A_m) subset.not V$. That means that for all $n,m in NN$, there are $k_m >= m$ and $x_m in A_m$ such that $f_(k_n)(x_m) in.not V$.\
-//   In particular, we have $f_(k_n)(x_n) in.not V$ for all $n in NN$. At the same time, since the sets $A_n$ generate $P$, we see that $x_n st(n -> oo) x$, so we must have $f_(k_n)(x_n) st(n -> oo) f(x)$ by (@subseq), a contradiction.
-// ]
-//
-// #corollary[
-//   From the above lemma we conclude that if $n >= 1$, a sequence of functions ${f_k}_(k = 1)^oo$ in $C_n (RR)$ converges to $f in C_n (RR)$ if and only if for any sequence ${x_k}_(k = 1)^oo subset RR$ converging to $x in RR$, we have $f_k (x_k) st(k -> oo) f(x)$ in $C_(n-1)(RR)$.
-// ]
 
 = Continuity of linear operations
 
