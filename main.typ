@@ -491,10 +491,30 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
   $
     f_k st(k -> oo) f in CC(RR, D_(n-1)^m (RR)), #h(2em) f'_k st(k -> oo) g in D_n^(m-1) (RR).
   $
-  We must now show that $f in D_n^m (RR)$ with $f' = g$. To this end, let $x_0 in RR$ and define the auxiliary functions
+  We must now show that $f in D_n^m (RR)$ with $f' = g$. To this end, let $x_0^((2)), x_0^((3)), ..., x_0^((n)) in RR$ and define the auxiliary functions
   $
-    q_k (x) = (f_k (x) - f_k (x_0))/(x - x_0), #h(2em) q(x) = (f(x) - f(x_0))/(x - x_0).
+    phi_k (x) &= f_k (x)(x_0^((2)))...(x_0^((n))),\
+    phi(x) &= f (x)(x_0^((2)))...(x_0^((n))),\
+    psi(x) &= g (x)(x_0^((2)))...(x_0^((n))).\
   $
+  We immediately observe that $phi_k st(k -> oo) phi$ pointwise on $RR$ Now, let $[a,b] subset RR$. Since $tilde(f'_k) -> tilde(g)$ in the space $CC(RR^n, RR)$, we see that $tilde(f'_k)$ converges to $tilde(g)$ _uniformly_ on the compact set
+  $
+    [a,b] times {x_0^((2))} times {x_0^((2))} times ... times {x_0^((n))} subset RR^n.
+  $
+  This implies that we have a uniform convergence $phi'_k -> psi$ on $[a,b]$. Therefore, the function $phi$ is differentiable on $(a,b)$ with $phi' = psi$. Since the interval $[a,b] subset RR$ was arbitrary, we conclude that $phi' = g$ on $RR$. In other words, for all $x_0 in RR$ we have the pointwise limit
+  $
+    lim_(x -> x_0) (f(x) - f(x_0))/(x - x_0) = g(x_0).
+  $
+  Since $f in CC(RR, D_(n-1)^m (RR))$ and $g in D_n^(m-1) (RR)$, we conclude that $f in D_n^m (RR)$, and so
+  $
+    cases(
+      reverse: #true,
+      gap: #5pt,
+      f_k -> f in CC(RR, D_(n-1)^m (RR)),
+      f'_k -> f' in D_n^(m-1) (RR)
+    ) ==> f_k -> f in D_n^m (RR).
+  $
+  Therefore, the space $D_n^m (RR)$ is complete, and hence a #fr space.
 ]
 
 #bibliography("bibliography.yml")
