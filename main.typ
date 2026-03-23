@@ -467,10 +467,6 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
   Let $K subset X$ be compact and let $U$ be a neighborhood of $0 in Y$. Since $f_k -> f in CC(X,Y)$, we have $f_k - f in V(K,U)$ eventually as $k -> oo$. This is to say that eventually $(f_k - f)(K) subset U$, implying that ${f_k}_(k = 1)^oo$ converges to $f$ uniformly on $K$.
 ]
 
-// #lemma[
-//   Let ${f_k}_(k = 1)^oo subset D_n^m (RR)$ be a sequence of functions that converges to a function $f in CC(RR, D_(n-1)^m (RR))$
-// ]
-
 #theorem[
   For all $m,n in NN_0$, the space $D_n^m (RR)$ is a #fr space.
 ]
