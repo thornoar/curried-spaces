@@ -481,7 +481,14 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
     U supset i^(-1)(V) inter d^(-1)(W) supset i^(-1)(V_j) inter d^(-1)(W_k) in.rev 0
   $
   for some open sets $V subset CC(RR, D_(n-1)^m (RR)), W subset D_n^(m-1)(RR)$ and some $j,k in NN$.\
-  Second, we need to prove that all Cauchy sequences in $D_n^m (RR)$ have a limit.
+
+  Second, we must show that $D_n^m (RR)$ is locally convex. Consider a neighborhood $U$ of $0 in D_n^m (RR)$. We can assume without loss of generality that $U = i^(-1)(V) inter d^(-1)(W)$, where $V$ and $W$ are neighborhoods of zero in $CC(RR, D_(n-1)^m (RR))$ and $D_n^(m-1) (RR)$, respectively. Since both of these spaces are #fr, we have convex neighborhoods $V' subset V$ and $W' subset W$. Lastly, since both maps $i, d$ are linear, we see that the set
+  $
+    0 in U' = i^(-1)(V') inter d^(-1)(W') subset U
+  $
+  is convex. Therefore, the space $D_n^m (RR)$ is locally convex.
+
+  Third, we need to prove that all Cauchy sequences in $D_n^m (RR)$ have a limit.
   To this end, let ${f_k}_(k = 1)^oo subset D_n^m (RR)$ be a Cauchy sequence.
   Then, clearly, the sequences ${f_k}_(n = 1)^oo subset CC(RR, D_(n-1)^m (RR))$ and ${f'_k}_(k = 1)^oo subset D_n^(m-1) (RR)$ are Cauchy, meaning that we have
   $
