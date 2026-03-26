@@ -44,6 +44,13 @@ rud2:
   page-total: 352
   date: 1976
 
+barend:
+  type: Book
+  title: The Lambda Calculus, Its Syntax and Semantics
+  author: Barendregt, H.P.
+  page-total: 640
+  date: 1984
+
 # fox:
 #     type: Article
 #     title: On Topologies For Function Spaces
