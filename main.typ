@@ -23,8 +23,12 @@
 
 #set page("a4", margin: (top: 0.5in, bottom: 0.7in, right: 0.5in, left: 0.5in), numbering: "1")
 #set text(size: 11pt, font: "TeX Gyre Schola")
-#set heading(numbering: "1.1  ")
-#show heading: it => { it; v(7pt) }
+#set heading(numbering: "1.1", hanging-indent: 10pt)
+#show heading: it => {
+  counter(heading).display()
+  h(12pt)
+  it.body
+}
 
 #set math.equation(numbering: "(1)", supplement: none)
 #show: equate.with(sub-numbering: false, number-mode: "label")
