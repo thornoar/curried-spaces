@@ -23,12 +23,12 @@
 
 #set page("a4", margin: (top: 0.5in, bottom: 0.7in, right: 0.5in, left: 0.5in), numbering: "1")
 #set text(size: 11pt, font: "TeX Gyre Schola")
-#set heading(numbering: "1.1", hanging-indent: 10pt)
-#show heading: it => {
-  counter(heading).display()
-  h(12pt)
-  it.body
-}
+#set heading(numbering: "1.1.", hanging-indent: 10pt)
+// #show heading: it => {
+//   counter(heading).display()
+//   h(12pt)
+//   it.body
+// }
 
 #set math.equation(numbering: "(1)", supplement: none)
 #show: equate.with(sub-numbering: false, number-mode: "label")
@@ -44,6 +44,8 @@
   #text(size: 22pt)[*Continuous Convergence and Curried Functional Spaces*]
   #v(.5in)
 ]
+
+#outline()
 
 = Introduction <intro>
 
@@ -390,7 +392,7 @@ In this section, we will establish some strong properties of the spaces $C_n (RR
 
 A very convenient criterion of metrizability is the existence of a countable local base:
 
-#proposition([see @rud, page 19])[
+#proposition([see @rud, page 18])[
   A topological vector space $X$ is metrizable if and only if it admits a countable local base of neighborhoods of $0$.
 ] <coumetr>
 
