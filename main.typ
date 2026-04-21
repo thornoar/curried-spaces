@@ -310,12 +310,30 @@ Now, let us consider the spaces $C_n (RR)$ of continuous functions.
   q.e.d.
 ]
 
-A similar result holds for the spaces $D_n^m (RR)$ which are in a natural bijection with the spaces $C^m (RR^n)$.
+A similar result holds for the spaces $D_n^m (RR)$ which are in a natural isomorphism with the spaces $C^m (RR^n)$.
+
+#definition[
+  Consider the space $C^m (RR^n)$ of functions $f : RR^n -> RR$ that have continuous partial derivatives of order up to and including $m$. For $alpha = (i_1, i_2, ..., i_s)$, where $s <= m$ and $1 <= i_k <= n$ for $k in {1, ..., s}$, write $abs(alpha) = s$ and
+  $
+    D^alpha f = (partial^s f)/(partial x_(i_1) partial x_(i_2) ... partial x_(i_s)).
+  $
+  Now, let $K$ be a compact subset of $RR^n$. Define
+  $
+    norm(f)_K = max_(abs(alpha) <= m) max_(x in K) hss abs(D^alpha f (x)).
+  $
+  Choosing a sequence ${K_j}_(j = 1)^oo$ such that $RR^n = union.big_(j = 1)^oo K_j$, we obtain a separating family ${norm(dot)_(K_j)}_(j = 1)^oo$ of seminorms, which generates a metrizable vector topology on $C^m (RR^n)$. Note that if $m = 0$, we obtain the familiar compact-open topology on $CC(RR^n, RR)$.
+]
 
 #theorem[
-  Let $m,n in NN$. A curried function $f in H_n (RR)$ lies in the class $D_n^m (RR)$ if and only if its counterpart $tilde(f) : RR^n -> RR$ has continuous partial derivatives on $RR^n$, of all orders up to $m$. Moreover, for each $1 <= i_1 <= i_2 <= ... <= i_m <= n$, we have
+  Let $m,n in NN$. Then the curry map
   $
-    &(partial^m tilde(f))/(partial x_(i_1) partial x_(i_2) ... partial x_(i_m))(x_1, x_2, ..., x_n)\
+    gamma : C^m (RR^n) <-> D_n^m (RR)
+  $
+  is well-defined and is an isomorphism of topological vector spaces.
+  // A curried function $f in H_n (RR)$ lies in the class $D_n^m (RR)$ if and only if its counterpart $tilde(f) : RR^n -> RR$ has continuous partial derivatives on $RR^n$, of all orders up to $m$.
+  Moreover, for each $1 <= i_1 <= i_2 <= ... <= i_m <= n$, we have
+  $
+    &(partial^m tilde(f))/(partial x_(i_1) partial x_(i_2) ... partial x_(i_m))(x_1, x_2, ..., x_n)
     = &f(x_1)...(x_(i_1 - 1))'(x_i_1)...(x_(i_2 - 1))'(x_i_2)...(x_(i_m - 1))'(x_i_m)...(x_n). #<difftrans>
   $
 ] <diffgamma>
@@ -371,6 +389,23 @@ A similar result holds for the spaces $D_n^m (RR)$ which are in a natural biject
       &= (lim_(h -> 0) (f(x_1 + h) - f(x_1))/h)(x_2)...(x_n),
     $
     and we are done.
+  Thus we have shown that $gamma: C^m (RR^n) -> D_n^m (RR)$ is a bijection. It is clearly a linear map, so it only remains to show that $gamma$ is continuous. Let $tilde(f)_k in C^m (RR^n)$ with $tilde(f)_k st(k -> oo) tilde(f) in C^m (RR^n)$. We aim to show that $f_k = gamma(tilde(f)_k) st(k -> oo) gamma(tilde(f)) = f in D_n^m (RR)$. Indeed, this is equivalent to showing that
+  $
+    f_k st(k -> oo) f in CC(RR, D_(n-1)^m (RR)) " and " f'_k st(k -> oo) f' in D_n^(m-1) (RR).
+  $
+  For the former condition, consider a sequence $x_k -> x in RR$, and note that $gamma^(-1)(f_k (x_k)) in C^m (RR^(n-1))$, so by the induction hypothesis we have
+  $
+    f_k (x_k) st(k -> oo) f(x) in D_(n-1)^m (RR).
+  $
+  For the latter condition, note that
+  $
+    gamma^(-1)(f'_k) = (partial tilde(f))/(partial x_1) in C^(m-1)(RR^n),
+  $
+  hence, applying the induction hypothesis again, we have
+  $
+    f'_k st(k -> oo) f in D_n^(m-1) (RR),
+  $
+  and the proof of the theorem is concluded.
 ]
 
 = Completeness and metrizability
@@ -390,10 +425,10 @@ In this section, we will establish some strong properties of the spaces $C_n (RR
   A topological vector space is called a _#fr space_ if it is locally convex, metrizable, and sequentially complete. In other words, if its topology is compatible with a complete invariant metric.
 ]
 
-A very convenient criterion of metrizability is the existence of a countable local base:
+A very convenient criterion of metrizability is the existence of a countable local basis:
 
 #proposition([see @rud, page 18])[
-  A topological vector space $X$ is metrizable if and only if it admits a countable local base of neighborhoods of $0$.
+  A topological vector space $X$ is metrizable if and only if it admits a countable local basis of neighborhoods of $0$.
 ] <coumetr>
 
 Now, let us first consider the general spaces $H_n (RR)$.
@@ -408,7 +443,7 @@ Now, let us first consider the general spaces $H_n (RR)$.
 
   Next, we show that $H_n (RR)$ is locally convex. It suffices to prove that any neighborhood of the form $V(x, U)$ contains a convex neighborhood $V'$ of zero. Indeed, since $H_(n-1)(RR)$ is locally convex, let $U' subset U$ be a convex neighborhood of zero in $H_(n-1)(RR)$. Then we have $0 in V(x, U') subset V(x, U)$, and $V(x, U')$ is clearly convex.
 
-  Finally, to show that $H_n (RR)$ is *not* metrizable, it suffices to show that no countable local base exists in $H_n (RR)$. To this end, assume the contrary, i.e. let ${V_j}_(j = 1)^oo$ be a countable local base in $H_n (RR)$. Since every set $V_j$ contains a neighborhood of zero of the form
+  Finally, to show that $H_n (RR)$ is *not* metrizable, it suffices to show that no countable local basis exists in $H_n (RR)$. To this end, assume the contrary, i.e. let ${V_j}_(j = 1)^oo$ be a countable local basis in $H_n (RR)$. Since every set $V_j$ contains a neighborhood of zero of the form
   $
     inter.big_(l = 1)^N_j V(x_l^j, U_l^j),
   $
@@ -497,7 +532,7 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
   $
     {0 in V_j subset CC(RR, D_(n-1)^m (RR)) mid(|) j in NN}, #h(2em) {0 in W_k subset D_n^(m-1) (RR) mid(|) k in NN}.
   $
-  We shall show that the family ${i^(-1)(V_j) inter d^(-1)(W_k)}_(j,k = 1)^oo$ forms a local base in $D_n^m (RR)$. Indeed, let $U$ be a neighborhood of zero in $D_n^m (RR)$. Then we have
+  We shall show that the family ${i^(-1)(V_j) inter d^(-1)(W_k)}_(j,k = 1)^oo$ forms a local basis in $D_n^m (RR)$. Indeed, let $U$ be a neighborhood of zero in $D_n^m (RR)$. Then we have
   $
     U supset i^(-1)(V) inter d^(-1)(W) supset i^(-1)(V_j) inter d^(-1)(W_k) in.rev 0
   $
@@ -571,7 +606,7 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
 #definition[
   Let $X$ be a set. A family $cal(B) subset 2^X$ is called a _filter base_ if it does not contain the empty set and is closed under finite intersection. The filter $[cal(B)]$ _generated_ by $cal(B)$ is defined as the collection of all supersets of sets from $cal(B)$.\
   If $cal(B) = {{x}}$ where $x in X$, the filter $[x] = [{{x}}]$ is called the _universal filter_ of $x$.\
-  If $f : X -> Y$ is a map and $F in FF(X)$ is a filter on $X$, then ${f(A) mid(|) A in F}$ is a filter base that generates the _image filter_ denoted $f(F)$.
+  If $f : X -> Y$ is a map and $F in FF(X)$ is a filter on $X$, then ${f(A) mid(|) A in F}$ is a filter basis that generates the _image filter_ denoted $f(F)$.
 ]
 
 #definition[
