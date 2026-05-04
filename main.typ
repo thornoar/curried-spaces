@@ -576,6 +576,12 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
   Therefore, the space $D_n^m (RR)$ is complete, and hence a #fr space.
 ]
 
+// = Integration
+//
+// #definition[
+//   Let $f in C_n (RR)$, where $n > 0$, and let $[a,b] subset RR$. Then 
+// ]
+
 #bibliography("bibliography.yml")
 
 #counter(heading).update(0)
@@ -628,18 +634,6 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
 #lemma([see @bou1, page 74])[
   Let $X$ be a set and $f_i : X -> Y_i$ be a family of maps, where $Y_i$ are topological spaces. Let $X$ be endowed with the coarsest topology such that $f_i$ is continuous for each $i$. Then a filter $F in FF(X)$ converges to $x in X$ if and only if $f_i (F)$ converges to $f_i (x)$ for all $i$.
 ]
-
-// = The topology of pointwise convergence <pwcapp>
-
-// #lemma[
-//   Let $X$ be a set and $Y$ a topological space. Then a filter $F in FF(SS(X,Y))$ converges to a function $f in SS(X,Y)$ if and only if, for any $x in X$, the filter $F(x) = [{A(x) mid(|) A in F}]$ converges to $f(x) in Y$.
-// ]
-// #proof[
-//   First, let $F -> f in SS(X,Y)$, and consider a point $x in X$. To show that $F(x) -> f(x) in Y$, let $U$ be a neighborhood of $f(x)$. Then, since $F -> f$, we see that $V(x, U) in F$. But this implies $U = V(x,U)(x) in F(x)$, and so we conclude that $F(x) -> f(x)$.\
-//   Conversely, assume that $F(x) -> f(x)$ for all $x in X$. To show that $F$ converges to $f$, it suffices to show that $V(x, U) in F$ whenever $f in V(x, U)$. Indeed, if $f in V(x,U)$, we have $f(x) in U$, and so $U in F(x)$, meaning that $U supset A(x)$ for some $A in F$, and so $V(x, U) supset V(x, A(x)) supset A in F$, and we are done.
-// ]
-
-// = The compact-open topology <coapp>
 
 = Continuity of linear operations
 
@@ -736,22 +730,3 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
   ]
   Since the down-then-right path in each diagram is continuous, the right-then-down paths are continuous as well, and we are done.
 ]
-
-// #lemma[
-//   For every $n in NN_0$, the space $H_n (RR)$ is locally convex.
-// ]
-// #proof[
-//   We employ induction over $n$. If $n = 0$, the statement is clear. Suppose that the space $H_(n-1) (RR)$ is locally compact. It is then easy to see that $V(0, U)$ is a convex neighborhood of $0$ in $H_n (RR)$, where $U$ is the convex neighborhood of $0 in H_(n-1) (RR)$ that exists by the induction hypothesis.
-// ]
-
-// = Continuous curried functions
-
-
-// #lemma[
-//   For every $n in NN_0$, the space $C_n (RR)$ is locally convex.
-// ]
-// #proof[
-//   An easy proof by induction over $n$, similar to the case of $H_n (RR)$.
-// ]
-//
-// Next, we show that the spaces $C_n (RR)$ 
