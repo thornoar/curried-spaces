@@ -4,7 +4,7 @@ config.drawing.drawnow = true;
 config.drawing.drawnow = true;
 config.arrow.mar = 0.03;
 config.arrow.currentbar = DeferredBar(10, true, false);
-config.drawing.subsetfill = new pen[] {gray(0.8)};
+config.drawing.subsetfill = new pen[] {gray(0.85)};
 config.system.repeatlabels = true;
 
 usepackage("tgschola");
@@ -24,7 +24,14 @@ string sbul() {
 orientation = Landscape;
 defaultpen(1pt);
 import slide;
+// size(pagewidth,pageheight,keepAspect = true);
+// tinv=inverse(fixedscaling((-pagewidth/pageheight,-1),(pagewidth/pageheight,1),currentpen));
 pagenumberpen = invisible;
+
+real ratio = pageheight/pagewidth;
+path circ(pair c, real r) {
+    return shift(c) * xscale(ratio) * circle((0,0), r);
+}
 
 pair top = (0,0.65);
 pair bot = (0,-0.9);
@@ -140,6 +147,7 @@ smooth xspace =
     .setlabel("$X$", dir = dir(126), align = 1.5*S)
     .addsubset(convexpaths[2], scale = .7, unit = true, shift = (.1,.1))
     .setlabel(0, "$K$");
+xspace.subsets[0].layer = 1;
 smooth yspace =
     smooth(box((5*st, bot.y + st), (rgt.x - 2*st, p1.y)))
     .setlabel("$Y$", dir = dir(55), align = 1.5*S)
@@ -149,7 +157,7 @@ smooth yspace =
     .setlabel(1, "$f(K)$", dir = dir(-50));
 draw(xspace);
 draw(yspace, dpar(subsetcontourpens = new pen[] {dashed, currentpen}));
-p1 = (0, -.36);
+p1 = (0, -.34);
 drawarrow(xspace, yspace, bar = null, curve = -.2);
 label("$f$", p1); p1 -= 1.8*vs;
 label("\rotatebox[origin=c]{-90}{$\in$}", p1); p1 -= 1.8*vs;
@@ -171,7 +179,6 @@ add(tmp);
 drawline(tmp); p1 -= 1*vs;
 label(
     tmp,
-    // "\textbf{Definition:} $X$ is a {\color{green} TVS} $\Leftrightarrow$ $X$ has {\color{}}",
     minipage(
         "\textbf{Definition:} $X$ is a {\color{green} TVS} $\Leftrightarrow$
         $X$ has {\color{Dandelion} topological}
@@ -207,3 +214,32 @@ draw(tmp, vy);
 drawarrow(tmp, ux, u0, curve = -.4, L = Label("$-x$", position = MidPoint, align = Relative(W)));
 drawarrow(tmp, vy, v0, curve = -.4, L = Label("$-y$", position = MidPoint, align = Relative(W)));
 add(tmp);
+
+// EIGHTH SLIDE
+
+title("Properties of Topological Vector Spaces");
+erase(tmp);
+label(tmp, "Metrizability", top + 2/3 * lft);
+label(tmp, "Local convexity", top);
+label(tmp, "", top);
+pair x1 = (-.34, .3);
+real r1 = .15;
+pair x2 = (-.11,.34);
+real r2 = .09;
+smooth metr =
+    smooth(concavepaths[5], scale = .25, shift = (-.3, .3))
+    .addsubset(circ(x1, r1))
+    .addsubset(circ(x2, r2))
+    .addelement(x1)
+    .addelement(x2)
+    .move(shift = (-.35,-.18))
+    ;
+draw(tmp, metr);
+draw(tmp, shift(metr.elements[0].pos) * xscale(ratio) * ((0,0) -- r1 * dir(40)), arrow = Arrows(TeXHead));
+draw(tmp, shift(metr.elements[1].pos) * xscale(ratio) * ((0,0) -- r2 * dir(110)), arrow = Arrows(TeXHead));
+
+smooth conc =
+    smooth(concavepaths[6]);
+add(tmp);
+
+// drawgrid();
