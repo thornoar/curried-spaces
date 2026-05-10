@@ -67,14 +67,14 @@ titlepage(
 title("Premise", position = (0,1));
 picture pr1, pr2;
 dpar nodepar = nodepar();
-draw(pr1, top -- bot);
+draw(pr1, (top + vs) -- (bot + vs));
 label(pr1, Label("Multivariable functions", position = top + lft / 2));
 label(pr1, Label("$\mathbb{R}^n \to \mathbb{R}$", position = top + lft / 2 - 2.5 * vs));
 label(pr2, Label("Curried functions", position = top + rgt / 2));
 label(pr2, Label("$\mathbb{R} \to (\mathbb{R} \to (\dots (\mathbb{R} \to \mathbb{R})))$", position = top + rgt / 2 - 2.65 * vs));
 smooth args = smooth(convexpaths[3]).scale(0.2).shift(top + lft/2 - 9 * vs);
 draw(pr1, args);
-label(pr1, "$x_1$", (-.74,.13));
+label(pr1, "$x_1$", (-.72,.12));
 label(pr1, "$x_2$", (-.63,.23));
 label(pr1, "$x_3$", (-.53,.1));
 smooth output = node("$f(x_1, x_2, x_3)$", size = .08).shift((-.6,-.4));
@@ -134,7 +134,7 @@ title("Continuous Functions");
 add(tmp);
 draw((.145,.33) -- (.55,.33), red);
 p2 = (-.15,-.4);
-draw(p2{(-1,0)} .. (-.17,-.1) .. {(0,1)}(.3475,.33), red, arrow = BeginArrow(SimpleHead));
+draw(p2{(-1,0)} .. (-.17,-.1) .. {(0,1)}(.3475,.33), red);
 label("what is the topology on $C_n (\mathbb{R})$?", p2, red, align = (1,0));
 
 // ---
@@ -143,7 +143,7 @@ title("Continuous Functions");
 add(tmp);
 draw((-.3,.32) -- (-.09,.32));
 p2 = (-1.06,.04);
-draw(p2{(-1,.3)} .. (-1.15,.12) .. (-1.0,.23) .. {(0,1)}(-.195,.32), arrow = BeginArrow(SimpleHead));
+draw(p2{(-1,.3)} .. (-1.15,.12) .. (-1.0,.23) .. {(0,1)}(-.195,.32));
 label("compact-open topology: $C_n (\mathbb{R}) = \mathcal{C}(\mathbb{R}, C_{n-1}(\mathbb{R}))$", p2, align = (1,0));
 p1 -= 8 * vs;
 drawline();
@@ -163,7 +163,7 @@ smooth yspace =
     .setlabel(1, "$f(K)$", dir = dir(-50));
 draw(xspace);
 draw(yspace, dpar(subsetcontourpens = new pen[] {dashed, currentpen}));
-p1 = (0, -.34);
+p1 = (0, -.28);
 drawarrow(xspace, yspace, bar = null, curve = -.2);
 label("$f$", p1); p1 -= 1.8*vs;
 label("\rotatebox[origin=c]{-90}{$\in$}", p1); p1 -= 1.8*vs;
@@ -275,7 +275,7 @@ for (real rp : rs) {
     cp = (.6 * cp + .4 * black);
     c = p;
     r = rp;
-    filldraw(tmp, circle(c, r), fillpen = opacity(.1), drawpen = blue);
+    filldraw(tmp, circle(c, r), fillpen = opacity(.2), drawpen = blue);
 }
 dot(tmp, c, cyan);
 p1 = bot + 2/3 * lft + 3 * vs;
@@ -308,10 +308,10 @@ p1 -= 9*vs;
 drawline();
 p1 -= 1*vs;
 label(minipage("
-\textbf{Results:}
+\textbf{Results:} for all $n \in \mathbb{N}$,
 \begin{enumerate}
-    \item $C_n (\mathbb{R})$ is isomorphic to $\mathcal{C}(\mathbb{R}^n, \mathbb{R})$.
-    \item $C_n (\mathbb{R})$ is a topological vector space.
+    \item $C_n (\mathbb{R})$ is a Hausdorff topological vector space;
+    \item There is an isomorphism $\gamma \colon \mathcal{C}(\mathbb{R}^n, \mathbb{R}) \leftrightarrow C_n (\mathbb{R})$;
     \item $C_n (\mathbb{R})$ is a Fr\'echet space.
 \end{enumerate}
 ", width = 22cm), p1, align = (1,-1));
@@ -323,7 +323,7 @@ $\Rightarrow$ Theorems from functional analysis apply:
 \begin{enumerate}
     \item Uniform boundedness principle;
     \item Open mapping theorem;
-    \item ...
+    \item \dots
 \end{enumerate}
 ", width = 22cm), p1, align = (1,-1));
 
@@ -357,7 +357,7 @@ p2 = (-.1,-.6);
 draw(p2{(-1,0)} .. (-.2,-.3) .. {(1,1)} (.09,-.17), arrow = Arrow(SimpleHead), red, L = Label("pointwise convergence!", position = BeginPoint, align = 1.5*E));
 label(minipage("
 $$
-    f_k \underset{k \to \infty}\longrightarrow f \Leftrightarrow f_k (x_1)...(x_n) \underset{k \to \infty}\longrightarrow f(x_1)...(x_n)
+    f_k \underset{k \to \infty}\longrightarrow f \Leftrightarrow f_k (x_1)\dots (x_n) \underset{k \to \infty}\longrightarrow f(x_1)\dots (x_n)
 $$
 ", width = 15cm), p2 + 9 * hs, align = (0,-1));
 
@@ -374,6 +374,45 @@ The topology on $D_n^m$ is \emph{coarsest} such that the maps
     i \colon D_n^m (\mathbb{R}) &\to \mathcal{C}(\mathbb{R}, & D_{n-1}^m(\mathbb{R})), \hspace{2cm} d \colon D_n^m (\mathbb{R}) &\to D_n^{m-1}(\mathbb{R})\\
     f &\mapsto f & f &\mapsto f'
 \end{align*}
+are continuous. In particular, $f_k \to f \Rightarrow f'_k \to f'$.
 ", width = 22cm), p1, align = (1,-1));
+
+// ---
+
+title("Differentiable functions");
+p1 = textst+.5*vs;
+label(minipage("
+$D^{{\color{blue} m}}_{\color{red} n} (\mathbb{R})$ --- the space of ${\color{red} n}$-ary ${\color{blue} m}$ times differentiable functions:
+", width = 23cm), p1, align = (1,-1));
+p1 -= 3.5*vs;
+drawline();
+p1 -= 1*vs;
+label(minipage("
+\textbf{Results:} for all $m,n \in \mathbb{N}$,
+\begin{enumerate}
+    \item $D_n^m (\mathbb{R})$ is a Hausdorff topological vector space;
+    \item The inclusion map $j \colon D_n^{m+1}(\mathbb{R}) \to D_n^m (\mathbb{R})$ is continuous;
+    \item There is an isomorphism $\gamma \colon C^m (\mathbb{R}^n) \leftrightarrow D_n^m (\mathbb{R})$, given by
+        $$
+            \gamma\left(\tilde{f}\right)(x_1)(x_2)\dots (x_n) = \tilde{f}(x_1, x_2, \dots, x_n).
+        $$
+    \item $D_n^m (\mathbb{R})$ is a Fr\'echet space.
+\end{enumerate}
+", width = 22cm), p1, align = (1,-1));
+
+// ---
+
+title("References");
+p1 = textst;
+label(minipage("
+\baselineskip=1.2\baselineskip
+\begin{enumerate}
+    \item[{[1]}]\ N. Bourbaki, \emph{General Topology, Part I.} 1966
+    \item[{[2]}]\ N. Bourbaki, \emph{General Topology, Part II.} 1966
+    \item[{[3]}] \ R. Beattie and H.-P. Butzmann, \emph{Convergence Structures and Applications to Functional Analysis.} 2002
+    \item[{[4]}]\ W. Rudin, \emph{Principles of Mathematical Analysis.} 1976
+    \item[{[5]}]\ W. Rudin, \emph{Functional Analysis.} 1976
+\end{enumerate}
+", width = 23cm), p1, align = (1,-1));
 
 // drawgrid();

@@ -259,13 +259,6 @@ Finally, we define the spaces of curried differentiable functions.
   The topology on $D_n^oo (RR)$ is the initial topology with respect to the family of inclusion maps ${i_m}_(m = 0)^oo$, where $i_m : D_n^oo -> D_n^m (RR)$.
 ]
 
-#lemma[
-  For every $n in NN_0$, the space $D_n^oo$ is a #fr space.
-] <doofrechet>
-#proof[
-  A trivial exercise.
-]
-
 = Correspondence with uncurried functions
 
 Any function from $RR^n -> RR$ can be rewritten as an element of $H_n (RR)$, and vice versa. Naturally, one might ask whether the spaces $C_n (RR)$ and $D_n^m (RR)$ correspond similarly to continuous and continuously differentiable, respectively, functions from $RR^n$ to $RR$. The answer to this question is yes.
@@ -574,6 +567,13 @@ Finally, we examine the spaces $D_n^m (RR)$ of differentiable functions. To show
     ) ==> f_k -> f in D_n^m (RR).
   $
   Therefore, the space $D_n^m (RR)$ is complete, and hence a #fr space.
+]
+
+#corollary[
+  For every $n in NN_0$, the space $D_n^oo$ is a #fr space.
+] <doofrechet>
+#proof[
+  A trivial exercise.
 ]
 
 // = Integration
