@@ -178,8 +178,8 @@ Finally, we define the spaces of curried differentiable functions.
     so in particular, $alpha f + beta g in D^m_n (RR)$.\
     We endow $D^m_n (RR)$ with the coarsest topology in which the maps
     $
-      i : D^m_n (RR) &-> CC(RR, D^m_(n-1) (RR)), #h(3cm) d : D^m_n (RR) -> D^(m-1)_n (RR) #<maps>\
-      f &|-> f #h(6.85cm) f |-> f'
+      i : D^m_n (RR) &-> CC(RR, D^m_(n-1) (RR)), & #h(3cm) d : D^m_n (RR) &-> D^(m-1)_n (RR) #<maps>\
+      f &|-> f & f &|-> f'
     $
     are continuous. This topology will be called the _differential topology of order $m$._ @diffhaus and @difftvs ensure that $D_n^m (RR)$ is a Hausdorff topological space.
 ]
