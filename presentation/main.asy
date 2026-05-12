@@ -57,7 +57,7 @@ void drawline(picture pic = currentpicture) {
 
 titlepage(
     "Curried Functional Spaces",
-    "Roman Maksimovich",
+    "Roman Maksimovich\\ Supervisor: JIN, Tianling",
     institution = "Hong Kong University of Science and Technology",
     date = "\today"
 );
