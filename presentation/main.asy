@@ -402,6 +402,20 @@ label(minipage("
 
 // ---
 
+title("Future directions");
+p1 = textst;
+label(minipage("
+\baselineskip=1.2\baselineskip
+\begin{enumerate}
+    \item Apply results from functional analysis to derive facts about $C_n (\mathbb{R})$ and $D_n^m (\mathbb{R})$;
+    \item Study complex curried functions, $C_n (\mathbb{C})$ and $D_n^m (\mathbb{C})$;
+    \item Define Riemann integrals on $C_n (\mathbb{R})$;
+    \item Prove analogs of the Inverse/Implicit function theorems.
+\end{enumerate}
+", width = 23cm), p1, align = (1,-1));
+
+// ---
+
 title("References");
 p1 = textst;
 label(minipage("
