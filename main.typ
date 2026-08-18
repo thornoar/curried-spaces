@@ -19,7 +19,7 @@
 #let problem = statestyle("Problem")
 #let corollary = statestyle("Corollary")
 
-#let proof = proofstyle()
+#let proof = proofstyle("Proof")
 
 #set page("a4", margin: (top: 0.5in, bottom: 0.7in, right: 0.5in, left: 0.5in), numbering: "1")
 #set text(size: 11pt, font: "TeX Gyre Schola")
